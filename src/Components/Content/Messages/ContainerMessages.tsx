@@ -19,7 +19,7 @@ const mapStateToProps = (state: RootState) => {
 
 const mapDispatchToProps = (dispatch: AppDispatch) => {
    return {
-      addPMessageCallback: () => dispatch(addMessageAC()),
+      addMessageCallback: () => dispatch(addMessageAC()),
       changeValueCallback: (value: string) => dispatch(changeValueMessageAC(value))
    }
 }

@@ -1,23 +1,27 @@
 import React, {ChangeEvent} from "react";
 import s from './messages.module.scss'
-import UserMessages from "./UserMessages/UserMessages";
-import User from "./User/User";
+import UserMessages, {UsersMessagesType} from "./UserMessages/UserMessages";
+import User, {UsersType} from "./User/User";
 import {MessagesPageType} from "../../../redux/MessagesReducer";
 
 type MessagesType = {
-   messagesPage: MessagesPageType
-   addPMessageCallback: () => void
+   users: UsersType[]
+   usersMessages: UsersMessagesType[]
+   changeTextAreaMessage: string
+   addMessageCallback: () => void
    changeValueCallback: (value: string) => void
 }
 
 const Messages: React.FC<MessagesType> = (
    {
-      messagesPage,
-      addPMessageCallback,
+      changeTextAreaMessage,
+      usersMessages,
+      users,
+      addMessageCallback,
       changeValueCallback
    }
 ) => {
-   const addPMessage = () => addPMessageCallback()
+   const addMessage = () => addMessageCallback()
    const changeValue = (e: ChangeEvent<HTMLInputElement>) => changeValueCallback(e.currentTarget.value)
 
    return (
@@ -25,22 +29,22 @@ const Messages: React.FC<MessagesType> = (
 
          {/* ======================= Users ========================= */}
          <div className={s.users}>
-            { messagesPage.users.map(u => <User id={u.id} name={u.name} ava={u.ava} key={u.id}/>) }
+            { users.map(u => <User id={u.id} name={u.name} ava={u.ava} key={u.id}/>) }
          </div>
 
          <div>
             {/* ======================= Users Messages ========================= */}
             <div className={s.usersMessages}>
-               { messagesPage.usersMessages.map(um => <UserMessages id={um.id} message={um.message} key={um.id}/>) }
+               { usersMessages.map(um => <UserMessages id={um.id} message={um.message} key={um.id}/>) }
             </div>
 
             {/* ========================= Input and button ========================= */}
             <div className={s.messages__addPost}>
                <input className={s.messages__addPost_input}
                       type="text"
-                      value={messagesPage.changeTextAreaMessage}
+                      value={changeTextAreaMessage}
                       onChange={ changeValue } />
-               <button className={s.messages__addPost_btn} onClick={ addPMessage }>Add</button>
+               <button className={s.messages__addPost_btn} onClick={ addMessage }>Add</button>
             </div>
          </div>
       </div>

@@ -2,8 +2,8 @@ import React from "react";
 import s from './content.module.scss'
 import {Route, Routes} from "react-router-dom";
 import {AppDispatch, RootState} from "../../redux/redax-store";
-import ContainerProfile from "./Profile/ContainerProfile";
-import ContainerMessages from "./Messages/ContainerMessages";
+import {ContainerProfile} from "./Profile/ContainerProfile";
+import {ContainerMessages} from "./Messages/ContainerMessages";
 
 export type ContentType = {
    state: RootState

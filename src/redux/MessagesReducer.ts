@@ -2,9 +2,6 @@ import {UsersType} from "../Components/Content/Messages/User/User";
 import {UsersMessagesType} from "../Components/Content/Messages/UserMessages/UserMessages";
 import {DispatchType} from "./redax-store";
 
-const ADD_MESSAGE = 'ADD-MESSAGE'
-const CHANGE_VALUE_MESSAGE = 'CHANGE-VALUE-MESSAGE'
-
 export type MessagesPageType = {
    users: Array<UsersType>
    usersMessages: Array<UsersMessagesType>
@@ -30,7 +27,7 @@ const initialState: MessagesPageType = {
 
 const messagesReducer = (state: MessagesPageType = initialState, action: DispatchType) => {
    switch (action.type) {
-      case ADD_MESSAGE: {
+      case "ADD-MESSAGE": {
          return {
             ...state,
             usersMessages: [
@@ -40,7 +37,7 @@ const messagesReducer = (state: MessagesPageType = initialState, action: Dispatc
             changeTextAreaMessage: ""
          }
       }
-      case CHANGE_VALUE_MESSAGE: {
+      case "CHANGE-VALUE-MESSAGE": {
          return  {
             ...state,
             changeTextAreaMessage: action.newChangeText
@@ -51,7 +48,7 @@ const messagesReducer = (state: MessagesPageType = initialState, action: Dispatc
    }
 }
 
-export const addMessageAC = () => ({ type: ADD_MESSAGE } as const)
-export const changeValueMessageAC = (newChangeText: string) => ({type: CHANGE_VALUE_MESSAGE, newChangeText} as const)
+export const addMessageAC = () => ({ type: 'ADD-MESSAGE' } as const)
+export const changeValueMessageAC = (newChangeText: string) => ({type: 'CHANGE-VALUE-MESSAGE', newChangeText} as const)
 
 export default messagesReducer
