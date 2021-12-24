@@ -9,25 +9,17 @@ export type ContentType = {
    state: RootState
    dispatch: AppDispatch
 }
-const Content: React.FC<ContentType> = (
-   {
-      state,
-      dispatch
-   }
-) => {
+const Content: React.FC<ContentType> = () => {
    return (
       <div className={s.content}>
          <Routes>
             <Route path="/profile"
                    element={
-                      <ContainerProfile profilePage={state.profilePage}
-                                        dispatch={dispatch}/>
+                      <ContainerProfile />
                    }/>
             <Route path="/messages"
                    element={
-                      <ContainerMessages messagesPage={state.messagesPages}
-                                         dispatch={dispatch}
-                      />
+                      <ContainerMessages />
                    }/>
          </Routes>
 

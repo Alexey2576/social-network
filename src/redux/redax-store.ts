@@ -1,6 +1,6 @@
 import {configureStore} from '@reduxjs/toolkit'
-import profileReducer, {addPostAC, changeValuePostAC} from "./ProfileReducer";
-import messagesReducer, {addMessageAC, changeValueMessageAC} from "./MessagesReducer";
+import {addPostAC, changeValuePostAC, profileReducer} from "./ProfileReducer";
+import {addMessageAC, changeValueMessageAC, messagesReducer} from "./MessagesReducer";
 
 export const store = configureStore({
    reducer: {

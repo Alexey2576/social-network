@@ -1,15 +1,9 @@
 import React, {ChangeEvent} from "react";
 import s from './profile.module.scss'
-import Post, {PostsType} from "./Post/Post";
+import Post from "./Post/Post";
+import {ContainerProfileType} from "./ContainerProfile";
 
-type ProfileType = {
-   changeTextAreaPost: string
-   posts: PostsType[]
-   addPostCallback: () => void
-   changeValueCallback: (value: string) => void
-}
-
-const Profile: React.FC<ProfileType> = (
+const Profile: React.FC<ContainerProfileType> = (
    {
       changeTextAreaPost,
       posts,

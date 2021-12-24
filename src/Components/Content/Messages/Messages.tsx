@@ -1,18 +1,10 @@
 import React, {ChangeEvent} from "react";
 import s from './messages.module.scss'
-import UserMessages, {UsersMessagesType} from "./UserMessages/UserMessages";
-import User, {UsersType} from "./User/User";
-import {MessagesPageType} from "../../../redux/MessagesReducer";
+import UserMessages from "./UserMessages/UserMessages";
+import User from "./User/User";
+import {ContainerMessagesType} from "./ContainerMessages";
 
-type MessagesType = {
-   users: UsersType[]
-   usersMessages: UsersMessagesType[]
-   changeTextAreaMessage: string
-   addMessageCallback: () => void
-   changeValueCallback: (value: string) => void
-}
-
-const Messages: React.FC<MessagesType> = (
+const Messages: React.FC<ContainerMessagesType> = (
    {
       changeTextAreaMessage,
       usersMessages,

@@ -1,26 +1,32 @@
-import {addPostAC, changeValuePostAC, ProfilePageType} from "../../../redux/ProfileReducer";
-import {AppDispatch, DispatchType, RootState} from "../../../redux/redax-store";
+import {addPostAC, changeValuePostAC} from "../../../redux/ProfileReducer";
+import {AppDispatch, RootState} from "../../../redux/redax-store";
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import React from "react";
+import {PostsType} from "./Post/Post";
 
-type ContainerProfileType = {
-   profilePage: ProfilePageType
-   dispatch: (action: DispatchType) => void
+type MapStatePropsType = {
+   posts: PostsType[]
+   changeTextAreaPost: string
 }
+type MapDispatchPropsType = {
+   addPostCallback: () => void
+   changeValueCallback: (value: string) => void
+}
+export type ContainerProfileType = MapStatePropsType & MapDispatchPropsType
 
-const mapStateToProps = (state: RootState) => {
+const mapStateToProps = (state: RootState): MapStatePropsType => {
    return {
       posts: state.profilePage.posts,
       changeTextAreaPost: state.profilePage.changeTextAreaPost
    }
 }
 
-const mapDispatchToProps = (dispatch: AppDispatch) => {
+const mapDispatchToProps = (dispatch: AppDispatch): MapDispatchPropsType => {
    return {
       addPostCallback: () => dispatch(addPostAC()),
       changeValueCallback: (value: string) => dispatch(changeValuePostAC(value))
    }
 }
 
-export const ContainerProfile: React.FC<ContainerProfileType> = connect(mapStateToProps, mapDispatchToProps)(Profile)
+export const ContainerProfile = connect(mapStateToProps, mapDispatchToProps)(Profile)
