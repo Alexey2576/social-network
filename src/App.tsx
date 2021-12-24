@@ -1,26 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.module.scss';
+import Header from "./Components/Header/Header";
+import Navbar from "./Components/Navbar/Navbar";
+import Content, {ContentType} from "./Components/Content/Content";
+import s from './App.module.scss'
+import Contacts from "./Components/Contacts/Contacts";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+const App = ({state, dispatch}: ContentType) => {
+   return (
+      <div className={s.App}>
+         <Header/>
+         <div className={s.contentAndNavbar}>
+            <Navbar/>
+            <Content state={state}
+                     dispatch={dispatch} />
+            <Contacts/>
+         </div>
+      </div>
+   );
 }
 
 export default App;

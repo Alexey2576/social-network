@@ -1,0 +1,17 @@
+.user {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin: 40px 60px;
+  padding: 10px;
+  background-color: #dbf1ff;
+  width: 300px;
+  &__ava {
+    width: 100px;
+    margin-right: 20px;
+    border-radius: 50%;
+  }
+  &__name {
+    font-size: 18px;
+  }
+}

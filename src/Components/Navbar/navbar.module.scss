@@ -1,0 +1,59 @@
+.navbar {
+  margin-right: 50px;
+  margin-bottom: 35px;
+  &__profile {
+    background-color: #fff;
+    width: 360px;
+    height: 130px;
+    margin: 35px 0 35px 35px;
+    border-radius: 20px;
+    padding: 35px;
+    display: flex;
+    align-items: center;
+    &_ava {
+      height: 60px;
+      margin-right: 20px;
+      img {
+        height: 100%;
+      }
+    }
+    &_info {
+      &_name {
+        color: #425979;
+        font-size: 20px;
+        margin-bottom: 13px;
+      }
+      &_username {
+        color: rgba(#425979, 0.7);
+      }
+    }
+  }
+
+  &__link {
+    width: 360px;
+    background-color: #fff;
+    margin: 35px 0 0 35px;
+    border-radius: 20px;
+    padding: 0 45px 0 45px;
+
+    &_item {
+      display: flex;
+      height: 95px;
+      align-items: center;
+      border-bottom: 1px solid rgba(#000, 0.2);
+      text-decoration: none;
+      &:last-child { border-bottom: none }
+      &_icon {
+        height: 30px;
+        margin-right: 25px;
+      }
+      &_title {
+        color: #425979;
+        font-size: 20px;
+      }
+    }
+  }
+}
+.active {
+  color: #21ffa5;
+}
