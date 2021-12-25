@@ -29,9 +29,9 @@ const Navbar = () => {
                <img className={s.navbar__link_item_icon} src={messages} alt="icon"/>
                <h3 className={s.navbar__link_item_title}>Messages</h3>
             </NavLink>
-            <NavLink className={s.navbar__link_item} to="/people">
+            <NavLink className={s.navbar__link_item} to="/peoples">
                <img className={s.navbar__link_item_icon} src={people} alt="icon"/>
-               <h3 className={s.navbar__link_item_title}>People</h3>
+               <h3 className={s.navbar__link_item_title}>Peoples</h3>
             </NavLink>
             <NavLink className={s.navbar__link_item} to="/photos">
                <img className={s.navbar__link_item_icon} src={photos} alt="icon"/>

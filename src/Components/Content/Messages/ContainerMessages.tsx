@@ -1,4 +1,3 @@
-import React from "react";
 import {addMessageAC, changeValueMessageAC} from "../../../redux/MessagesReducer";
 import {AppDispatch, RootState} from "../../../redux/redax-store";
 import Messages from "./Messages";
@@ -19,9 +18,9 @@ export type ContainerMessagesType = MapStatePropsType & MapDispatchPropsType
 
 const mapStateToProps = (state: RootState) => {
    return {
-      users: state.messagesPages.users,
-      usersMessages: state.messagesPages.usersMessages,
-      changeTextAreaMessage: state.messagesPages.changeTextAreaMessage
+      users: state.messagesPage.users,
+      usersMessages: state.messagesPage.usersMessages,
+      changeTextAreaMessage: state.messagesPage.changeTextAreaMessage
    }
 }
 

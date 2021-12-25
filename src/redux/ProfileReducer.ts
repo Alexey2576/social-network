@@ -10,6 +10,7 @@ const initialProfilePageState = {
    changeTextAreaPost: ''
 }
 
+
 type ProfilePageType = typeof initialProfilePageState
 
 export const profileReducer = (state: ProfilePageType = initialProfilePageState, action: DispatchType): ProfilePageType => {
@@ -31,7 +32,7 @@ export const profileReducer = (state: ProfilePageType = initialProfilePageState,
          }
       }
       default:
-         throw new Error()
+         return state
    }
 }
 

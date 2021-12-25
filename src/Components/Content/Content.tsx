@@ -1,26 +1,20 @@
 import React from "react";
 import s from './content.module.scss'
 import {Route, Routes} from "react-router-dom";
-import {AppDispatch, RootState} from "../../redux/redax-store";
 import {ContainerProfile} from "./Profile/ContainerProfile";
 import {ContainerMessages} from "./Messages/ContainerMessages";
+import {ContainerPeoples} from "./Peoples/ContainerPeoples";
 
-export type ContentType = {
-   state: RootState
-   dispatch: AppDispatch
-}
-const Content: React.FC<ContentType> = () => {
+const Content = () => {
    return (
       <div className={s.content}>
          <Routes>
             <Route path="/profile"
-                   element={
-                      <ContainerProfile />
-                   }/>
+                   element={ <ContainerProfile /> }/>
             <Route path="/messages"
-                   element={
-                      <ContainerMessages />
-                   }/>
+                   element={ <ContainerMessages /> }/>
+            <Route path="/peoples"
+                   element={ <ContainerPeoples /> }/>
          </Routes>
 
       </div>

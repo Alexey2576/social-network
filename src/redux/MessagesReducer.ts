@@ -40,7 +40,7 @@ export const messagesReducer = (state: MessagesPageType = initialMessagesPageSta
          }
       }
       default:
-         throw new Error()
+         return state
    }
 }
 

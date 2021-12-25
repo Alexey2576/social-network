@@ -2,7 +2,6 @@ import {addPostAC, changeValuePostAC} from "../../../redux/ProfileReducer";
 import {AppDispatch, RootState} from "../../../redux/redax-store";
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import React from "react";
 import {PostsType} from "./Post/Post";
 
 type MapStatePropsType = {
