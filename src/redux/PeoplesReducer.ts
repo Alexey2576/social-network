@@ -14,7 +14,7 @@ const initialPeoplesPageState = {
          followed: false
       },
       {
-         id: 1,
+         id: 2,
          name: "Bob",
          status: "Hi! i am React JS Junior developer and I am looking for a job",
          photos: {
@@ -24,7 +24,7 @@ const initialPeoplesPageState = {
          followed: true
       },
       {
-         id: 1,
+         id: 3,
          name: "Liza",
          status: "Hi! i am React JS Junior developer and I am looking for a job",
          photos: {
