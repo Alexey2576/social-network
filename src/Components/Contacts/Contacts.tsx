@@ -1,6 +1,6 @@
 import React from "react";
 import s from './contacts.module.scss'
-import ava from '../../assets/contacts/ava.jpeg'
+import ava from '../../assets/contacts/ava.png'
 
 const Contacts = () => {
    return (

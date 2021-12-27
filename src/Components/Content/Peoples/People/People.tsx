@@ -1,5 +1,6 @@
 import React from 'react';
 import './people.scss';
+import ava from '../../../../assets/ava.png'
 
 export type PeopleType = {
    id: number
@@ -24,7 +25,7 @@ export const People: React.FC<PeopleType> = (
    return (
       <div className="people_info">
          <div className="people_info__img">
-            <img src={photos.small} alt="photo_people" className="people_info__img__photo"/>
+            <img src={photos.small !== null ? photos.small : ava} alt="photo_people" className="people_info__img__photo"/>
          </div>
          <div className="people_info__text">
             <h3 className="people_info__text__name">{name}</h3>

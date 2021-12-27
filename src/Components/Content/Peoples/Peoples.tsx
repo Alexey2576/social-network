@@ -1,15 +1,25 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {ContainerPeoplesType} from "./ContainerPeoples";
 import {People} from "./People/People";
 import './peoples.scss';
+import axios from 'axios'
 
 export const Peoples: React.FC<ContainerPeoplesType> = (
    {
       peoples,
       follow,
-      unfollow
+      unfollow,
+      setPeoples
    }
 ) => {
+
+   useEffect(() => {
+      if (peoples.length === 0) {
+         axios.get("https://social-network.samuraijs.com/api/1.0/users")
+            .then(response => setPeoples(response.data.items))
+      }
+   }, [])
+
    return (
       <div>
          {peoples.map(p =>
