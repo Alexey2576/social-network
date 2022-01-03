@@ -1,7 +1,15 @@
 import {configureStore} from '@reduxjs/toolkit'
 import {addPostAC, changeValuePostAC, profileReducer} from "./ProfileReducer";
 import {addMessageAC, changeValueMessageAC, messagesReducer} from "./MessagesReducer";
-import {followAC, peoplesReducer, setPeoplesAC, unfollowAC} from "./PeoplesReducer";
+import {
+   followAC,
+   peoplesReducer,
+   setCountPagesAC,
+   setCurrentPageAC,
+   setPeoplesAC,
+   setTotalCountAC,
+   unfollowAC
+} from "./PeoplesReducer";
 
 export const store = configureStore({
    reducer: {
@@ -19,6 +27,9 @@ export type DispatchType =
    ReturnType<typeof changeValuePostAC> |
    ReturnType<typeof followAC> |
    ReturnType<typeof unfollowAC> |
-   ReturnType<typeof setPeoplesAC>
+   ReturnType<typeof setPeoplesAC> |
+   ReturnType<typeof setTotalCountAC> |
+   ReturnType<typeof setCurrentPageAC> |
+   ReturnType<typeof setCountPagesAC>
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
