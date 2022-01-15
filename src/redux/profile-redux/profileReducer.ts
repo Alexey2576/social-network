@@ -1,6 +1,6 @@
 import {PostsType} from "../../Components/Content/Profile/Post/Post";
 import {ActionCreatorsType} from "../redax-store";
-import {PROFILE_ACTIONS_TYPES} from "./ProfileActions";
+import {PROFILE_ACTIONS_TYPES} from "./profileActions";
 
 export type ProfileUserInfoType = {
    userId: number
@@ -33,8 +33,7 @@ const initialProfilePageState = {
    changeTextAreaPost: '' as string
 }
 
-
-type ProfilePageType = typeof initialProfilePageState
+export type ProfilePageType = typeof initialProfilePageState
 
 export const profileReducer = (state: ProfilePageType = initialProfilePageState, action: ActionCreatorsType): ProfilePageType => {
    switch (action.type) {
@@ -60,7 +59,6 @@ export const profileReducer = (state: ProfilePageType = initialProfilePageState,
             profileUserInfo: action.profileUserInfo
          }
       }
-      default:
-         return state
+      default: return state
    }
 }

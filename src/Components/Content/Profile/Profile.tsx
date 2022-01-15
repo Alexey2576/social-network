@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from "react";
 import s from './profile.module.scss'
 import Post, {PostsType} from "./Post/Post";
-import {ProfileUserInfoType} from "../../../redux/ProfileBLL/ProfileReducer";
+import {ProfileUserInfoType} from "../../../redux/profile-redux/profileReducer";
 
 type ProfileType = {
    profileUserInfo: ProfileUserInfoType | null

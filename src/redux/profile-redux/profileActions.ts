@@ -1,4 +1,4 @@
-import {ProfileUserInfoType} from "./ProfileReducer";
+import {ProfileUserInfoType} from "./profileReducer";
 
 export enum PROFILE_ACTIONS_TYPES {
    ADD_POST = 'profileReducer/ADD_POST',

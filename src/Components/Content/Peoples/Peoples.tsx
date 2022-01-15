@@ -6,18 +6,19 @@ export type PeoplesType = {
    peoples: PeopleType[]
    totalCount: number
    countPeoplesOnPage: number
-   follow: (people_id: number) => void
-   unfollow: (people_id: number) => void
-   setCurrentPage: (currentPage: number) => void
+   followCallback: (people_id: number) => void
+   unfollowCallback: (people_id: number) => void
+   setCurrentPageCallback: (currentPage: number) => void
 }
+
 export const Peoples: React.FC<PeoplesType> = (
    {
       peoples,
       totalCount,
       countPeoplesOnPage,
-      follow,
-      unfollow,
-      setCurrentPage,
+      followCallback,
+      unfollowCallback,
+      setCurrentPageCallback,
    }
 ) => {
    const massPages = useMemo(() => {
@@ -29,7 +30,7 @@ export const Peoples: React.FC<PeoplesType> = (
       return pages
    }, [totalCount, countPeoplesOnPage])
 
-   const onClickPageHandler = (e: MouseEvent<HTMLButtonElement>) => setCurrentPage(Number(e.currentTarget.value))
+   const onClickPageHandler = (e: MouseEvent<HTMLButtonElement>) => setCurrentPageCallback(Number(e.currentTarget.value))
 
    return (
       <div>
@@ -46,13 +47,12 @@ export const Peoples: React.FC<PeoplesType> = (
                <div className="people_followed">
                   {
                      p.followed
-                        ? <button className="people_followed__btn" onClick={() => unfollow(p.id)}>Unfollow</button>
-                        : <button className="people_followed__btn" onClick={() => follow(p.id)}>Follow</button>
+                        ? <button className="people_followed__btn" onClick={() => unfollowCallback(p.id)}>Unfollow</button>
+                        : <button className="people_followed__btn" onClick={() => followCallback(p.id)}>Follow</button>
                   }
                </div>
             </div>
          )}
-
       </div>
    )
 }

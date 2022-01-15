@@ -1,16 +1,16 @@
 import {configureStore} from '@reduxjs/toolkit'
 import {addMessage, changeValueMessage, messagesReducer} from "./MessagesReducer";
+import {profileReducer} from "./profile-redux/profileReducer";
+import {addPost, changeValuePost, setProfileUserInfo} from "./profile-redux/profileActions";
+import {peoplesReducer} from "./peoples-redux/peoplesReducer";
 import {
    follow,
-   peoplesReducer,
    setCurrentPage,
    setIsFetching,
    setPeoples,
    setTotalCount,
    unfollow
-} from "./PeoplesReducer";
-import {profileReducer} from "./ProfileBLL/ProfileReducer";
-import {addPost, changeValuePost, setProfileUserInfo} from "./ProfileBLL/ProfileActions";
+} from "./peoples-redux/peoplesActions";
 
 export const store = configureStore({
    reducer: {
