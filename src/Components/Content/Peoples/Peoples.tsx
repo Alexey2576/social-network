@@ -3,6 +3,7 @@ import {People, PeopleType} from "./People/People";
 import './peoples.scss'
 import axios from "axios";
 import {setIsFetching, setPeoples, setTotalCount} from "../../../redux/peoples-redux/peoplesActions";
+import {userAPI} from "../../../api/api";
 
 export type PeoplesType = {
    peoples: PeopleType[]
@@ -50,27 +51,15 @@ export const Peoples: React.FC<PeoplesType> = (
                   {
                      p.followed
                         ? <button className="people_followed__btn" onClick={() => {
-                           axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${p.id}`, {
-                              withCredentials: true,
-                              headers: {
-                                 "API-KEY": "0b35bf30-9811-4ef2-8cc3-183ac4bf4914"
-                              },
-                           })
-                              .then(response => {
-                                 if (response.data.resultCode === 0) {
+                           userAPI.unfollow(p.id).then(data => {
+                                 if (data.resultCode === 0) {
                                     unfollowCallback(p.id)
                                  }
                               })
                         }}>Unfollow</button>
                         : <button className="people_followed__btn" onClick={() => {
-                           axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${p.id}`, {},{
-                              withCredentials: true,
-                              headers: {
-                                 "API-KEY": "0b35bf30-9811-4ef2-8cc3-183ac4bf4914"
-                              },
-                           })
-                              .then(response => {
-                                 if (response.data.resultCode === 0) {
+                           userAPI.follow(p.id).then(data => {
+                                 if (data.resultCode === 0) {
                                     followCallback(p.id)
                                  }
                               })

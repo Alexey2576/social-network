@@ -7,6 +7,7 @@ import {useParams} from "react-router-dom";
 import {addPost, changeValuePost, setProfileUserInfo} from "../../../redux/profile-redux/profileActions";
 import {ProfilePageType} from "../../../redux/profile-redux/profileReducer";
 import { selectAllPropsProfile } from "../../../redux/profile-redux/profileSelectors";
+import {profileAPI} from "../../../api/api";
 
 export const ContainerProfile: React.FC = () => {
    const {
@@ -21,10 +22,11 @@ export const ContainerProfile: React.FC = () => {
 
    let {userID} = useParams<string>()
    useEffect(() => {
-      axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userID}`)
-         .then(response => {
-            dispatch(setProfileUserInfo(response.data))
+      if (userID) {
+         profileAPI.getUserProfile(userID).then(data => {
+            dispatch(setProfileUserInfo(data))
          })
+      }
    }, [userID])
 
    return <Profile profileUserInfo={profileUserInfo}

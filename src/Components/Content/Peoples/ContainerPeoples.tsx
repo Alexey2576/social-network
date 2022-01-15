@@ -14,6 +14,7 @@ import {
    unfollow
 } from "../../../redux/peoples-redux/peoplesActions";
 import {selectAllPropsPeoples} from "../../../redux/peoples-redux/peoplesSelectors";
+import {userAPI} from "../../../api/api";
 
 export const ContainerPeoples: React.FC = () => {
    const {
@@ -27,24 +28,18 @@ export const ContainerPeoples: React.FC = () => {
    const dispatch = useDispatch<AppDispatch>()
    useEffect(() => {
       dispatch(setIsFetching(true))
-      axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${countPeoplesOnPage}&page=${currentPage}`, {
-         withCredentials:true,
-      })
-         .then(response => {
+      userAPI.getUsers(countPeoplesOnPage, currentPage).then(data => {
             dispatch(setIsFetching(false))
-            dispatch(setPeoples(response.data.items))
-            dispatch(setTotalCount(response.data.totalCount))
+            dispatch(setPeoples(data.items))
+            dispatch(setTotalCount(data.totalCount))
          })
    }, [])
 
    useEffect(() => {
       setIsFetching(true)
-      axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${countPeoplesOnPage}&page=${currentPage}`, {
-         withCredentials: true,
-      })
-         .then(response => {
+      userAPI.getUsers(countPeoplesOnPage, currentPage).then(data => {
             dispatch(setIsFetching(false))
-            dispatch(setPeoples(response.data.items))
+            dispatch(setPeoples(data.items))
          })
    }, [currentPage, countPeoplesOnPage, flag])
 
