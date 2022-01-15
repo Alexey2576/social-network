@@ -1,9 +1,10 @@
-import {addMessageAC, changeValueMessageAC} from "../../../redux/MessagesReducer";
-import {AppDispatch, RootState} from "../../../redux/redax-store";
+import {addMessage, changeValueMessage} from "../../../redux/MessagesReducer";
+import {RootState} from "../../../redux/redax-store";
 import Messages from "./Messages";
 import {connect} from "react-redux";
 import {UsersMessagesType} from "./UserMessages/UserMessages";
 import {UsersType} from "./User/User";
+import React from 'react';
 
 type MapStatePropsType = {
    users: UsersType[]
@@ -11,10 +12,26 @@ type MapStatePropsType = {
    changeTextAreaMessage: string
 }
 type MapDispatchPropsType = {
-   addMessageCallback: () => void
-   changeValueCallback: (value: string) => void
+   addMessage: () => void
+   changeValueMessage: (value: string) => void
 }
 export type ContainerMessagesType = MapStatePropsType & MapDispatchPropsType
+
+const ContainerMessages: React.FC<ContainerMessagesType> = (
+   {
+      users,
+      usersMessages,
+      changeTextAreaMessage,
+      changeValueMessage,
+      addMessage
+   }
+) => {
+   return <Messages users={users}
+                    usersMessages={usersMessages}
+                    changeTextAreaMessage={changeTextAreaMessage}
+                    addMessage={addMessage}
+                    changeValueMessage={changeValueMessage}/>
+}
 
 const mapStateToProps = (state: RootState) => {
    return {
@@ -24,11 +41,4 @@ const mapStateToProps = (state: RootState) => {
    }
 }
 
-const mapDispatchToProps = (dispatch: AppDispatch) => {
-   return {
-      addMessageCallback: () => dispatch(addMessageAC()),
-      changeValueCallback: (value: string) => dispatch(changeValueMessageAC(value))
-   }
-}
-
-export const ContainerMessages = connect(mapStateToProps, mapDispatchToProps)(Messages)
+export default connect(mapStateToProps, {addMessage, changeValueMessage})(ContainerMessages)

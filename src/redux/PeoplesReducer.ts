@@ -1,12 +1,12 @@
-import {DispatchType} from "./redax-store";
+import {ActionCreatorsType} from "./redax-store";
 import {PeopleType} from "../Components/Content/Peoples/People/People";
 
 const initialPeoplesPageState = {
    peoples: [],
    totalCount: 0,
    currentPage: 2,
-   countPeoplesOnPage: 5,
-   countPages: 10
+   countPeoplesOnPage: 15,
+   isFetching: false
 }
 
 export type PeoplesPageType = {
@@ -14,10 +14,10 @@ export type PeoplesPageType = {
    totalCount: number
    currentPage: number
    countPeoplesOnPage: number
-   countPages: number
+   isFetching: boolean
 }
 
-export const peoplesReducer = (state: PeoplesPageType = initialPeoplesPageState, action: DispatchType): PeoplesPageType => {
+export const peoplesReducer = (state: PeoplesPageType = initialPeoplesPageState, action: ActionCreatorsType): PeoplesPageType => {
    switch (action.type) {
       case "SET_PEOPLES": {
          return {
@@ -49,10 +49,10 @@ export const peoplesReducer = (state: PeoplesPageType = initialPeoplesPageState,
             currentPage: action.currentPage
          }
       }
-      case "SET_COUNT_PAGES": {
+      case "SET_IS_FETCHING": {
          return {
             ...state,
-            countPages: Math.ceil(state.totalCount / state.countPeoplesOnPage)
+            isFetching: action.isFetching
          }
       }
       default:
@@ -60,9 +60,9 @@ export const peoplesReducer = (state: PeoplesPageType = initialPeoplesPageState,
    }
 }
 
-export const followAC = (people_ID: number) => ({type: 'FOLLOW', people_ID} as const)
-export const unfollowAC = (people_ID: number) => ({type: 'UNFOLLOW', people_ID} as const)
-export const setPeoplesAC = (peoples: PeopleType[]) => ({type: 'SET_PEOPLES', peoples} as const)
-export const setTotalCountAC = (totalCount: number) => ({type: 'SET_TOTAL_COUNT', totalCount} as const)
-export const setCurrentPageAC = (currentPage: number) => ({type: 'SET_CURRENT_PAGE', currentPage} as const)
-export const setCountPagesAC = () => ({type: 'SET_COUNT_PAGES'} as const)
+export const follow = (people_ID: number) => ({type: 'FOLLOW', people_ID} as const)
+export const unfollow = (people_ID: number) => ({type: 'UNFOLLOW', people_ID} as const)
+export const setPeoples = (peoples: PeopleType[]) => ({type: 'SET_PEOPLES', peoples} as const)
+export const setTotalCount = (totalCount: number) => ({type: 'SET_TOTAL_COUNT', totalCount} as const)
+export const setCurrentPage = (currentPage: number) => ({type: 'SET_CURRENT_PAGE', currentPage} as const)
+export const setIsFetching = (isFetching: boolean) => ({type: 'SET_IS_FETCHING', isFetching} as const)

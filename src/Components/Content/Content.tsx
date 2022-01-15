@@ -2,14 +2,14 @@ import React from "react";
 import s from './content.module.scss'
 import {Route, Routes} from "react-router-dom";
 import {ContainerProfile} from "./Profile/ContainerProfile";
-import {ContainerMessages} from "./Messages/ContainerMessages";
-import {ContainerPeoples} from "./Peoples/ContainerPeoples";
+import ContainerMessages from "./Messages/ContainerMessages";
+import ContainerPeoples from "./Peoples/ContainerPeoples";
 
 const Content = () => {
    return (
       <div className={s.content}>
          <Routes>
-            <Route path="/profile"
+            <Route path="/profile/:userID"
                    element={ <ContainerProfile /> }/>
             <Route path="/messages"
                    element={ <ContainerMessages /> }/>

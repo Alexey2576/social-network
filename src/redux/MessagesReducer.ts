@@ -1,6 +1,6 @@
 import {UsersType} from "../Components/Content/Messages/User/User";
 import {UsersMessagesType} from "../Components/Content/Messages/UserMessages/UserMessages";
-import {DispatchType} from "./redax-store";
+import {ActionCreatorsType} from "./redax-store";
 
 const initialMessagesPageState = {
    users: [
@@ -21,7 +21,7 @@ const initialMessagesPageState = {
 
 export type MessagesPageType = typeof initialMessagesPageState
 
-export const messagesReducer = (state: MessagesPageType = initialMessagesPageState, action: DispatchType): MessagesPageType => {
+export const messagesReducer = (state: MessagesPageType = initialMessagesPageState, action: ActionCreatorsType): MessagesPageType => {
    switch (action.type) {
       case "ADD-MESSAGE": {
          return {
@@ -44,5 +44,5 @@ export const messagesReducer = (state: MessagesPageType = initialMessagesPageSta
    }
 }
 
-export const addMessageAC = () => ({ type: 'ADD-MESSAGE' } as const)
-export const changeValueMessageAC = (newChangeText: string) => ({type: 'CHANGE-VALUE-MESSAGE', newChangeText} as const)
+export const addMessage = () => ({ type: 'ADD-MESSAGE' } as const)
+export const changeValueMessage = (newChangeText: string) => ({type: 'CHANGE-VALUE-MESSAGE', newChangeText} as const)

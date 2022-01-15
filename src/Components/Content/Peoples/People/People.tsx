@@ -1,6 +1,7 @@
 import React from 'react';
 import './people.scss';
 import ava from '../../../../assets/ava.png'
+import {NavLink} from "react-router-dom";
 
 export type PeopleType = {
    id: number
@@ -18,14 +19,18 @@ export const People: React.FC<PeopleType> = (
       name,
       status,
       photos,
-      ...restProps
+      id
    }
 ) => {
 
    return (
       <div className="people_info">
          <div className="people_info__img">
-            <img src={photos.small !== null ? photos.small : ava} alt="photo_people" className="people_info__img__photo"/>
+            <NavLink to={`/profile/${id}`}>
+               <img src={photos.small !== null ? photos.small : ava}
+                    alt="photo_people"
+                    className="people_info__img__photo"/>
+            </NavLink>
          </div>
          <div className="people_info__text">
             <h3 className="people_info__text__name">{name}</h3>

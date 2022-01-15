@@ -1,46 +1,33 @@
-import React, {MouseEvent, useEffect, useMemo} from "react";
-import {ContainerPeoplesType} from "./ContainerPeoples";
-import {People} from "./People/People";
-import './peoples.scss';
-import axios from 'axios'
+import React, {MouseEvent, useMemo} from "react";
+import {People, PeopleType} from "./People/People";
+import './peoples.scss'
 
-export const Peoples: React.FC<ContainerPeoplesType> = (
+export type PeoplesType = {
+   peoples: PeopleType[]
+   totalCount: number
+   countPeoplesOnPage: number
+   follow: (people_id: number) => void
+   unfollow: (people_id: number) => void
+   setCurrentPage: (currentPage: number) => void
+}
+export const Peoples: React.FC<PeoplesType> = (
    {
       peoples,
+      totalCount,
       countPeoplesOnPage,
-      currentPage,
       follow,
       unfollow,
-      setPeoples,
-      setTotalCount,
       setCurrentPage,
-      setCountPages,
-      countPages
    }
 ) => {
    const massPages = useMemo(() => {
+      const countPages = Math.ceil(totalCount / countPeoplesOnPage)
       let pages: number[] = []
       for (let i = 1; i <= countPages; i++) {
          pages.push(i)
       }
       return pages
-   }, [countPages])
-
-
-   useEffect(() => {
-      axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${countPeoplesOnPage}&page=${currentPage}`)
-         .then(response => {
-            setPeoples(response.data.items)
-            setTotalCount(response.data.totalCount)
-            // setCountPages()
-         })
-   }, [])
-   useEffect(() => {
-      axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${countPeoplesOnPage}&page=${currentPage}`)
-         .then(response => {
-            setPeoples(response.data.items)
-         })
-   }, [currentPage, countPeoplesOnPage])
+   }, [totalCount, countPeoplesOnPage])
 
    const onClickPageHandler = (e: MouseEvent<HTMLButtonElement>) => setCurrentPage(Number(e.currentTarget.value))
 

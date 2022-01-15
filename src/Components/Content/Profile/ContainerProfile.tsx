@@ -1,31 +1,36 @@
-import {addPostAC, changeValuePostAC} from "../../../redux/ProfileReducer";
-import {AppDispatch, RootState} from "../../../redux/redax-store";
-import Profile from "./Profile";
-import {connect} from "react-redux";
-import {PostsType} from "./Post/Post";
+import {AppDispatch} from "../../../redux/redax-store";
+import {Profile} from "./Profile";
+import {useDispatch, useSelector} from "react-redux";
+import React, {useEffect} from "react";
+import axios from "axios";
+import {useParams} from "react-router-dom";
+import {addPost, changeValuePost, setProfileUserInfo} from "../../../redux/ProfileBLL/ProfileActions";
+import {selectAllProps} from "../../../redux/ProfileBLL/ProfileSelectors";
 
-type MapStatePropsType = {
-   posts: PostsType[]
-   changeTextAreaPost: string
-}
-type MapDispatchPropsType = {
-   addPostCallback: () => void
-   changeValueCallback: (value: string) => void
-}
-export type ContainerProfileType = MapStatePropsType & MapDispatchPropsType
+export const ContainerProfile: React.FC = () => {
+   const {
+      profileUserInfo,
+      changeTextAreaPost,
+      posts,
+   } = useSelector(selectAllProps)
+   const dispatch = useDispatch<AppDispatch>()
 
-const mapStateToProps = (state: RootState): MapStatePropsType => {
-   return {
-      posts: state.profilePage.posts,
-      changeTextAreaPost: state.profilePage.changeTextAreaPost
-   }
-}
+   const changeValuePostCallback = (newChangeText: string) => dispatch(changeValuePost(newChangeText))
+   const addPostCallback = () => dispatch(addPost())
 
-const mapDispatchToProps = (dispatch: AppDispatch): MapDispatchPropsType => {
-   return {
-      addPostCallback: () => dispatch(addPostAC()),
-      changeValueCallback: (value: string) => dispatch(changeValuePostAC(value))
-   }
-}
+   let {userID} = useParams<string>()
+   useEffect(() => {
+      axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userID}`)
+         .then(response => {
+            dispatch(setProfileUserInfo(response.data))
+         })
+   }, [userID])
 
-export const ContainerProfile = connect(mapStateToProps, mapDispatchToProps)(Profile)
+
+   return <Profile profileUserInfo={profileUserInfo}
+                   changeTextAreaPost={changeTextAreaPost}
+                   posts={posts}
+                   addPostCallback={addPostCallback}
+                   changeValuePostCallback={changeValuePostCallback}
+   />
+}

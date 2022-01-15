@@ -1,37 +1,50 @@
 import React, {ChangeEvent} from "react";
 import s from './profile.module.scss'
-import Post from "./Post/Post";
-import {ContainerProfileType} from "./ContainerProfile";
+import Post, {PostsType} from "./Post/Post";
+import {ProfileUserInfoType} from "../../../redux/ProfileBLL/ProfileReducer";
 
-const Profile: React.FC<ContainerProfileType> = (
+type ProfileType = {
+   profileUserInfo: ProfileUserInfoType | null
+   posts: PostsType[]
+   changeTextAreaPost: string
+   addPostCallback(): void
+   changeValuePostCallback(newChangeText: string): void
+}
+
+export const Profile: React.FC<ProfileType> = (
    {
-      changeTextAreaPost,
+      profileUserInfo,
       posts,
+      changeTextAreaPost,
       addPostCallback,
-      changeValueCallback
+      changeValuePostCallback,
    }
 ) => {
-   const addPost = () => addPostCallback()
-   const changeValue = (e: ChangeEvent<HTMLInputElement>) => changeValueCallback(e.currentTarget.value)
+
+   const onClickAddPostHandler = () => addPostCallback()
+   const onChangeValueHandler = (e: ChangeEvent<HTMLInputElement>) => changeValuePostCallback(e.currentTarget.value)
 
    return (
       <div className={s.profile}>
-
          {/* ========================= Profile Info ========================= */}
+         {profileUserInfo &&
          <div className={s.profile__info}>
-            <div className={s.profile__info_img}>
-               <img src="https://shapka-youtube.ru/wp-content/uploads/2021/02/avatarka-dlya-skaypa-dlya-parney.jpg"
-                    alt=""/>
-            </div>
-            <div className={s.profile__info_text}>
-               <h3>Ivan Ivanov</h3>
-            </div>
-         </div>
+           <div className={s.profile__info_img}>
+             <img src={profileUserInfo.photos.large} alt=""/>
+           </div>
+           <div className={s.profile__info_text}>
+             <h3>{profileUserInfo.fullName}</h3>
+             <h4>{profileUserInfo.contacts.github}</h4>
+             <h4>{profileUserInfo.contacts.instagram}</h4>
+             <h4>{profileUserInfo.contacts.website}</h4>
+             <h5>{profileUserInfo.lookingForAJobDescription}</h5>
+           </div>
+         </div>}
 
          {/* ========================= Posts ========================= */}
          <h3 className={s.profile__postTitle}>My posts</h3>
          <div className={s.profile__posts}>
-            { posts.map(p => <Post id={p.id} message={p.message} like={p.like} key={p.id}/>)}
+            {posts.map(p => <Post id={p.id} message={p.message} like={p.like} key={p.id}/>)}
          </div>
 
          {/* ========================= Input and button ========================= */}
@@ -39,13 +52,12 @@ const Profile: React.FC<ContainerProfileType> = (
             <input className={s.profile__addPost_input}
                    type="text"
                    value={changeTextAreaPost}
-                   onChange={changeValue}
+                   onChange={onChangeValueHandler}
             />
             <button className={s.profile__addPost_btn}
-                    onClick={addPost}>Add
+                    onClick={onClickAddPostHandler}>Add
             </button>
          </div>
       </div>
    )
 }
-export default Profile;

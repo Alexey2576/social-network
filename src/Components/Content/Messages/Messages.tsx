@@ -9,12 +9,12 @@ const Messages: React.FC<ContainerMessagesType> = (
       changeTextAreaMessage,
       usersMessages,
       users,
-      addMessageCallback,
-      changeValueCallback
+      addMessage,
+      changeValueMessage
    }
 ) => {
-   const addMessage = () => addMessageCallback()
-   const changeValue = (e: ChangeEvent<HTMLInputElement>) => changeValueCallback(e.currentTarget.value)
+   const onClickAddMessageHandler = () => addMessage()
+   const onChangeValueHandler = (e: ChangeEvent<HTMLInputElement>) => changeValueMessage(e.currentTarget.value)
 
    return (
       <div className={s.messages}>
@@ -35,8 +35,8 @@ const Messages: React.FC<ContainerMessagesType> = (
                <input className={s.messages__addPost_input}
                       type="text"
                       value={changeTextAreaMessage}
-                      onChange={ changeValue } />
-               <button className={s.messages__addPost_btn} onClick={ addMessage }>Add</button>
+                      onChange={ onChangeValueHandler } />
+               <button className={s.messages__addPost_btn} onClick={ onClickAddMessageHandler }>Add</button>
             </div>
          </div>
       </div>

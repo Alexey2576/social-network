@@ -19,7 +19,7 @@ const Navbar = () => {
                <img src={ava} alt="ava"/>
             </div>
             <div className={s.navbar__profile_info}>
-               <h4 className={s.navbar__profile_info_name}>Alexey Nikitsin</h4>
+               <h4 className={s.navbar__profile_info_name}>Alexey Nikitin</h4>
                <span className={s.navbar__profile_info_username}>@username</span>
             </div>
          </div>
@@ -41,7 +41,7 @@ const Navbar = () => {
                <img className={s.navbar__link_item_icon} src={news} alt="icon"/>
                <h3 className={s.navbar__link_item_title}>News</h3>
             </NavLink>
-            <NavLink className={s.navbar__link_item} to="/profile">
+            <NavLink className={s.navbar__link_item} to="/profile/2">
                <img className={s.navbar__link_item_icon} src={profile} alt="icon"/>
                <h3 className={s.navbar__link_item_title}>Profile</h3>
             </NavLink>

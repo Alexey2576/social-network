@@ -1,5 +1,5 @@
 import {MessagesPageType, messagesReducer} from "./MessagesReducer";
-import {DispatchType} from "./redax-store";
+import {ActionCreatorsType} from "./redax-store";
 
 test('user reducer should change changeTextAreaMessage', () => {
    const startState: MessagesPageType = {
@@ -12,7 +12,7 @@ test('user reducer should change changeTextAreaMessage', () => {
       ]
    };
 
-   const startAction: DispatchType = {
+   const startAction: ActionCreatorsType = {
       type: "CHANGE-VALUE-MESSAGE",
       newChangeText: "Hello"
    }
@@ -33,7 +33,7 @@ test('user reducer should add user messages', () => {
       ]
    };
 
-   const startAction: DispatchType = {
+   const startAction: ActionCreatorsType = {
       type: "ADD-MESSAGE"
    }
 
