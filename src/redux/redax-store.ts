@@ -1,5 +1,5 @@
 import {configureStore} from '@reduxjs/toolkit'
-import {addMessage, changeValueMessage, messagesReducer} from "./MessagesReducer";
+import {addMessage, changeValueMessage, messagesReducer} from "./messages-redux/MessagesReducer";
 import {profileReducer} from "./profile-redux/profileReducer";
 import {addPost, changeValuePost, setProfileUserInfo} from "./profile-redux/profileActions";
 import {peoplesReducer} from "./peoples-redux/peoplesReducer";

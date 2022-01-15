@@ -1,44 +1,25 @@
-import {addMessage, changeValueMessage} from "../../../redux/MessagesReducer";
-import {RootState} from "../../../redux/redax-store";
+import {AppDispatch, RootState} from "../../../redux/redax-store";
 import Messages from "./Messages";
-import {connect} from "react-redux";
-import {UsersMessagesType} from "./UserMessages/UserMessages";
-import {UsersType} from "./User/User";
 import React from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {MessagesPageType} from "../../../redux/messages-redux/MessagesReducer";
+import {selectAllPropsMessages} from "../../../redux/messages-redux/messagesSelectors";
+import {addMessage, changeValueMessage} from "../../../redux/messages-redux/messagesActions";
 
-type MapStatePropsType = {
-   users: UsersType[]
-   usersMessages: UsersMessagesType[]
-   changeTextAreaMessage: string
-}
-type MapDispatchPropsType = {
-   addMessage: () => void
-   changeValueMessage: (value: string) => void
-}
-export type ContainerMessagesType = MapStatePropsType & MapDispatchPropsType
-
-const ContainerMessages: React.FC<ContainerMessagesType> = (
-   {
-      users,
+export const ContainerMessages: React.FC = () => {
+   const {
       usersMessages,
       changeTextAreaMessage,
-      changeValueMessage,
-      addMessage
-   }
-) => {
+      users
+   } = useSelector<RootState, MessagesPageType>(selectAllPropsMessages)
+   const dispatch = useDispatch<AppDispatch>()
+
+   const addMessageCallback = () => dispatch(addMessage())
+   const changeValueMessageCallback = (newChangeText: string) =>dispatch(changeValueMessage(newChangeText))
    return <Messages users={users}
                     usersMessages={usersMessages}
                     changeTextAreaMessage={changeTextAreaMessage}
-                    addMessage={addMessage}
-                    changeValueMessage={changeValueMessage}/>
+                    addMessageCallback={addMessageCallback}
+                    changeValueMessageCallback={changeValueMessageCallback}
+   />
 }
-
-const mapStateToProps = (state: RootState) => {
-   return {
-      users: state.messagesPage.users,
-      usersMessages: state.messagesPage.usersMessages,
-      changeTextAreaMessage: state.messagesPage.changeTextAreaMessage
-   }
-}
-
-export default connect(mapStateToProps, {addMessage, changeValueMessage})(ContainerMessages)

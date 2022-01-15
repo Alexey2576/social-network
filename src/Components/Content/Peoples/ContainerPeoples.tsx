@@ -1,7 +1,6 @@
 import {AppDispatch, RootState} from "../../../redux/redax-store";
 import {useDispatch, useSelector} from "react-redux";
 import {Peoples} from "./Peoples";
-
 import React, {useEffect} from 'react';
 import axios from "axios";
 import {Preloader} from "../../Preloader/Preloader";

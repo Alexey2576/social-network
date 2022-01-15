@@ -1,4 +1,4 @@
-import {MessagesPageType, messagesReducer} from "./MessagesReducer";
+import {MessagesPageType, messagesReducer} from "./messages-redux/MessagesReducer";
 import {ActionCreatorsType} from "./redax-store";
 
 test('user reducer should change changeTextAreaMessage', () => {

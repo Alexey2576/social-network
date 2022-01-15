@@ -1,20 +1,27 @@
 import React, {ChangeEvent} from "react";
 import s from './messages.module.scss'
-import UserMessages from "./UserMessages/UserMessages";
-import User from "./User/User";
-import {ContainerMessagesType} from "./ContainerMessages";
+import UserMessages, {UsersMessagesType} from "./UserMessages/UserMessages";
+import User, {UsersType} from "./User/User";
 
-const Messages: React.FC<ContainerMessagesType> = (
+export type MessagesType = {
+   changeTextAreaMessage: string
+   usersMessages: UsersMessagesType[]
+   users: UsersType[]
+   addMessageCallback(): void
+   changeValueMessageCallback(newChangeText: string): void
+}
+
+const Messages: React.FC<MessagesType> = (
    {
       changeTextAreaMessage,
       usersMessages,
       users,
-      addMessage,
-      changeValueMessage
+      addMessageCallback,
+      changeValueMessageCallback,
    }
 ) => {
-   const onClickAddMessageHandler = () => addMessage()
-   const onChangeValueHandler = (e: ChangeEvent<HTMLInputElement>) => changeValueMessage(e.currentTarget.value)
+   const onClickAddMessageHandler = () => addMessageCallback()
+   const onChangeValueHandler = (e: ChangeEvent<HTMLInputElement>) => changeValueMessageCallback(e.currentTarget.value)
 
    return (
       <div className={s.messages}>
