@@ -11,7 +11,7 @@ import ava from '../../assets/ava.jpg'
 import {NavLink} from "react-router-dom";
 
 
-const Navbar = () => {
+export const Navbar = () => {
    return (
       <div className={s.navbar}>
          <div className={s.navbar__profile}>
@@ -49,15 +49,7 @@ const Navbar = () => {
                <img className={s.navbar__link_item_icon} src={settings} alt="icon"/>
                <h3 className={s.navbar__link_item_title}>Settings</h3>
             </NavLink>
-
-            {/*<Messages />*/}
-            {/*<People />*/}
-            {/*<Photos />*/}
-            {/*<NewsFeed />*/}
-            {/*<Profile />*/}
-            {/*<Settings />*/}
          </div>
       </div>
    )
 }
-export default Navbar;

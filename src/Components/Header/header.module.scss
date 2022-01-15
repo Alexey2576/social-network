@@ -40,7 +40,13 @@
       border: transparent;
       border-radius: 20px;
     }
+    &_login {
+      color: #425979;
+      font-size: 20px;
+      margin-bottom: 13px;
+    }
     &_img {
+      margin-left: 20px;
       height: 60px;
     }
   }

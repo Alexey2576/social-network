@@ -2,7 +2,7 @@ import React from "react";
 import s from './contacts.module.scss'
 import ava from '../../assets/contacts/ava.png'
 
-const Contacts = () => {
+export const Contacts = () => {
    return (
       <div className={s.contacts}>
          <div className={s.contacts__profile}>
@@ -64,4 +64,3 @@ const Contacts = () => {
       </div>
    )
 }
-export default Contacts;

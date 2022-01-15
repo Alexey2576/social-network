@@ -1,16 +1,16 @@
 import React from 'react';
 import './App.module.scss';
-import Header from "./Components/Header/Header";
-import Navbar from "./Components/Navbar/Navbar";
-import Content from "./Components/Content/Content";
+import {Navbar} from "./Components/Navbar/Navbar";
+import {Content} from "./Components/Content/Content";
 import s from './App.module.scss'
-import Contacts from "./Components/Contacts/Contacts";
+import {Contacts} from "./Components/Contacts/Contacts";
+import {ContainerHeader} from "./Components/Header/ContainerHeader";
 
 
-const App = () => {
+export const App = () => {
    return (
       <div className={s.App}>
-         <Header/>
+         <ContainerHeader/>
          <div className={s.contentAndNavbar}>
             <Navbar/>
             <Content/>
@@ -19,5 +19,3 @@ const App = () => {
       </div>
    );
 }
-
-export default App;

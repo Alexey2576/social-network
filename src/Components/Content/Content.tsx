@@ -5,7 +5,7 @@ import {ContainerProfile} from "./Profile/ContainerProfile";
 import {ContainerMessages} from "./Messages/ContainerMessages";
 import {ContainerPeoples} from "./Peoples/ContainerPeoples";
 
-const Content = () => {
+export const Content = () => {
    return (
       <div className={s.content}>
          <Routes>
@@ -20,4 +20,3 @@ const Content = () => {
       </div>
    )
 }
-export default Content;
