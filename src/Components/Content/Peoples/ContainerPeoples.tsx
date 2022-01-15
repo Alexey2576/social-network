@@ -1,7 +1,7 @@
 import {AppDispatch, RootState} from "../../../redux/redax-store";
 import {useDispatch, useSelector} from "react-redux";
 import {Peoples} from "./Peoples";
-import React, {useEffect} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import axios from "axios";
 import {Preloader} from "../../Preloader/Preloader";
 import {PeoplesPageType} from "../../../redux/peoples-redux/peoplesReducer";
@@ -22,12 +22,14 @@ export const ContainerPeoples: React.FC = () => {
       currentPage,
       countPeoplesOnPage,
       isFetching,
+      flag
    } = useSelector<RootState, PeoplesPageType>(selectAllPropsPeoples)
    const dispatch = useDispatch<AppDispatch>()
-
    useEffect(() => {
       dispatch(setIsFetching(true))
-      axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${countPeoplesOnPage}&page=${currentPage}`)
+      axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${countPeoplesOnPage}&page=${currentPage}`, {
+         withCredentials:true,
+      })
          .then(response => {
             dispatch(setIsFetching(false))
             dispatch(setPeoples(response.data.items))
@@ -37,15 +39,17 @@ export const ContainerPeoples: React.FC = () => {
 
    useEffect(() => {
       setIsFetching(true)
-      axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${countPeoplesOnPage}&page=${currentPage}`)
+      axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${countPeoplesOnPage}&page=${currentPage}`, {
+         withCredentials: true,
+      })
          .then(response => {
             dispatch(setIsFetching(false))
             dispatch(setPeoples(response.data.items))
          })
-   }, [currentPage, countPeoplesOnPage])
+   }, [currentPage, countPeoplesOnPage, flag])
 
-   const followCallback = (people_id: number) => dispatch(follow(people_id))
-   const unfollowCallback = (people_id: number) => dispatch(unfollow(people_id))
+   const followCallback = (people_id: number) => dispatch(follow(people_id, !flag))
+   const unfollowCallback = (people_id: number) => dispatch(unfollow(people_id, !flag))
    const setCurrentPageCallback = (currentPage: number) => dispatch(setCurrentPage(currentPage))
 
    return (

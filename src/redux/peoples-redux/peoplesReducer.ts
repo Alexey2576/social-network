@@ -8,6 +8,7 @@ export type PeoplesPageType = {
    currentPage: number
    countPeoplesOnPage: number
    isFetching: boolean
+   flag: boolean
 }
 
 const initialPeoplesPageState: PeoplesPageType = {
@@ -15,7 +16,8 @@ const initialPeoplesPageState: PeoplesPageType = {
    totalCount: 0,
    currentPage: 2,
    countPeoplesOnPage: 15,
-   isFetching: false
+   isFetching: false,
+   flag: false
 }
 
 export const peoplesReducer = (state: PeoplesPageType = initialPeoplesPageState, action: ActionCreatorsType): PeoplesPageType => {
@@ -25,12 +27,14 @@ export const peoplesReducer = (state: PeoplesPageType = initialPeoplesPageState,
       case PEOPLES_ACTIONS_TYPES.FOLLOW:
          return {
             ...state,
-            peoples: state.peoples.map(p => p.id === action.people_ID ? {...p, followed: true} : p)
+            peoples: state.peoples.map(p => p.id === action.people_ID ? {...p, followed: true} : p),
+            flag: action.flag
          }
       case PEOPLES_ACTIONS_TYPES.UNFOLLOW:
          return {
             ...state,
-            peoples: state.peoples.map(p => p.id === action.people_ID ? {...p, followed: false} : p)
+            peoples: state.peoples.map(p => p.id === action.people_ID ? {...p, followed: false} : p),
+            flag: action.flag
          }
       case PEOPLES_ACTIONS_TYPES.SET_TOTAL_COUNT:
          return { ...state, totalCount: action.totalCount }

@@ -10,8 +10,8 @@ export enum PEOPLES_ACTIONS_TYPES {
 
 }
 
-export const follow = (people_ID: number) => ({type: PEOPLES_ACTIONS_TYPES.FOLLOW, people_ID} as const)
-export const unfollow = (people_ID: number) => ({type: PEOPLES_ACTIONS_TYPES.UNFOLLOW, people_ID} as const)
+export const follow = (people_ID: number, flag: boolean) => ({type: PEOPLES_ACTIONS_TYPES.FOLLOW, people_ID, flag} as const)
+export const unfollow = (people_ID: number, flag: boolean) => ({type: PEOPLES_ACTIONS_TYPES.UNFOLLOW, people_ID, flag} as const)
 export const setPeoples = (peoples: PeopleType[]) => ({type: PEOPLES_ACTIONS_TYPES.SET_PEOPLES, peoples} as const)
 export const setTotalCount = (totalCount: number) => ({type: PEOPLES_ACTIONS_TYPES.SET_TOTAL_COUNT, totalCount} as const)
 export const setCurrentPage = (currentPage: number) => ({type: PEOPLES_ACTIONS_TYPES.SET_CURRENT_PAGE, currentPage} as const)
