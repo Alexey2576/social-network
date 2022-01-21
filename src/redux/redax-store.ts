@@ -16,7 +16,6 @@ import {addMessageAC, changeValueMessageAC} from "./messages-redux/messagesActio
 import {authReducer} from "./auth-redux/authReducer";
 import {setAuthData} from "./auth-redux/authActions";
 import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
-import {changeValuePost} from "./profile-redux/profileThunk";
 
 export const store = configureStore({
    reducer: {

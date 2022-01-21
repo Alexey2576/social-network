@@ -1,4 +1,4 @@
-import {addMessageAC, changeValueMessageAC, MESSAGES_ACTIONS_TYPES} from "./messagesActions";
+import {addMessageAC, changeValueMessageAC} from "./messagesActions";
 import {AppDispatch} from "../redax-store";
 
 export const addMessage = () => (dispatch: AppDispatch) => dispatch(addMessageAC())
