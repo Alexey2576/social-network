@@ -10,16 +10,20 @@ export const userAPI = {
       return instanceAxios.get(`users?count=${countPeoplesOnPage}&page=${currentPage}`)
          .then(response => response.data)
    },
+   getUserProfile: (userID: string) => {
+      return instanceAxios.get(`profile/${userID}`).then(response => response.data)
+   },
    follow: (userID: number) => {
       return instanceAxios.post(`follow/${userID}`).then(response => response.data)
    },
    unfollow: (userID: number) => {
       return instanceAxios.delete(`follow/${userID}`).then(response => response.data)
-   }
+   },
+
 }
 
-export const profileAPI = {
-   getUserProfile: (userID: string) => {
-      return instanceAxios.get(`profile/${userID}`).then(response => response.data)
+export const headerAPI = {
+   getAuthData: () => {
+      return instanceAxios.get('auth/me').then(response => response.data)
    }
 }

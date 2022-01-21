@@ -1,25 +1,44 @@
 import {AppDispatch, RootState} from "../../../redux/redax-store";
 import Messages from "./Messages";
 import React from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {MessagesPageType} from "../../../redux/messages-redux/MessagesReducer";
-import {selectAllPropsMessages} from "../../../redux/messages-redux/messagesSelectors";
-import {addMessage, changeValueMessage} from "../../../redux/messages-redux/messagesActions";
+import {connect} from "react-redux";
+import {UsersMessagesType} from "./UserMessages/UserMessages";
+import {UsersType} from "./User/User";
+import {addMessage, changeValueMessage} from "../../../redux/messages-redux/messagesThunk";
 
-export const ContainerMessages: React.FC = () => {
-   const {
-      usersMessages,
-      changeTextAreaMessage,
-      users
-   } = useSelector<RootState, MessagesPageType>(selectAllPropsMessages)
-   const dispatch = useDispatch<AppDispatch>()
+export type ContainerMessagesPropsType = MapStateToPropsType & MapDispatchToPropsType
+class ContainerMessages extends React.Component<ContainerMessagesPropsType, AppDispatch> {
+   addMessageCallback = () => this.props.addMessage()
+   changeValueMessageCallback = (newChangeText: string) => this.props.changeValueMessage(newChangeText)
 
-   const addMessageCallback = () => dispatch(addMessage())
-   const changeValueMessageCallback = (newChangeText: string) =>dispatch(changeValueMessage(newChangeText))
-   return <Messages users={users}
-                    usersMessages={usersMessages}
-                    changeTextAreaMessage={changeTextAreaMessage}
-                    addMessageCallback={addMessageCallback}
-                    changeValueMessageCallback={changeValueMessageCallback}
-   />
+   render() {
+      return (
+         <Messages users={this.props.users}
+                   usersMessages={this.props.usersMessages}
+                   changeTextAreaMessage={this.props.changeTextAreaMessage}
+                   addMessageCallback={this.addMessageCallback}
+                   changeValueMessageCallback={this.changeValueMessageCallback}
+         />
+      )
+   }
 }
+
+type MapStateToPropsType = {
+   users: UsersType[]
+   usersMessages: UsersMessagesType[]
+   changeTextAreaMessage: string
+}
+type MapDispatchToPropsType = {
+   addMessage(): void
+   changeValueMessage(newChangeText: string): void
+}
+
+const mapStateToProps = (state: RootState): MapStateToPropsType => {
+   return {
+      users: state.messagesPage.users,
+      usersMessages: state.messagesPage.usersMessages,
+      changeTextAreaMessage: state.messagesPage.changeTextAreaMessage,
+   }
+}
+
+export default connect(mapStateToProps, { addMessage, changeValueMessage })(ContainerMessages)

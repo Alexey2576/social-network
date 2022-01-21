@@ -4,7 +4,7 @@ import {Navbar} from "./Components/Navbar/Navbar";
 import {Content} from "./Components/Content/Content";
 import s from './App.module.scss'
 import {Contacts} from "./Components/Contacts/Contacts";
-import {ContainerHeader} from "./Components/Header/ContainerHeader";
+import ContainerHeader from "./Components/Header/ContainerHeader";
 
 
 export const App = () => {

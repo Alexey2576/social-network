@@ -1,31 +1,35 @@
-import React, {useEffect} from "react";
-import s from './header.module.scss'
-import logo from '../../assets/logo.png'
-import ava from '../../assets/ava.jpg'
+import React from "react";
 import {Header} from "./Header";
-import {useDispatch, useSelector} from "react-redux";
-import {selectAllPropsAuthState} from "../../redux/auth-redux/authSelectors";
+import {connect} from "react-redux";
 import {AppDispatch, RootState} from "../../redux/redax-store";
-import {UserLoggedType} from "../../redux/auth-redux/authReducer";
-import axios from "axios";
-import {setProfileUserInfo} from "../../redux/profile-redux/profileActions";
-import {setAuthData} from "../../redux/auth-redux/authActions";
+import {getAuthData} from "../../redux/auth-redux/authThunk";
 
-export const ContainerHeader: React.FC = () => {
+type HeaderPropsType = MapStateToPropsType & MapDispatchToPropsType
 
-   const authProps = useSelector<RootState, UserLoggedType>(selectAllPropsAuthState)
-   const dispatch = useDispatch<AppDispatch>()
 
-   useEffect(() => {
-      axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
-         withCredentials: true
-      })
-         .then(response => {
-            if (response.data.resultCode === 0) {
-               const {id, email, login} = response.data.data
-               dispatch(setAuthData(id, email, login, true))
-            }
-         })
-   }, [])
-   return <Header {...authProps} />
+class ContainerHeader extends React.Component<HeaderPropsType, AppDispatch> {
+   componentDidMount = () => this.props.getAuthData()
+
+   render = () => <Header {...this.props} />
 }
+
+type MapStateToPropsType = {
+   id: number | null
+   email: string | null
+   login: string | null
+   isAuth: boolean
+}
+type MapDispatchToPropsType = {
+   getAuthData(): void
+}
+
+const mapStateToProps = (state: RootState): MapStateToPropsType => {
+   return {
+      id: state.authState.id,
+      email: state.authState.email,
+      isAuth: state.authState.isAuth,
+      login: state.authState.login
+   }
+}
+
+export default connect(mapStateToProps, { getAuthData })(ContainerHeader)

@@ -3,26 +3,25 @@ import {
    setCurrentPage,
    setIsFetching,
    setIsFollowing,
-   setPeoples, setTotalCount,
+   setPeoples,
+   setTotalCount,
    unfollowSuccess
 } from "./peoplesActions";
-import {ActionCreatorsType, AppDispatch, RootState} from "../redax-store";
+import {ActionCreatorsType, AppDispatch, ThunkDispatchType, ThunkType} from "../redax-store";
 import {userAPI} from "../../api/api";
-import {ThunkAction} from "redux-thunk";
+import {Dispatch} from "@reduxjs/toolkit";
 
-type ThunkType = ThunkAction<Promise<void>, RootState, unknown, ActionCreatorsType>
 
 export const getPeoples = (countPeoplesOnPage: number, currentPage: number): ThunkType =>
-   async (dispatch) => {
-      dispatch(setCurrentPage(currentPage))
+   async (dispatch: ThunkDispatchType) => {
       dispatch(setIsFetching(true))
       let data = await userAPI.getUsers(countPeoplesOnPage, currentPage)
       dispatch(setIsFetching(false))
       dispatch(setPeoples(data.items))
       dispatch(setTotalCount(data.totalCount))
-
+      dispatch(setCurrentPage(currentPage))
    }
-export const unfollow = (people_ID: number, flag: boolean) => (dispatch: AppDispatch) => {
+export const unfollow = (people_ID: number, flag: boolean) => (dispatch: Dispatch<ActionCreatorsType>) => {
    dispatch(setIsFollowing(true, people_ID))
    userAPI.unfollow(people_ID).then(data => {
       if (data.resultCode === 0) {

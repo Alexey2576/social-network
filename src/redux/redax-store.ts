@@ -1,7 +1,7 @@
 import {configureStore} from '@reduxjs/toolkit'
 import {messagesReducer} from "./messages-redux/MessagesReducer";
 import {profileReducer} from "./profile-redux/profileReducer";
-import {addPost, changeValuePost, setProfileUserInfo} from "./profile-redux/profileActions";
+import {addPostAC, changeValuePostAC, setProfileUserInfo} from "./profile-redux/profileActions";
 import {peoplesReducer} from "./peoples-redux/peoplesReducer";
 import {
    followSuccess,
@@ -12,10 +12,11 @@ import {
    setTotalCount,
    unfollowSuccess,
 } from "./peoples-redux/peoplesActions";
-import {addMessage, changeValueMessage} from "./messages-redux/messagesActions";
+import {addMessageAC, changeValueMessageAC} from "./messages-redux/messagesActions";
 import {authReducer} from "./auth-redux/authReducer";
 import {setAuthData} from "./auth-redux/authActions";
-import thunk from "redux-thunk";
+import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {changeValuePost} from "./profile-redux/profileThunk";
 
 export const store = configureStore({
    reducer: {
@@ -28,10 +29,10 @@ export const store = configureStore({
 })
 
 export type ActionCreatorsType =
-   ReturnType<typeof addPost> |
-   ReturnType<typeof addMessage> |
-   ReturnType<typeof changeValueMessage> |
-   ReturnType<typeof changeValuePost> |
+   ReturnType<typeof addPostAC> |
+   ReturnType<typeof addMessageAC> |
+   ReturnType<typeof changeValueMessageAC> |
+   ReturnType<typeof changeValuePostAC> |
    ReturnType<typeof followSuccess> |
    ReturnType<typeof unfollowSuccess> |
    ReturnType<typeof setPeoples> |
@@ -44,3 +45,6 @@ export type ActionCreatorsType =
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
+export type ThunkType = ThunkAction<Promise<void>, RootState, unknown, ActionCreatorsType>
+export type ThunkDispatchType = ThunkDispatch<RootState, unknown, ActionCreatorsType>;
+
