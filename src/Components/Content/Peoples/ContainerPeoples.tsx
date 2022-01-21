@@ -1,61 +1,68 @@
 import {AppDispatch, RootState} from "../../../redux/redax-store";
-import {useDispatch, useSelector} from "react-redux";
+import {connect} from "react-redux";
 import {Peoples} from "./Peoples";
-import React, {useEffect, useMemo} from 'react';
-import axios from "axios";
+import React from 'react';
 import {Preloader} from "../../Preloader/Preloader";
-import {PeoplesPageType} from "../../../redux/peoples-redux/peoplesReducer";
-import {
-   follow,
-   setCurrentPage,
-   setIsFetching,
-   setPeoples,
-   setTotalCount,
-   unfollow
-} from "../../../redux/peoples-redux/peoplesActions";
-import {selectAllPropsPeoples} from "../../../redux/peoples-redux/peoplesSelectors";
-import {userAPI} from "../../../api/api";
+import {PeopleType} from "./People/People";
+import {follow, getPeoples, unfollow} from "../../../redux/peoples-redux/peoplesThunk";
 
-export const ContainerPeoples: React.FC = () => {
-   const {
-      peoples,
-      totalCount,
-      currentPage,
-      countPeoplesOnPage,
-      isFetching,
-      flag
-   } = useSelector<RootState, PeoplesPageType>(selectAllPropsPeoples)
-   const dispatch = useDispatch<AppDispatch>()
-   useEffect(() => {
-      dispatch(setIsFetching(true))
-      userAPI.getUsers(countPeoplesOnPage, currentPage).then(data => {
-            dispatch(setIsFetching(false))
-            dispatch(setPeoples(data.items))
-            dispatch(setTotalCount(data.totalCount))
-         })
-   }, [])
+class ContainerPeoples extends React.Component<ContainerPeoplePropsType, AppDispatch> {
+   componentDidMount() {
+      this.props.getPeoples(this.props.countPeoplesOnPage, this.props.currentPage)
+   }
 
-   useEffect(() => {
-      setIsFetching(true)
-      userAPI.getUsers(countPeoplesOnPage, currentPage).then(data => {
-            dispatch(setIsFetching(false))
-            dispatch(setPeoples(data.items))
-         })
-   }, [currentPage, countPeoplesOnPage, flag])
+   setCurrentPageCallback = (currentPage: number) => this.props.getPeoples(this.props.countPeoplesOnPage, currentPage)
 
-   const followCallback = (people_id: number) => dispatch(follow(people_id, !flag))
-   const unfollowCallback = (people_id: number) => dispatch(unfollow(people_id, !flag))
-   const setCurrentPageCallback = (currentPage: number) => dispatch(setCurrentPage(currentPage))
+   followCallback = (people_id: number) => this.props.follow(people_id, !this.props.flag)
+   unfollowCallback = (people_id: number) => this.props.unfollow(people_id, !this.props.flag)
 
-   return (
-      <>
-         {isFetching && <Preloader/>}
-         <Peoples peoples={peoples}
-                  totalCount={totalCount}
-                  countPeoplesOnPage={countPeoplesOnPage}
-                  followCallback={followCallback}
-                  unfollowCallback={unfollowCallback}
-                  setCurrentPageCallback={setCurrentPageCallback}
+   render() {
+      return <>
+         {this.props.isFetching && <Preloader/>}
+         <Peoples peoples={this.props.peoples}
+                  totalCount={this.props.totalCount}
+                  countPeoplesOnPage={this.props.countPeoplesOnPage}
+                  followCallback={this.followCallback}
+                  unfollowCallback={this.unfollowCallback}
+                  setCurrentPageCallback={this.setCurrentPageCallback}
+                  following_ID={this.props.following_ID}
          />
-      </>)
-};
+      </>
+   }
+}
+
+export type ContainerPeoplePropsType = MapStateToPropsType & MapDispatchToPropsType
+
+export type MapStateToPropsType = {
+   peoples: PeopleType[] | []
+   totalCount: number
+   currentPage: number
+   countPeoplesOnPage: number
+   isFetching: boolean
+   flag: boolean
+   isFollowing: boolean
+   following_ID: number[]
+}
+
+export type MapDispatchToPropsType = {
+   follow(people_ID: number, flag: boolean): void
+   unfollow(people_ID: number, flag: boolean): void
+   getPeoples(countPeoplesOnPage: number, currentPage: number): void
+}
+
+const mapStateToProps = (state: RootState): MapStateToPropsType => {
+   return {
+      peoples: state.peoplesPage.peoples,
+      totalCount: state.peoplesPage.totalCount,
+      currentPage: state.peoplesPage.currentPage,
+      countPeoplesOnPage: state.peoplesPage.countPeoplesOnPage,
+      isFetching: state.peoplesPage.isFetching,
+      flag: state.peoplesPage.flag,
+      isFollowing: state.peoplesPage.isFollowing,
+      following_ID: state.peoplesPage.following_ID,
+   }
+}
+
+export default connect(mapStateToProps, {
+   follow, unfollow, getPeoples
+})(ContainerPeoples)

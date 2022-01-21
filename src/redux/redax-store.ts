@@ -4,16 +4,18 @@ import {profileReducer} from "./profile-redux/profileReducer";
 import {addPost, changeValuePost, setProfileUserInfo} from "./profile-redux/profileActions";
 import {peoplesReducer} from "./peoples-redux/peoplesReducer";
 import {
-   follow,
+   followSuccess,
    setCurrentPage,
    setIsFetching,
+   setIsFollowing,
    setPeoples,
    setTotalCount,
-   unfollow
+   unfollowSuccess,
 } from "./peoples-redux/peoplesActions";
 import {addMessage, changeValueMessage} from "./messages-redux/messagesActions";
 import {authReducer} from "./auth-redux/authReducer";
 import {setAuthData} from "./auth-redux/authActions";
+import thunk from "redux-thunk";
 
 export const store = configureStore({
    reducer: {
@@ -21,7 +23,8 @@ export const store = configureStore({
       messagesPage: messagesReducer,
       peoplesPage: peoplesReducer,
       authState: authReducer,
-   }
+   },
+   middleware: [thunk]
 })
 
 export type ActionCreatorsType =
@@ -29,14 +32,15 @@ export type ActionCreatorsType =
    ReturnType<typeof addMessage> |
    ReturnType<typeof changeValueMessage> |
    ReturnType<typeof changeValuePost> |
-   ReturnType<typeof follow> |
-   ReturnType<typeof unfollow> |
+   ReturnType<typeof followSuccess> |
+   ReturnType<typeof unfollowSuccess> |
    ReturnType<typeof setPeoples> |
    ReturnType<typeof setTotalCount> |
    ReturnType<typeof setCurrentPage> |
    ReturnType<typeof setIsFetching> |
    ReturnType<typeof setProfileUserInfo> |
-   ReturnType<typeof setAuthData>
+   ReturnType<typeof setAuthData> |
+   ReturnType<typeof setIsFollowing>
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch

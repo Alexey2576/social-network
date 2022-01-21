@@ -7,7 +7,8 @@ const instanceAxios = axios.create({
 })
 export const userAPI = {
    getUsers: (countPeoplesOnPage: number, currentPage: number) => {
-      return instanceAxios.get(`users?count=${countPeoplesOnPage}&page=${currentPage}`).then(response => response.data)
+      return instanceAxios.get(`users?count=${countPeoplesOnPage}&page=${currentPage}`)
+         .then(response => response.data)
    },
    follow: (userID: number) => {
       return instanceAxios.post(`follow/${userID}`).then(response => response.data)

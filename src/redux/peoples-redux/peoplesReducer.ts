@@ -9,6 +9,8 @@ export type PeoplesPageType = {
    countPeoplesOnPage: number
    isFetching: boolean
    flag: boolean
+   isFollowing: boolean
+   following_ID: number[]
 }
 
 const initialPeoplesPageState: PeoplesPageType = {
@@ -17,7 +19,9 @@ const initialPeoplesPageState: PeoplesPageType = {
    currentPage: 2,
    countPeoplesOnPage: 15,
    isFetching: false,
-   flag: false
+   flag: false,
+   isFollowing: false,
+   following_ID: [],
 }
 
 export const peoplesReducer = (state: PeoplesPageType = initialPeoplesPageState, action: ActionCreatorsType): PeoplesPageType => {
@@ -42,6 +46,13 @@ export const peoplesReducer = (state: PeoplesPageType = initialPeoplesPageState,
          return { ...state, currentPage: action.currentPage }
       case PEOPLES_ACTIONS_TYPES.SET_IS_FETCHING:
          return { ...state, isFetching: action.isFetching }
+      case PEOPLES_ACTIONS_TYPES.SET_IS_FOLLOWING:
+         return {
+            ...state,
+            following_ID: action.isFollowing
+               ? [...state.following_ID, action.followUser_ID]
+               : state.following_ID.filter(id => id !== action.followUser_ID)
+         }
       default: return state
    }
 }
