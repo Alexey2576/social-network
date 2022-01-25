@@ -3,7 +3,6 @@ import {userAPI} from "../../api/api";
 import {addPostAC, changeValuePostAC, setProfileUserInfo} from "./profileActions";
 
 export const getProfileUserInfo = (userID: string): ThunkType => async (dispatch: ThunkDispatchType) => {
-   debugger
    if (userID) {
       let data = await userAPI.getUserProfile(userID)
       dispatch(setProfileUserInfo(data))

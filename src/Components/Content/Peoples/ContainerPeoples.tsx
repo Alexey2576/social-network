@@ -1,10 +1,12 @@
 import {AppDispatch, RootState} from "../../../redux/redax-store";
 import {connect} from "react-redux";
 import {Peoples} from "./Peoples";
-import React from 'react';
+import React, {ComponentType} from 'react';
 import {Preloader} from "../../Preloader/Preloader";
 import {PeopleType} from "./People/People";
 import {follow, getPeoples, unfollow} from "../../../redux/peoples-redux/peoplesThunk";
+import {compose} from "@reduxjs/toolkit";
+import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 
 export type ContainerPeoplePropsType = MapStateToPropsType & MapDispatchToPropsType
 
@@ -60,4 +62,7 @@ const mapStateToProps = (state: RootState): MapStateToPropsType => {
    }
 }
 
-export default connect(mapStateToProps, {follow, unfollow, getPeoples})(ContainerPeoples)
+export default compose<ComponentType>(
+   connect(mapStateToProps, {follow, unfollow, getPeoples}),
+   withAuthRedirect,
+)(ContainerPeoples)

@@ -1,10 +1,12 @@
 import {AppDispatch, RootState} from "../../../redux/redax-store";
 import Messages from "./Messages";
-import React from 'react';
+import React, {ComponentType} from 'react';
 import {connect} from "react-redux";
 import {UsersMessagesType} from "./UserMessages/UserMessages";
 import {UsersType} from "./User/User";
 import {addMessage, changeValueMessage} from "../../../redux/messages-redux/messagesThunk";
+import {compose} from "@reduxjs/toolkit";
+import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 
 export type ContainerMessagesPropsType = MapStateToPropsType & MapDispatchToPropsType
 class ContainerMessages extends React.Component<ContainerMessagesPropsType, AppDispatch> {
@@ -41,4 +43,7 @@ const mapStateToProps = (state: RootState): MapStateToPropsType => {
    }
 }
 
-export default connect(mapStateToProps, { addMessage, changeValueMessage })(ContainerMessages)
+export default compose<ComponentType>(
+   connect(mapStateToProps, { addMessage, changeValueMessage }),
+   withAuthRedirect,
+)(ContainerMessages)

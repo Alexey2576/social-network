@@ -9,9 +9,14 @@ import profile from '../../assets/profile.png'
 import settings from '../../assets/setting.png'
 import ava from '../../assets/ava.jpg'
 import {NavLink} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {RootState} from "../../redux/redax-store";
 
 
 export const Navbar = () => {
+
+   const id = useSelector<RootState, number | null>((state: RootState) => state.authState.id)
+   const fullAddressNavLink = `/profile/${id}`
    return (
       <div className={s.navbar}>
          <div className={s.navbar__profile}>
@@ -41,7 +46,7 @@ export const Navbar = () => {
                <img className={s.navbar__link_item_icon} src={news} alt="icon"/>
                <h3 className={s.navbar__link_item_title}>News</h3>
             </NavLink>
-            <NavLink className={s.navbar__link_item} to="/profile/2">
+            <NavLink className={s.navbar__link_item} to={fullAddressNavLink}>
                <img className={s.navbar__link_item_icon} src={profile} alt="icon"/>
                <h3 className={s.navbar__link_item_title}>Profile</h3>
             </NavLink>

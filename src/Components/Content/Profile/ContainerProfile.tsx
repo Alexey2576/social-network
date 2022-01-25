@@ -1,19 +1,21 @@
-import {AppDispatch, RootState} from "../../../redux/redax-store";
+import {RootState} from "../../../redux/redax-store";
 import {Profile} from "./Profile";
-import React from "react";
+import React, {ComponentType} from "react";
 import {connect} from "react-redux";
 import {ProfileUserInfoType} from "../../../redux/profile-redux/profileReducer";
 import {PostsType} from "./Post/Post";
 import {addPost, changeValuePost, getProfileUserInfo} from "../../../redux/profile-redux/profileThunk";
-import {useParams} from "react-router-dom";
+import {withRouter} from "../../../hoc/withRouter";
+import {compose} from "@reduxjs/toolkit";
+import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 
 export type ContainerProfilePropsType = MapStateToPropsType & MapDispatchToPropsType
 
-class ContainerProfile extends React.Component<ContainerProfilePropsType, AppDispatch> {
+class ContainerProfile extends React.Component<ContainerProfilePropsType> {
    componentDidMount = () => {
       // @ts-ignore
       let userID = this.props.userID
-      if (!userID) userID = "2"
+      if (!userID) userID = this.props.myId
       this.props.getProfileUserInfo(userID)
 
    }
@@ -35,6 +37,7 @@ type MapStateToPropsType = {
    profileUserInfo: ProfileUserInfoType | null
    posts: PostsType[]
    changeTextAreaPost: string
+   myId: number | null
 }
 type MapDispatchToPropsType = {
    getProfileUserInfo(userID: string): void
@@ -46,22 +49,12 @@ const mapStateToProps = (state: RootState): MapStateToPropsType  => {
   return {
      profileUserInfo: state.profilePage.profileUserInfo,
      posts: state.profilePage.posts,
-     changeTextAreaPost: state.profilePage.changeTextAreaPost
+     changeTextAreaPost: state.profilePage.changeTextAreaPost,
+     myId: state.authState.id
   }
 }
-
-function withRouter(Component: any) {
-   function ComponentWithRouterProp(props: any) {
-      // let location = useLocation();
-      // let navigate = useNavigate();
-      let {userID} = useParams();
-      return (
-         <Component {...props} userID={userID} />
-      );
-   }
-
-   return ComponentWithRouterProp;
-}
-
-export default connect(mapStateToProps, { getProfileUserInfo, addPost, changeValuePost })(withRouter(ContainerProfile))
-
+export default compose<ComponentType>(
+   connect(mapStateToProps, { getProfileUserInfo, addPost, changeValuePost }),
+   withRouter,
+   withAuthRedirect,
+)(ContainerProfile)
