@@ -10,6 +10,15 @@ export enum PEOPLES_ACTIONS_TYPES {
    SET_IS_FOLLOWING = 'peoplesReducer/SET_IS_FOLLOWING',
 }
 
+export type PeoplesActionCreatorsType =
+   ReturnType<typeof followSuccess>
+   | ReturnType<typeof unfollowSuccess>
+   | ReturnType<typeof setPeoples>
+   | ReturnType<typeof setTotalCount>
+   | ReturnType<typeof setCurrentPage>
+   | ReturnType<typeof setIsFetching>
+   | ReturnType<typeof setIsFollowing>
+
 export const followSuccess = (people_ID: number, flag: boolean) => ({type: PEOPLES_ACTIONS_TYPES.FOLLOW, people_ID, flag} as const)
 export const unfollowSuccess = (people_ID: number, flag: boolean) => ({type: PEOPLES_ACTIONS_TYPES.UNFOLLOW, people_ID, flag} as const)
 export const setPeoples = (peoples: PeopleType[]) => ({type: PEOPLES_ACTIONS_TYPES.SET_PEOPLES, peoples} as const)

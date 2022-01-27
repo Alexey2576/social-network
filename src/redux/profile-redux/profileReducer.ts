@@ -21,10 +21,12 @@ export type ProfileUserInfoType = {
       small: string
       large: string
    }
+
 }
 
 const initialProfilePageState = {
    profileUserInfo: null as ProfileUserInfoType | null,
+   status: null as string | null,
    posts: [
       {id: 0, message: "Hello", like: 10},
       {id: 1, message: "Hello", like: 20},
@@ -37,7 +39,7 @@ export type ProfilePageType = typeof initialProfilePageState
 
 export const profileReducer = (state: ProfilePageType = initialProfilePageState, action: ActionCreatorsType): ProfilePageType => {
    switch (action.type) {
-      case PROFILE_ACTIONS_TYPES.ADD_POST: {
+      case PROFILE_ACTIONS_TYPES.ADD_POST:
          return {
             ...state,
             posts: [
@@ -46,19 +48,21 @@ export const profileReducer = (state: ProfilePageType = initialProfilePageState,
             ],
             changeTextAreaPost: ""
          }
-      }
-      case PROFILE_ACTIONS_TYPES.CHANGE_VALUE_POST: {
+      case PROFILE_ACTIONS_TYPES.CHANGE_VALUE_POST:
          return {
             ...state,
             changeTextAreaPost: action.newChangeText
          }
-      }
-      case PROFILE_ACTIONS_TYPES.SET_PROFILE_USER_INFO: {
+      case PROFILE_ACTIONS_TYPES.SET_PROFILE_USER_INFO:
          return {
             ...state,
             profileUserInfo: action.profileUserInfo
          }
-      }
+      case PROFILE_ACTIONS_TYPES.SET_PROFILE_STATUS:
+         return {
+            ...state,
+            status: action.status
+         }
       default: return state
    }
 }

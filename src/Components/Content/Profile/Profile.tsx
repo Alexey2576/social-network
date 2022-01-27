@@ -2,22 +2,29 @@ import React, {ChangeEvent} from "react";
 import s from './profile.module.scss'
 import Post, {PostsType} from "./Post/Post";
 import {ProfileUserInfoType} from "../../../redux/profile-redux/profileReducer";
+import {Status} from "./Status/Status";
 
 type ProfileType = {
    profileUserInfo: ProfileUserInfoType | null
+   myId: number | null
    posts: PostsType[]
    changeTextAreaPost: string
+   status: string | null
    addPostCallback(): void
    changeValuePostCallback(newChangeText: string): void
+   updateStatusCallback(status: string): void
 }
 
 export const Profile: React.FC<ProfileType> = (
    {
       profileUserInfo,
+      myId,
       posts,
       changeTextAreaPost,
+      status,
       addPostCallback,
       changeValuePostCallback,
+      updateStatusCallback,
    }
 ) => {
 
@@ -34,10 +41,15 @@ export const Profile: React.FC<ProfileType> = (
            </div>
            <div className={s.profile__info_text}>
              <h3>{profileUserInfo.fullName}</h3>
+             <Status status={status}
+                     myId={myId}
+                     userID={profileUserInfo.userId}
+                     updateStatusCallback={updateStatusCallback}
+             />
              <h4>{profileUserInfo.contacts.github}</h4>
-             <h4>{profileUserInfo.contacts.instagram}</h4>
-             <h4>{profileUserInfo.contacts.website}</h4>
-             <h5>{profileUserInfo.lookingForAJobDescription}</h5>
+              {/*<h4>{profileUserInfo.contacts.instagram}</h4>*/}
+              {/*<h4>{profileUserInfo.contacts.website}</h4>*/}
+              {/*<h5>{profileUserInfo.lookingForAJobDescription}</h5>*/}
            </div>
          </div>}
 
