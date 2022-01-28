@@ -21,7 +21,6 @@ export type ProfileUserInfoType = {
       small: string
       large: string
    }
-
 }
 
 const initialProfilePageState = {

@@ -1,5 +1,7 @@
 import axios from "axios";
 import {UserLoginType} from "../redux/auth-redux/authReducer";
+import {PeopleType} from "../Components/Content/Peoples/People/People";
+import {ProfileUserInfoType} from "../redux/profile-redux/profileReducer";
 
 const instanceAxios = axios.create({
    withCredentials:true,
@@ -13,32 +15,38 @@ type CommonResponseType<T> = {
    data: T
 }
 
+type GetUsersResponseType = {
+   items: PeopleType[]
+   totalCount: number
+   error: string
+}
+
 export const userAPI = {
    getUsers: (countPeoplesOnPage: number, currentPage: number) => {
-      return instanceAxios.get(`users?count=${countPeoplesOnPage}&page=${currentPage}`)
+      return instanceAxios.get<GetUsersResponseType>(`users?count=${countPeoplesOnPage}&page=${currentPage}`)
          .then(response => response.data)
    },
-   follow: (userID: number) => {
-      return instanceAxios.post(`follow/${userID}`).then(response => response.data)
+   setFollow: (userID: number) => {
+      return instanceAxios.post<CommonResponseType<{}>>(`follow/${userID}`).then(response => response.data)
    },
-   unfollow: (userID: number) => {
-      return instanceAxios.delete(`follow/${userID}`).then(response => response.data)
+   setUnfollow: (userID: number) => {
+      return instanceAxios.delete<CommonResponseType<{}>>(`follow/${userID}`).then(response => response.data)
    },
 }
 
 export const profileAPI = {
    getProfile: (userID: string) => {
-      return instanceAxios.get(`profile/${userID}`).then(response => response.data)
+      return instanceAxios.get<ProfileUserInfoType>(`profile/${userID}`).then(response => response.data)
    },
    getStatus: (userID: string) => {
       return instanceAxios.get(`profile/status/${userID}`).then(response => response.data)
    },
    updateStatus: (status: string) => {
-      return instanceAxios.put(`profile/status`, {status}).then(response => response.data)
+      return instanceAxios.put<CommonResponseType<{}>>(`profile/status`, {status}).then(response => response.data)
    }
 }
 
-export const headerAPI = {
+export const authAPI = {
    getLoggedData: () => {
       return instanceAxios.get<CommonResponseType<{id: number, email: string, login: string}>>('auth/me').then(response => response.data)
    },

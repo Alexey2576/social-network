@@ -11,8 +11,8 @@ export const getProfileUserInfo = (userID: number | null): ThunkType => async (d
 
 export const getProfileStatus = (userID: number | null): ThunkType => async (dispatch: ThunkDispatchType) => {
    if (userID) {
-      let data = await profileAPI.getStatus(userID.toString())
-      dispatch(setProfileStatus(data))
+      let status: string = await profileAPI.getStatus(userID.toString())
+      dispatch(setProfileStatus(status))
    }
 }
 
