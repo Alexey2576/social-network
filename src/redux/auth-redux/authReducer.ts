@@ -7,6 +7,12 @@ export type UserLoggedType = {
    login: string | null
    isAuth: boolean
 }
+export type UserLoginType = {
+   email: string | null
+   password: string | null
+   rememberMe: boolean
+   captcha: boolean
+}
 
 const initialAuthState: UserLoggedType = {
    id: null,
@@ -17,12 +23,15 @@ const initialAuthState: UserLoggedType = {
 
 export const authReducer = (state: UserLoggedType = initialAuthState, action: ActionCreatorsType): UserLoggedType => {
    switch (action.type) {
-      case AUTH_ACTIONS_TYPES.SET_AUTH_DATA: {
+      case AUTH_ACTIONS_TYPES.SET_AUTH_DATA:
          return {
             ...state,
             ...action.payload
          }
-      }
+      // case AUTH_ACTIONS_TYPES.SET_LOGIN_DATA:
+      //    return {
+      //       ...state,
+      //    }
       default: return state
    }
 }

@@ -26,7 +26,7 @@ export const Header: React.FC<HeaderType> = (
             {isAuth
                ?  <>
                      <h4 className={s.header__profile_login}>{login}</h4>
-                     <img className={s.header__profile_img} src={ava} alt="photo"/>
+                     <img className={s.header__profile_img} src={ava} alt="photos"/>
                   </>
                : <button className={s.header__profile_btn}>Create</button>
             }

@@ -4,7 +4,7 @@ import {Route, Routes} from "react-router-dom";
 import ContainerProfile from "./Profile/ContainerProfile";
 import ContainerMessages from "./Messages/ContainerMessages";
 import ContainerPeoples from "./Peoples/ContainerPeoples";
-import {Login} from "./Login/Login";
+import ContainerLogin from "./Login/Login";
 
 export const Content = () => {
    return (
@@ -17,7 +17,7 @@ export const Content = () => {
             <Route path="/peoples"
                    element={<ContainerPeoples/>}/>
             <Route path="/login"
-                   element={<Login/>}/>
+                   element={<ContainerLogin/>}/>
          </Routes>
 
       </div>

@@ -1,4 +1,5 @@
 import axios from "axios";
+import {UserLoginType} from "../redux/auth-redux/authReducer";
 
 const instanceAxios = axios.create({
    withCredentials:true,
@@ -31,7 +32,10 @@ export const profileAPI = {
 }
 
 export const headerAPI = {
-   getAuthData: () => {
+   getLoggedData: () => {
       return instanceAxios.get('auth/me').then(response => response.data)
-   }
+   },
+   getLoginData: (loginData: UserLoginType) =>{
+      return instanceAxios.post('auth/login', loginData).then(response => response.data)
+   },
 }
