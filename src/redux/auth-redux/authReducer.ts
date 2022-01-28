@@ -28,10 +28,6 @@ export const authReducer = (state: UserLoggedType = initialAuthState, action: Ac
             ...state,
             ...action.payload
          }
-      // case AUTH_ACTIONS_TYPES.SET_LOGIN_DATA:
-      //    return {
-      //       ...state,
-      //    }
       default: return state
    }
 }

@@ -17,7 +17,6 @@ const initialMessagesPageState = {
       {id: 2, message: "What is your name"},
       {id: 2, message: "What is your name"},
    ] as UsersMessagesType[],
-   changeTextAreaMessage: ""
 }
 
 export type MessagesPageType = typeof initialMessagesPageState
@@ -28,14 +27,10 @@ export const messagesReducer = (state: MessagesPageType = initialMessagesPageSta
          return {
             ...state,
             usersMessages: [
-               {id: 3, message: state.changeTextAreaMessage},
+               {id: 3, message: action.message},
                ...state.usersMessages,
             ],
-            changeTextAreaMessage: ""
          }
-      case MESSAGES_ACTIONS_TYPES.CHANGE_VALUE_MESSAGE:
-         return  { ...state, changeTextAreaMessage: action.newChangeText }
-
       default: return state
    }
 }

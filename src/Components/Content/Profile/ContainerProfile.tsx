@@ -6,7 +6,6 @@ import {ProfileUserInfoType} from "../../../redux/profile-redux/profileReducer";
 import {PostsType} from "./Post/Post";
 import {
    addPost,
-   changeValuePost,
    getProfileStatus,
    getProfileUserInfo, updateProfileStatus
 } from "../../../redux/profile-redux/profileThunk";
@@ -24,8 +23,7 @@ class ContainerProfile extends React.Component<ContainerProfilePropsType> {
       this.props.getProfileStatus(userID)
    }
 
-   changeValuePostCallback = (newChangeText: string) => this.props.changeValuePost(newChangeText)
-   addPostCallback = () => this.props.addPost()
+   addPostCallback = (post: string) => this.props.addPost(post)
    updateStatusCallback = (status: string) => this.props.updateProfileStatus(status)
 
    render = () => {
@@ -33,7 +31,6 @@ class ContainerProfile extends React.Component<ContainerProfilePropsType> {
          <Profile {...this.props}
                   addPostCallback={this.addPostCallback}
                   updateStatusCallback={this.updateStatusCallback}
-                  changeValuePostCallback={this.changeValuePostCallback}
          />
       )
    }
@@ -42,15 +39,13 @@ class ContainerProfile extends React.Component<ContainerProfilePropsType> {
 type MapStateToPropsType = {
    profileUserInfo: ProfileUserInfoType | null
    posts: PostsType[]
-   changeTextAreaPost: string
    myId: number | null
    status: string | null
    userID?: number | null
 }
 type MapDispatchToPropsType = {
    getProfileUserInfo(userID: number | null): void
-   addPost(): void
-   changeValuePost(newChangeText: string): void
+   addPost(post: string): void
    getProfileStatus(userID: number | null): void
    updateProfileStatus(status: string): void
 }
@@ -59,13 +54,12 @@ const mapStateToProps = (state: RootState): MapStateToPropsType  => {
   return {
      profileUserInfo: state.profilePage.profileUserInfo,
      posts: state.profilePage.posts,
-     changeTextAreaPost: state.profilePage.changeTextAreaPost,
      myId: state.authState.id,
      status: state.profilePage.status,
   }
 }
 export default compose<ComponentType>(
-   connect(mapStateToProps, { getProfileUserInfo, addPost, changeValuePost, getProfileStatus, updateProfileStatus }),
+   connect(mapStateToProps, { getProfileUserInfo, addPost, getProfileStatus, updateProfileStatus }),
    withRouter,
    withAuthRedirect,
 )(ContainerProfile)

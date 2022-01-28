@@ -10,16 +10,13 @@ import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 
 export type ContainerMessagesPropsType = MapStateToPropsType & MapDispatchToPropsType
 class ContainerMessages extends React.Component<ContainerMessagesPropsType, AppDispatch> {
-   addMessageCallback = () => this.props.addMessage()
-   changeValueMessageCallback = (newChangeText: string) => this.props.changeValueMessage(newChangeText)
+   addMessageCallback = (message: string) => this.props.addMessage(message)
 
    render() {
       return (
          <Messages users={this.props.users}
                    usersMessages={this.props.usersMessages}
-                   changeTextAreaMessage={this.props.changeTextAreaMessage}
                    addMessageCallback={this.addMessageCallback}
-                   changeValueMessageCallback={this.changeValueMessageCallback}
          />
       )
    }
@@ -28,10 +25,9 @@ class ContainerMessages extends React.Component<ContainerMessagesPropsType, AppD
 type MapStateToPropsType = {
    users: UsersType[]
    usersMessages: UsersMessagesType[]
-   changeTextAreaMessage: string
 }
 type MapDispatchToPropsType = {
-   addMessage(): void
+   addMessage(message:string): void
    changeValueMessage(newChangeText: string): void
 }
 
@@ -39,7 +35,6 @@ const mapStateToProps = (state: RootState): MapStateToPropsType => {
    return {
       users: state.messagesPage.users,
       usersMessages: state.messagesPage.usersMessages,
-      changeTextAreaMessage: state.messagesPage.changeTextAreaMessage,
    }
 }
 

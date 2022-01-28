@@ -6,6 +6,13 @@ const instanceAxios = axios.create({
    baseURL: 'https://social-network.samuraijs.com/api/1.0/',
    headers: { "API-KEY": "0b35bf30-9811-4ef2-8cc3-183ac4bf4914" },
 })
+
+type CommonResponseType<T> = {
+   resultCode: number
+   messages: string[]
+   data: T
+}
+
 export const userAPI = {
    getUsers: (countPeoplesOnPage: number, currentPage: number) => {
       return instanceAxios.get(`users?count=${countPeoplesOnPage}&page=${currentPage}`)
@@ -33,9 +40,9 @@ export const profileAPI = {
 
 export const headerAPI = {
    getLoggedData: () => {
-      return instanceAxios.get('auth/me').then(response => response.data)
+      return instanceAxios.get<CommonResponseType<{id: number, email: string, login: string}>>('auth/me').then(response => response.data)
    },
-   getLoginData: (loginData: UserLoginType) =>{
-      return instanceAxios.post('auth/login', loginData).then(response => response.data)
+   getLoginData: (loginData: UserLoginType) => {
+      return instanceAxios.post<CommonResponseType<{userId: number}>>('auth/login', loginData).then(response => response.data)
    },
 }

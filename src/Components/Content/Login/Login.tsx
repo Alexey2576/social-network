@@ -1,37 +1,37 @@
-import React, {ComponentType} from 'react';
-import {MyForm} from "./Form/MyForm";
+import React from "react";
+import {Form} from "react-final-form";
 import {UserLoginType} from "../../../redux/auth-redux/authReducer";
-import {RootState} from "../../../redux/redax-store";
-import {compose} from "@reduxjs/toolkit";
-import {connect} from "react-redux";
-import {getLoggingData} from "../../../redux/auth-redux/authThunk";
-import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
+import {required} from "../../Commons/Validators/validators";
+import {FieldForm} from "../../Commons/FieldForm/FieldForm";
 
-type ContainerLoginPropsType = MapStateToPropsType & MapDispatchToPropsType
+type LoginType = {
+   onSubmit(loginData: UserLoginType): void
+}
 
-class ContainerLogin extends React.Component<ContainerLoginPropsType> {
-
-   onSubmitHandler = (loginData: UserLoginType) => this.props.getLoggingData(loginData)
-
-   render = () => {
-      return (
-         <div>
-            <MyForm onSubmit={this.onSubmitHandler}/>
-         </div>
-      );
+export const Login: React.FC<LoginType> = (
+   {
+      onSubmit
    }
-}
-
-type MapStateToPropsType = {}
-type MapDispatchToPropsType = {
-   getLoggingData(loginData: UserLoginType): void
-}
-
-const mapStateToProps = (state: RootState): MapStateToPropsType  => {
-   return {}
-}
-export default compose<ComponentType>(
-   connect(mapStateToProps, { getLoggingData }),
-)(ContainerLogin)
-
-
+) => (
+   <Form
+      onSubmit={onSubmit}
+      render={
+         ({handleSubmit,}) => (
+            <form onSubmit={handleSubmit}>
+               <h2>Log in</h2>
+               <div>
+                  <FieldForm type={"text"} placeholder={"email"} name={"email"} validators={required}/>
+               </div>
+               <div>
+                  <FieldForm type={"text"} placeholder={"Password"} name={"password"} validators={required}/>
+               </div>
+               <div>
+                  <label>Remember Me</label>
+                  <FieldForm type={"checkbox"} name={"rememberMe"} />
+               </div>
+               <button type="submit">Submit</button>
+            </form>
+         )
+      }
+   />
+)

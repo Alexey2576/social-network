@@ -1,27 +1,26 @@
-import React, {ChangeEvent} from "react";
+import React from "react";
 import s from './messages.module.scss'
 import UserMessages, {UsersMessagesType} from "./UserMessages/UserMessages";
 import User, {UsersType} from "./User/User";
+import {FieldForm} from "../../Commons/FieldForm/FieldForm";
+import {Form} from "react-final-form";
 
 export type MessagesType = {
-   changeTextAreaMessage: string
    usersMessages: UsersMessagesType[]
    users: UsersType[]
-   addMessageCallback(): void
-   changeValueMessageCallback(newChangeText: string): void
+   addMessageCallback(message: string): void
 }
-
+type MessageSubmitType = {
+   message: string
+}
 const Messages: React.FC<MessagesType> = (
    {
-      changeTextAreaMessage,
       usersMessages,
       users,
       addMessageCallback,
-      changeValueMessageCallback,
    }
 ) => {
-   const onClickAddMessageHandler = () => addMessageCallback()
-   const onChangeValueHandler = (e: ChangeEvent<HTMLInputElement>) => changeValueMessageCallback(e.currentTarget.value)
+   const onSubmitHandler = ({message}: MessageSubmitType) => addMessageCallback(message)
 
    return (
       <div className={s.messages}>
@@ -39,11 +38,19 @@ const Messages: React.FC<MessagesType> = (
 
             {/* ========================= Input and button ========================= */}
             <div className={s.messages__addPost}>
-               <input className={s.messages__addPost_input}
-                      type="text"
-                      value={changeTextAreaMessage}
-                      onChange={ onChangeValueHandler } />
-               <button className={s.messages__addPost_btn} onClick={ onClickAddMessageHandler }>Add</button>
+               <Form
+                  onSubmit={onSubmitHandler}
+                  render={
+                     ({handleSubmit,}) => (
+                        <form onSubmit={handleSubmit}>
+                           <div>
+                              <FieldForm type={"text"} placeholder={"Add new message"} name={"message"} className={"messages__addPost_btn"}/>
+                           </div>
+                           <button type="submit" className={s.messages__addPost_btn}>Add</button>
+                        </form>
+                     )
+                  }
+               />
             </div>
          </div>
       </div>

@@ -1,6 +1,6 @@
-import {AppDispatch, ThunkDispatchType, ThunkType} from "../redax-store";
+import {ThunkDispatchType, ThunkType} from "../redax-store";
 import {profileAPI} from "../../api/api";
-import {addPostAC, changeValuePostAC, setProfileStatus, setProfileUserInfo} from "./profileActions";
+import {addPostAC, setProfileStatus, setProfileUserInfo} from "./profileActions";
 
 export const getProfileUserInfo = (userID: number | null): ThunkType => async (dispatch: ThunkDispatchType) => {
    if (userID) {
@@ -22,5 +22,4 @@ export const updateProfileStatus = (status: string): ThunkType => async (dispatc
       dispatch(setProfileStatus(status))
 }
 
-export const addPost = () => (dispatch: ThunkDispatchType) => dispatch(addPostAC())
-export const changeValuePost = (newChangeText: string) => (dispatch: AppDispatch) => dispatch(changeValuePostAC(newChangeText))
+export const addPost = (post: string) => (dispatch: ThunkDispatchType) => dispatch(addPostAC(post))

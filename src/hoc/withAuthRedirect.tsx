@@ -1,7 +1,7 @@
 import {RootState} from "../redux/redax-store";
 import React, {ComponentType} from "react";
 import {connect} from "react-redux";
-import ContainerLogin from "../Components/Content/Login/Login";
+import ContainerLogin from "../Components/Content/Login/ContainerLogin";
 
 type MapStateToPropsType = {
    isAuth: boolean

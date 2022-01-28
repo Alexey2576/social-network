@@ -32,7 +32,6 @@ const initialProfilePageState = {
       {id: 1, message: "Hello", like: 20},
       {id: 2, message: "Hello", like: 30},
    ] as PostsType[],
-   changeTextAreaPost: '' as string
 }
 
 export type ProfilePageType = typeof initialProfilePageState
@@ -44,14 +43,8 @@ export const profileReducer = (state: ProfilePageType = initialProfilePageState,
             ...state,
             posts: [
                ...state.posts,
-               {id: 3, message: state.changeTextAreaPost, like: 0}
+               {id: 3, message: action.post, like: 0}
             ],
-            changeTextAreaPost: ""
-         }
-      case PROFILE_ACTIONS_TYPES.CHANGE_VALUE_POST:
-         return {
-            ...state,
-            changeTextAreaPost: action.newChangeText
          }
       case PROFILE_ACTIONS_TYPES.SET_PROFILE_USER_INFO:
          return {

@@ -1,18 +1,22 @@
-import React, {ChangeEvent} from "react";
+import React from "react";
 import s from './profile.module.scss'
 import Post, {PostsType} from "./Post/Post";
 import {ProfileUserInfoType} from "../../../redux/profile-redux/profileReducer";
 import {Status} from "./Status/Status";
+import {FieldForm} from "../../Commons/FieldForm/FieldForm";
+import {Form} from "react-final-form";
 
 type ProfileType = {
    profileUserInfo: ProfileUserInfoType | null
    myId: number | null
    posts: PostsType[]
-   changeTextAreaPost: string
    status: string | null
-   addPostCallback(): void
-   changeValuePostCallback(newChangeText: string): void
+   addPostCallback(post: string): void
    updateStatusCallback(status: string): void
+}
+
+type PostSubmitType = {
+   post: string
 }
 
 export const Profile: React.FC<ProfileType> = (
@@ -20,16 +24,13 @@ export const Profile: React.FC<ProfileType> = (
       profileUserInfo,
       myId,
       posts,
-      changeTextAreaPost,
       status,
       addPostCallback,
-      changeValuePostCallback,
       updateStatusCallback,
    }
 ) => {
 
-   const onClickAddPostHandler = () => addPostCallback()
-   const onChangeValueHandler = (e: ChangeEvent<HTMLInputElement>) => changeValuePostCallback(e.currentTarget.value)
+   const onSubmitHandler = ({post}: PostSubmitType) => addPostCallback(post)
 
    return (
       <div className={s.profile}>
@@ -47,9 +48,6 @@ export const Profile: React.FC<ProfileType> = (
                      updateStatusCallback={updateStatusCallback}
              />
              <h4>{profileUserInfo.contacts.github}</h4>
-              {/*<h4>{profileUserInfo.contacts.instagram}</h4>*/}
-              {/*<h4>{profileUserInfo.contacts.website}</h4>*/}
-              {/*<h5>{profileUserInfo.lookingForAJobDescription}</h5>*/}
            </div>
          </div>}
 
@@ -61,14 +59,19 @@ export const Profile: React.FC<ProfileType> = (
 
          {/* ========================= Input and button ========================= */}
          <div className={s.profile__addPost}>
-            <input className={s.profile__addPost_input}
-                   type="text"
-                   value={changeTextAreaPost}
-                   onChange={onChangeValueHandler}
+            <Form
+               onSubmit={onSubmitHandler}
+               render={
+                  ({handleSubmit,}) => (
+                     <form onSubmit={handleSubmit}>
+                        <div>
+                           <FieldForm type={"text"} placeholder={"Add new message"} name={"post"} className={"messages__addPost_btn"}/>
+                        </div>
+                        <button type="submit" className={s.messages__addPost_btn}>Add</button>
+                     </form>
+                  )
+               }
             />
-            <button className={s.profile__addPost_btn}
-                    onClick={onClickAddPostHandler}>Add
-            </button>
          </div>
       </div>
    )

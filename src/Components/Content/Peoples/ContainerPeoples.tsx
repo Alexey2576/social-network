@@ -2,7 +2,7 @@ import {AppDispatch, RootState} from "../../../redux/redax-store";
 import {connect} from "react-redux";
 import {Peoples} from "./Peoples";
 import React, {ComponentType} from 'react';
-import {Preloader} from "../../Preloader/Preloader";
+import {Preloader} from "../../Commons/Preloader/Preloader";
 import {PeopleType} from "./People/People";
 import {follow, getPeoples, unfollow} from "../../../redux/peoples-redux/peoplesThunk";
 import {compose} from "@reduxjs/toolkit";
