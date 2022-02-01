@@ -18,7 +18,14 @@ export type ContainerProfilePropsType = MapStateToPropsType & MapDispatchToProps
 class ContainerProfile extends React.Component<ContainerProfilePropsType> {
    componentDidMount = () => {
       let userID = this.props.userID
-      if (!userID) userID = this.props.myId
+      if (!userID) {
+         debugger
+         userID = this.props.myId
+         // if (!userID) {
+         //    debugger
+         //    this.props.navigate('/login', { replace: true })
+         // }
+      }
       this.props.getProfileUserInfo(userID)
       this.props.getProfileStatus(userID)
    }
@@ -42,6 +49,7 @@ type MapStateToPropsType = {
    myId: number | null
    status: string | null
    userID?: number | null
+   navigate?: any
 }
 type MapDispatchToPropsType = {
    getProfileUserInfo(userID: number | null): void

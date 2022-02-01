@@ -1,10 +1,11 @@
-import {useParams} from "react-router-dom";
-import React from "react";
+import {useNavigate, useParams} from "react-router-dom";
+import React, {ComponentType} from "react";
 
-export const withRouter = (Component: any) => {
+export function withRouter<T>(Component: ComponentType<T>) {
    return (props: any) => {
       let {userID} = useParams<string>();
-      return <Component {...props} userID={userID}/>
+      let navigate = useNavigate()
+      return <Component {...props} userID={userID} navigate={navigate}/>
    };
 }
 

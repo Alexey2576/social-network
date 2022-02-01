@@ -16,8 +16,6 @@ export const Content = () => {
                    element={<ContainerMessages/>}/>
             <Route path="/peoples"
                    element={<ContainerPeoples/>}/>
-            <Route path="/login"
-                   element={<ContainerLogin/>}/>
          </Routes>
 
       </div>

@@ -14,7 +14,6 @@ type CommonResponseType<T> = {
    messages: string[]
    data: T
 }
-
 type GetUsersResponseType = {
    items: PeopleType[]
    totalCount: number
@@ -50,7 +49,10 @@ export const authAPI = {
    getLoggedData: () => {
       return instanceAxios.get<CommonResponseType<{id: number, email: string, login: string}>>('auth/me').then(response => response.data)
    },
-   getLoginData: (loginData: UserLoginType) => {
+   logIn: (loginData: UserLoginType) => {
       return instanceAxios.post<CommonResponseType<{userId: number}>>('auth/login', loginData).then(response => response.data)
    },
+   logOut: () => {
+      return instanceAxios.delete<CommonResponseType<{}>>('/auth/login', {}).then(response => response.data)
+   }
 }

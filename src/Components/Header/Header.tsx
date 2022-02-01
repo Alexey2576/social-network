@@ -3,17 +3,23 @@ import s from './header.module.scss'
 import logo from '../../assets/logo.png'
 import ava from '../../assets/ava.jpg'
 import {UserLoggedType} from "../../redux/auth-redux/authReducer";
+import {NavLink} from "react-router-dom";
 
-export type HeaderType = UserLoggedType
+export type HeaderType = UserLoggedType & {
+   logOutCallback(): void
+}
 
 export const Header: React.FC<HeaderType> = (
    {
       login,
-      id,
       email,
-      isAuth
+      isAuth,
+      logOutCallback,
    }
 ) => {
+
+   const onClickLogOutHandler = () => logOutCallback()
+
    return (
       <div className={s.header}>
          <div className={s.header__logo}>
@@ -24,10 +30,14 @@ export const Header: React.FC<HeaderType> = (
             <input className={s.header__profile_search} type="text"/>
 
             {isAuth
-               ?  <>
-                     <h4 className={s.header__profile_login}>{login}</h4>
-                     <img className={s.header__profile_img} src={ava} alt="photos"/>
-                  </>
+               ?
+               <>
+                  <h4 className={s.header__profile_login}>{login}</h4>
+                  <img className={s.header__profile_img} src={ava} alt="photos"/>
+                  <NavLink to={'/login'}>
+                     <button className={s.header__profile_btn} onClick={onClickLogOutHandler}>Exit</button>
+                  </NavLink>
+               </>
                : <button className={s.header__profile_btn}>Create</button>
             }
          </div>

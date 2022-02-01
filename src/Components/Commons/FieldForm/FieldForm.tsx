@@ -12,6 +12,7 @@ type FieldFormType = DefaultInputPropsType & {
    type: string
    spanClassName?: string
    label?: string
+   submitError?: any
 }
 
 export const FieldForm: React.FC<FieldFormType> = (
@@ -21,6 +22,7 @@ export const FieldForm: React.FC<FieldFormType> = (
       type,
       placeholder,
       label,
+      submitError
    }
 ) => {
 
@@ -32,7 +34,7 @@ export const FieldForm: React.FC<FieldFormType> = (
                <div>
                   <label>{label}</label>
                   <input {...input} type={type} placeholder={placeholder}/>
-                  {meta.error && meta.touched && <span>{meta.error}</span>}
+                  {(meta.error || meta.submitError) && meta.touched && <span>{meta.submitError || meta.error}</span>}
                </div>
             )
          }

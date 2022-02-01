@@ -8,12 +8,15 @@ import {MessagesActionCreatorsType} from "./messages-redux/messagesActions";
 import {authReducer} from "./auth-redux/authReducer";
 import {AuthActionCreatorsType} from "./auth-redux/authActions";
 import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {AppActionCreatorsType} from "./app-redux/appAction";
+import {appReducer} from "./app-redux/appReducer";
 
 const rootReducer = combineReducers({
    profilePage: profileReducer,
    messagesPage: messagesReducer,
    peoplesPage: peoplesReducer,
    authState: authReducer,
+   appState: appReducer,
 })
 
 export const store = configureStore({
@@ -26,6 +29,7 @@ export type ActionCreatorsType =
    | MessagesActionCreatorsType
    | PeoplesActionCreatorsType
    | ProfileActionCreatorsType
+   | AppActionCreatorsType
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch

@@ -3,15 +3,18 @@ import {Login} from "./Login";
 import {UserLoginType} from "../../../redux/auth-redux/authReducer";
 import {compose} from "@reduxjs/toolkit";
 import {connect} from "react-redux";
-import {getLoggingData} from "../../../redux/auth-redux/authThunk";
+import {getLogInData} from "../../../redux/auth-redux/authThunk";
+import {FORM_ERROR} from "final-form";
 
 type ContainerLoginPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 class ContainerLogin extends React.Component<ContainerLoginPropsType> {
 
-   onSubmitHandler = (loginData: UserLoginType) => {
-      this.props.getLoggingData(loginData)
+   onSubmitHandler = async (loginData: UserLoginType) => {
+      let errors = await this.props.getLogInData(loginData)
+      return {[FORM_ERROR]: errors.messages[0]}
    }
+
 
    render = () => {
       return (
@@ -24,14 +27,14 @@ class ContainerLogin extends React.Component<ContainerLoginPropsType> {
 
 type MapStateToPropsType = {}
 type MapDispatchToPropsType = {
-   getLoggingData(loginData: UserLoginType): void
+   getLogInData(loginData: UserLoginType): Promise<any>
 }
 
 const mapStateToProps = (): MapStateToPropsType  => {
    return {}
 }
 export default compose<ComponentType>(
-   connect(mapStateToProps, { getLoggingData }),
+   connect(mapStateToProps, { getLogInData }),
 )(ContainerLogin)
 
 

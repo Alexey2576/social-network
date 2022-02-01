@@ -30,7 +30,7 @@ export const Peoples: React.FC<PeoplesType> = (
          pages.push(i)
       }
       return pages
-   }, [])
+   }, [countPeoplesOnPage, totalCount])
 
    const onClickPageHandler = (e: MouseEvent<HTMLButtonElement>) => setCurrentPageCallback(Number(e.currentTarget.value))
 
