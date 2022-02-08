@@ -1,6 +1,7 @@
 import {ActionCreatorsType} from "../redax-store";
 import {PeopleType} from "../../Components/Content/Peoples/People/People";
 import {PEOPLES_ACTIONS_TYPES} from "./peoplesActions";
+import {updateObjectInArray} from "../../Components/Commons/Utils/functions-helpers";
 
 export type PeoplesPageType = {
    peoples: PeopleType[] | []
@@ -31,13 +32,13 @@ export const peoplesReducer = (state: PeoplesPageType = initialPeoplesPageState,
       case PEOPLES_ACTIONS_TYPES.FOLLOW:
          return {
             ...state,
-            peoples: state.peoples.map(p => p.id === action.people_ID ? {...p, followed: true} : p),
+            peoples: updateObjectInArray(state.peoples, action.people_ID, "id", {followed: true}),
             flag: action.flag
          }
       case PEOPLES_ACTIONS_TYPES.UNFOLLOW:
          return {
             ...state,
-            peoples: state.peoples.map(p => p.id === action.people_ID ? {...p, followed: false} : p),
+            peoples: updateObjectInArray(state.peoples, action.people_ID, "id", {followed: false}),
             flag: action.flag
          }
       case PEOPLES_ACTIONS_TYPES.SET_TOTAL_COUNT:
