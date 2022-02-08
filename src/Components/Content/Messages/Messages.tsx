@@ -1,19 +1,11 @@
 import React from "react";
 import s from './messages.module.scss'
-import UserMessages, {UsersMessagesType} from "./UserMessages/UserMessages";
-import User, {UsersType} from "./User/User";
+import {UserMessages, UsersMessagesType} from "./UserMessages/UserMessages";
+import {User, UsersType} from "./User/User";
 import {FieldForm} from "../../Commons/FieldForm/FieldForm";
 import {Form} from "react-final-form";
 
-export type MessagesType = {
-   usersMessages: UsersMessagesType[]
-   users: UsersType[]
-   addMessageCallback(message: string): void
-}
-type MessageSubmitType = {
-   message: string
-}
-const Messages: React.FC<MessagesType> = (
+export const Messages: React.FC<MessagesType> = React.memo((
    {
       usersMessages,
       users,
@@ -24,19 +16,13 @@ const Messages: React.FC<MessagesType> = (
 
    return (
       <div className={s.messages}>
-
-         {/* ======================= Users ========================= */}
          <div className={s.users}>
-            { users.map(u => <User id={u.id} name={u.name} ava={u.ava} key={u.id}/>) }
+            {users.map(u => <User id={u.id} name={u.name} ava={u.ava} key={u.id}/>)}
          </div>
-
          <div>
-            {/* ======================= Users Messages ========================= */}
             <div className={s.usersMessages}>
-               { usersMessages.map(um => <UserMessages id={um.id} message={um.message} key={um.id}/>) }
+               {usersMessages.map(um => <UserMessages id={um.id} message={um.message} key={um.id}/>)}
             </div>
-
-            {/* ========================= Input and button ========================= */}
             <div className={s.messages__addPost}>
                <Form
                   onSubmit={onSubmitHandler}
@@ -44,7 +30,8 @@ const Messages: React.FC<MessagesType> = (
                      ({handleSubmit,}) => (
                         <form onSubmit={handleSubmit}>
                            <div>
-                              <FieldForm type={"text"} placeholder={"Add new message"} name={"message"} className={"messages__addPost_btn"}/>
+                              <FieldForm type={"text"} placeholder={"Add new message"} name={"message"}
+                                         className={"messages__addPost_btn"}/>
                            </div>
                            <button type="submit" className={s.messages__addPost_btn}>Add</button>
                         </form>
@@ -55,6 +42,13 @@ const Messages: React.FC<MessagesType> = (
          </div>
       </div>
    )
-}
+})
 
-export default Messages;
+export type MessagesType = {
+   usersMessages: UsersMessagesType[]
+   users: UsersType[]
+   addMessageCallback(message: string): void
+}
+type MessageSubmitType = {
+   message: string
+}

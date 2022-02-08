@@ -4,18 +4,13 @@ import React, {ComponentType} from "react";
 import {connect} from "react-redux";
 import {ProfileUserInfoType} from "../../../redux/profile-redux/profileReducer";
 import {PostsType} from "./Post/Post";
-import {
-   addPost,
-   getProfileStatus,
-   getProfileUserInfo, updateProfileStatus
-} from "../../../redux/profile-redux/profileThunk";
+import {addPost, getProfileStatus, getProfileUserInfo, updateProfileStatus} from "../../../redux/profile-redux/profileThunk";
 import {withRouter} from "../../../hoc/withRouter";
 import {compose} from "@reduxjs/toolkit";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
+import {getMyId, getPosts, getStatus, getUserInfo} from "../../../redux/profile-redux/profileSelectors";
 
-export type ContainerProfilePropsType = MapStateToPropsType & MapDispatchToPropsType
-
-class ContainerProfile extends React.Component<ContainerProfilePropsType> {
+class ContainerProfile extends React.PureComponent<ContainerProfilePropsType> {
    componentDidMount = () => {
       let userID = this.props.userID
       if (!userID) userID = this.props.myId
@@ -35,7 +30,7 @@ class ContainerProfile extends React.Component<ContainerProfilePropsType> {
       )
    }
 }
-
+export type ContainerProfilePropsType = MapStateToPropsType & MapDispatchToPropsType
 type MapStateToPropsType = {
    profileUserInfo: ProfileUserInfoType | null
    posts: PostsType[]
@@ -51,16 +46,17 @@ type MapDispatchToPropsType = {
    updateProfileStatus(status: string): void
 }
 
-const mapStateToProps = (state: RootState): MapStateToPropsType  => {
-  return {
-     profileUserInfo: state.profilePage.profileUserInfo,
-     posts: state.profilePage.posts,
-     myId: state.authState.id,
-     status: state.profilePage.status,
-  }
+const mapStateToProps = (state: RootState): MapStateToPropsType => {
+   return {
+      profileUserInfo: getUserInfo(state),
+      posts: getPosts(state),
+      myId: getMyId(state),
+      status: getStatus(state),
+   }
 }
+
 export default compose<ComponentType>(
-   connect(mapStateToProps, { getProfileUserInfo, addPost, getProfileStatus, updateProfileStatus }),
+   connect(mapStateToProps, {getProfileUserInfo, addPost, getProfileStatus, updateProfileStatus}),
    withRouter,
    withAuthRedirect,
 )(ContainerProfile)

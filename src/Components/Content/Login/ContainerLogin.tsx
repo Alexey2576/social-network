@@ -9,11 +9,7 @@ import {useNavigate} from "react-router-dom";
 
 type ContainerLoginPropsType = MapStateToPropsType & MapDispatchToPropsType
 
-const ContainerLogin: React.FC<ContainerLoginPropsType> = (
-   {
-      getLogInData
-   }
-) => {
+const ContainerLogin: React.FC<ContainerLoginPropsType> = React.memo(({ getLogInData }) => {
 
    let navigate = useNavigate();
    const onSubmitHandler = async (loginData: UserLoginType) => {
@@ -22,7 +18,7 @@ const ContainerLogin: React.FC<ContainerLoginPropsType> = (
       if (data.resultCode === 1) {
          return {[FORM_ERROR]: data.messages[0]}
       } else {
-         navigate(`/profile/${data.data.userId}`);
+         navigate(`/profile/${data.data.userId}`)
       }
    }
    return (
@@ -30,19 +26,13 @@ const ContainerLogin: React.FC<ContainerLoginPropsType> = (
          <Login onSubmit={onSubmitHandler}/>
       </div>
    );
-}
-
-
-
+})
 
 type MapStateToPropsType = {}
-type MapDispatchToPropsType = {
-   getLogInData(loginData: UserLoginType): Promise<any>
-}
+type MapDispatchToPropsType = { getLogInData(loginData: UserLoginType): Promise<any> }
 
-const mapStateToProps = (): MapStateToPropsType => {
-   return {}
-}
+const mapStateToProps = (): MapStateToPropsType => ({})
+
 export default compose<ComponentType>(
    connect(mapStateToProps, {getLogInData}),
 )(ContainerLogin)

@@ -1,5 +1,5 @@
-import {AppDispatch, RootState} from "../../../redux/redax-store";
-import Messages from "./Messages";
+import {RootState} from "../../../redux/redax-store";
+import {Messages} from "./Messages";
 import React, {ComponentType} from 'react';
 import {connect} from "react-redux";
 import {UsersMessagesType} from "./UserMessages/UserMessages";
@@ -8,8 +8,8 @@ import {addMessage, changeValueMessage} from "../../../redux/messages-redux/mess
 import {compose} from "@reduxjs/toolkit";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 
-export type ContainerMessagesPropsType = MapStateToPropsType & MapDispatchToPropsType
-class ContainerMessages extends React.Component<ContainerMessagesPropsType, AppDispatch> {
+class ContainerMessages extends React.PureComponent<ContainerMessagesPropsType> {
+
    addMessageCallback = (message: string) => this.props.addMessage(message)
 
    render() {
@@ -22,6 +22,7 @@ class ContainerMessages extends React.Component<ContainerMessagesPropsType, AppD
    }
 }
 
+export type ContainerMessagesPropsType = MapStateToPropsType & MapDispatchToPropsType
 type MapStateToPropsType = {
    users: UsersType[]
    usersMessages: UsersMessagesType[]

@@ -5,17 +5,7 @@ import ava from '../../assets/ava.jpg'
 import {UserLoggedType} from "../../redux/auth-redux/authReducer";
 import {NavLink} from "react-router-dom";
 
-export type HeaderType = UserLoggedType & {
-   logOutCallback(): void
-}
-
-export const Header: React.FC<HeaderType> = (
-   {
-      login,
-      isAuth,
-      logOutCallback,
-   }
-) => {
+export const Header: React.FC<HeaderType> = React.memo(({ login, isAuth, logOutCallback, }) => {
 
    const onClickLogOutHandler = () => logOutCallback()
 
@@ -27,7 +17,6 @@ export const Header: React.FC<HeaderType> = (
          </div>
          <div className={s.header__profile}>
             <input className={s.header__profile_search} type="text"/>
-
             {isAuth
                ?
                <>
@@ -42,4 +31,8 @@ export const Header: React.FC<HeaderType> = (
          </div>
       </div>
    )
+})
+
+export type HeaderType = UserLoggedType & {
+   logOutCallback(): void
 }

@@ -13,22 +13,20 @@ import ContainerLogin from "./Components/Content/Login/ContainerLogin";
 import {Home} from "./Components/Home/Home";
 import {getAppData} from "./redux/auth-redux/authThunk";
 
-type AppPropsType = MapStateToPropsType & MapDispatchToPropsType
 
-export class App extends React.Component<AppPropsType, AppDispatch> {
-   componentDidMount = () => {
-      this.props.getAppData()
-   }
+export class App extends React.PureComponent<AppPropsType, AppDispatch> {
+   componentDidMount = () => this.props.getAppData()
 
    render() {
       return (
          <div className={s.App}>
             <ContainerHeader/>
-            {!this.props.isAuth &&
-            <Routes>
-              <Route path={'/'} element={<Home/>}/>
-              <Route path={'/login'} element={<ContainerLogin/>}/>
-            </Routes>
+            {
+               !this.props.isAuth &&
+               <Routes>
+                 <Route path={'/'} element={<Home/>}/>
+                 <Route path={'/login'} element={<ContainerLogin/>}/>
+               </Routes>
             }
             {this.props.isAuth &&
             <div className={s.contentAndNavbar}>
@@ -41,19 +39,11 @@ export class App extends React.Component<AppPropsType, AppDispatch> {
    }
 }
 
+type AppPropsType = MapStateToPropsType & MapDispatchToPropsType
+type MapStateToPropsType = { isAuth: boolean }
+type MapDispatchToPropsType = { getAppData(): void }
 
-type MapStateToPropsType = {
-   isAuth: boolean
-}
-type MapDispatchToPropsType = {
-   getAppData(): void
-}
-
-const mapStateToProps = (state: RootState): MapStateToPropsType => {
-   return {
-      isAuth: state.authState.isAuth
-   }
-}
+const mapStateToProps = (state: RootState): MapStateToPropsType => ({isAuth: state.authState.isAuth})
 
 export default compose<ComponentType>(
    connect(mapStateToProps, {getAppData}))

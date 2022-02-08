@@ -1,6 +1,7 @@
 import {PostsType} from "../../Components/Content/Profile/Post/Post";
 import {ActionCreatorsType} from "../redax-store";
 import {PROFILE_ACTIONS_TYPES} from "./profileActions";
+import {v1} from "uuid";
 
 export type ProfileUserInfoType = {
    userId: number
@@ -27,9 +28,9 @@ const initialProfilePageState = {
    profileUserInfo: null as ProfileUserInfoType | null,
    status: null as string | null,
    posts: [
-      {id: 0, message: "Hello", like: 10},
-      {id: 1, message: "Hello", like: 20},
-      {id: 2, message: "Hello", like: 30},
+      {id: v1(), message: "Hello", like: 10},
+      {id: v1(), message: "Hello", like: 20},
+      {id: v1(), message: "Hello", like: 30},
    ] as PostsType[],
 }
 
@@ -42,7 +43,7 @@ export const profileReducer = (state: ProfilePageType = initialProfilePageState,
             ...state,
             posts: [
                ...state.posts,
-               {id: 3, message: action.post, like: 0}
+               {id: v1(), message: action.post, like: 0}
             ],
          }
       case PROFILE_ACTIONS_TYPES.SET_PROFILE_USER_INFO:

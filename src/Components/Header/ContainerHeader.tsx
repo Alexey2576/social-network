@@ -5,9 +5,7 @@ import {AppDispatch, RootState} from "../../redux/redax-store";
 import {getLogOutData} from "../../redux/auth-redux/authThunk";
 import {compose} from "@reduxjs/toolkit";
 
-type HeaderPropsType = MapStateToPropsType & MapDispatchToPropsType
-
-class ContainerHeader extends React.Component<HeaderPropsType, AppDispatch> {
+class ContainerHeader extends React.PureComponent<HeaderPropsType, AppDispatch> {
    logOutCallback = () => this.props.getLogOutData()
 
    render = () => (
@@ -15,6 +13,7 @@ class ContainerHeader extends React.Component<HeaderPropsType, AppDispatch> {
    )
 }
 
+type HeaderPropsType = MapStateToPropsType & MapDispatchToPropsType
 type MapStateToPropsType = {
    id: number | null
    email: string | null

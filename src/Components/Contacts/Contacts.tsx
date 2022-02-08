@@ -2,7 +2,7 @@ import React from "react";
 import s from './contacts.module.scss'
 import ava from '../../assets/contacts/ava.png'
 
-export const Contacts = () => {
+export const Contacts = React.memo(() => {
    return (
       <div className={s.contacts}>
          <div className={s.contacts__profile}>
@@ -63,4 +63,4 @@ export const Contacts = () => {
          </div>
       </div>
    )
-}
+})

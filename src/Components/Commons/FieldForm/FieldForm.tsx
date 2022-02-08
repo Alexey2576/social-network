@@ -3,7 +3,30 @@ import {composeValidators} from "../Validators/validators";
 import {Field} from "react-final-form";
 import {FieldValidator} from "final-form";
 
-// тип пропсов обычного инпута
+export const FieldForm: React.FC<FieldFormType> = React.memo((
+   {
+      name,
+      validators,
+      type,
+      placeholder,
+      label,
+   }
+) => {
+   return (
+      <Field name={name} validate={validators && composeValidators(validators)}>
+         {
+            ({input, meta}) => (
+               <div>
+                  <label>{label}</label>
+                  <input {...input} type={type} placeholder={placeholder}/>
+                  {meta.error && meta.touched && <span>{meta.error}</span>}
+               </div>
+            )
+         }
+      </Field>
+   )
+})
+
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
 type FieldFormType = DefaultInputPropsType & {
@@ -14,30 +37,3 @@ type FieldFormType = DefaultInputPropsType & {
    label?: string
    submitError?: any
 }
-
-export const FieldForm: React.FC<FieldFormType> = (
-   {
-      name,
-      validators,
-      type,
-      placeholder,
-      label,
-   }
-) => {
-
-
-   return (
-      <Field name={name} validate={validators && composeValidators(validators)}>
-         {
-            ({input, meta}) => (
-               <div>
-                  <label>{label}</label>
-                  <input {...input} type={type} placeholder={placeholder}/>
-                  {(meta.error || meta.submitError) && meta.touched && <span>{meta.submitError || meta.error}</span>}
-               </div>
-            )
-         }
-
-      </Field>
-   );
-};

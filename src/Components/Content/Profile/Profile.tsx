@@ -6,20 +6,8 @@ import {Status} from "./Status/Status";
 import {FieldForm} from "../../Commons/FieldForm/FieldForm";
 import {Form} from "react-final-form";
 
-type ProfileType = {
-   profileUserInfo: ProfileUserInfoType | null
-   myId: number | null
-   posts: PostsType[]
-   status: string | null
-   addPostCallback(post: string): void
-   updateStatusCallback(status: string): void
-}
 
-type PostSubmitType = {
-   post: string
-}
-
-export const Profile: React.FC<ProfileType> = (
+export const Profile: React.FC<ProfileType> = React.memo((
    {
       profileUserInfo,
       myId,
@@ -29,9 +17,7 @@ export const Profile: React.FC<ProfileType> = (
       updateStatusCallback,
    }
 ) => {
-
    const onSubmitHandler = ({post}: PostSubmitType) => addPostCallback(post)
-
    return (
       <div className={s.profile}>
          {/* ========================= Profile Info ========================= */}
@@ -75,4 +61,18 @@ export const Profile: React.FC<ProfileType> = (
          </div>
       </div>
    )
+})
+
+
+type ProfileType = {
+   profileUserInfo: ProfileUserInfoType | null
+   myId: number | null
+   posts: PostsType[]
+   status: string | null
+   addPostCallback(post: string): void
+   updateStatusCallback(status: string): void
+}
+
+type PostSubmitType = {
+   post: string
 }

@@ -1,17 +1,15 @@
 import React from "react";
 import s from './userMessages.module.scss'
 
-export type UsersMessagesType = {
-   id: number
-   message: string
-}
-
-const User: React.FC<UsersMessagesType> = (props) => {
+export const UserMessages: React.FC<UsersMessagesType> = React.memo(({message}) => {
    return (
       <div className={s.userMessages}>
-         <p className={s.userMessages__message}>{props.message}</p>
+         <p className={s.userMessages__message}>{message}</p>
       </div>
    )
-}
+})
 
-export default User;
+export type UsersMessagesType = {
+   id: string
+   message: string
+}

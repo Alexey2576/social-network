@@ -1,4 +1,4 @@
-import {AppDispatch, RootState} from "../../../redux/redax-store";
+import {RootState} from "../../../redux/redax-store";
 import {connect} from "react-redux";
 import {Peoples} from "./Peoples";
 import React, {ComponentType} from 'react';
@@ -8,9 +8,7 @@ import {follow, getPeoples, unfollow} from "../../../redux/peoples-redux/peoples
 import {compose} from "@reduxjs/toolkit";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 
-export type ContainerPeoplePropsType = MapStateToPropsType & MapDispatchToPropsType
-
-class ContainerPeoples extends React.Component<ContainerPeoplePropsType, AppDispatch> {
+class ContainerPeoples extends React.PureComponent<ContainerPeoplePropsType> {
    componentDidMount = () => {
       this.props.getPeoples(this.props.countPeoplesOnPage, this.props.currentPage)
    }
@@ -33,6 +31,7 @@ class ContainerPeoples extends React.Component<ContainerPeoplePropsType, AppDisp
    }
 }
 
+export type ContainerPeoplePropsType = MapStateToPropsType & MapDispatchToPropsType
 type MapStateToPropsType = {
    peoples: PeopleType[] | []
    totalCount: number

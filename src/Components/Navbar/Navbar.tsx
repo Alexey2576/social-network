@@ -12,11 +12,10 @@ import {NavLink} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {RootState} from "../../redux/redax-store";
 
-
-export const Navbar = () => {
-
+export const Navbar = React.memo(() => {
    const id = useSelector<RootState, number | null>((state: RootState) => state.authState.id)
    const fullAddressNavLink = `/profile/${id}`
+
    return (
       <div className={s.navbar}>
          <div className={s.navbar__profile}>
@@ -57,4 +56,4 @@ export const Navbar = () => {
          </div>
       </div>
    )
-}
+})

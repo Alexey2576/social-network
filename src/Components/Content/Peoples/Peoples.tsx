@@ -2,17 +2,7 @@ import React, {MouseEvent, useMemo} from "react";
 import {People, PeopleType} from "./People/People";
 import './peoples.scss'
 
-export type PeoplesType = {
-   peoples: PeopleType[]
-   totalCount: number
-   countPeoplesOnPage: number
-   followCallback: (people_id: number) => void
-   unfollowCallback: (people_id: number) => void
-   setCurrentPageCallback: (currentPage: number) => void
-   following_ID: number[]
-}
-
-export const Peoples: React.FC<PeoplesType> = (
+export const Peoples: React.FC<PeoplesType> = React.memo((
    {
       peoples,
       totalCount,
@@ -37,29 +27,43 @@ export const Peoples: React.FC<PeoplesType> = (
    return (
       <div>
          <div className={"pages"}>
-            {massPages.map(p => <button className={"page"} onClick={onClickPageHandler} value={p}>{p}</button>)}
+            {massPages.map(p => <button key={p} className={"page"} onClick={onClickPageHandler} value={p}>{p}</button>)}
          </div>
          {peoples.map(p => {
 
-            const onClickUnfollowHandler = () => unfollowCallback(p.id)
-            const onClickFollowHandler = () => followCallback(p.id)
+               const onClickUnfollowHandler = () => unfollowCallback(p.id)
+               const onClickFollowHandler = () => followCallback(p.id)
 
-            return <div className="people" key={p.id}>
-                  <People id={p.id}
-                          name={p.name}
-                          photos={p.photos}
-                          followed={p.followed}
-                          status={p.status}/>
-                  <div className="people_followed">
-                     {
-                        p.followed
-                           ? <button disabled={following_ID.some(id => id === p.id)} className="people_followed__btn" onClick={onClickUnfollowHandler}>Unfollow</button>
-                           : <button disabled={following_ID.some(id => id === p.id)} className="people_followed__btn" onClick={onClickFollowHandler}>Follow</button>
-                     }
+               return (
+                  <div className="people" key={p.id}>
+                     <People id={p.id}
+                             name={p.name}
+                             photos={p.photos}
+                             followed={p.followed}
+                             status={p.status}/>
+                     <div className="people_followed">
+                        {
+                           p.followed
+                              ? <button disabled={following_ID.some(id => id === p.id)} className="people_followed__btn"
+                                        onClick={onClickUnfollowHandler}>Unfollow</button>
+                              : <button disabled={following_ID.some(id => id === p.id)} className="people_followed__btn"
+                                        onClick={onClickFollowHandler}>Follow</button>
+                        }
+                     </div>
                   </div>
-               </div>
+               )
             }
          )}
       </div>
    )
+})
+
+export type PeoplesType = {
+   peoples: PeopleType[]
+   totalCount: number
+   countPeoplesOnPage: number
+   followCallback: (people_id: number) => void
+   unfollowCallback: (people_id: number) => void
+   setCurrentPageCallback: (currentPage: number) => void
+   following_ID: number[]
 }
