@@ -6,6 +6,7 @@ import ContainerLogin from "../Components/Content/Login/ContainerLogin";
 type MapStateToPropsType = {
    isAuth: boolean
 }
+
 const mapStateToProps = (state: RootState): MapStateToPropsType => {
    return {
       isAuth: state.authState.isAuth

@@ -22,7 +22,6 @@ export const FieldForm: React.FC<FieldFormType> = (
       type,
       placeholder,
       label,
-      submitError
    }
 ) => {
 

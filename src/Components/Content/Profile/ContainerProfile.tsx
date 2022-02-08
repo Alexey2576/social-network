@@ -18,14 +18,7 @@ export type ContainerProfilePropsType = MapStateToPropsType & MapDispatchToProps
 class ContainerProfile extends React.Component<ContainerProfilePropsType> {
    componentDidMount = () => {
       let userID = this.props.userID
-      if (!userID) {
-         debugger
-         userID = this.props.myId
-         // if (!userID) {
-         //    debugger
-         //    this.props.navigate('/login', { replace: true })
-         // }
-      }
+      if (!userID) userID = this.props.myId
       this.props.getProfileUserInfo(userID)
       this.props.getProfileStatus(userID)
    }

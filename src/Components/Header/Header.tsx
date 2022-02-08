@@ -12,7 +12,6 @@ export type HeaderType = UserLoggedType & {
 export const Header: React.FC<HeaderType> = (
    {
       login,
-      email,
       isAuth,
       logOutCallback,
    }
@@ -34,7 +33,7 @@ export const Header: React.FC<HeaderType> = (
                <>
                   <h4 className={s.header__profile_login}>{login}</h4>
                   <img className={s.header__profile_img} src={ava} alt="photos"/>
-                  <NavLink to={'/login'}>
+                  <NavLink to={'/'}>
                      <button className={s.header__profile_btn} onClick={onClickLogOutHandler}>Exit</button>
                   </NavLink>
                </>

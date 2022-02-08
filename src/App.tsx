@@ -8,46 +8,42 @@ import ContainerHeader from "./Components/Header/ContainerHeader";
 import {compose} from "@reduxjs/toolkit";
 import {connect} from "react-redux";
 import {AppDispatch, RootState} from "./redux/redax-store";
-import {getAppData} from "./redux/app-redux/appThunk";
+import {Route, Routes} from 'react-router-dom';
 import ContainerLogin from "./Components/Content/Login/ContainerLogin";
-import {Route, Routes} from "react-router-dom";
+import {Home} from "./Components/Home/Home";
+import {getAppData} from "./redux/auth-redux/authThunk";
 
 type AppPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 export class App extends React.Component<AppPropsType, AppDispatch> {
-   componentDidMount = async () => {
-      await this.props.getAppData()
-      // if (!this.props.isInit)
-      //    return <ContainerLogin/>
+   componentDidMount = () => {
+      this.props.getAppData()
    }
 
    render() {
       return (
          <div className={s.App}>
-            {!this.props.isInit
-               ?
-               <Routes>
-                  <Route path="/login"
-                         element={<ContainerLogin/>}/>
-               </Routes>
-               :
-               <><ContainerHeader/>
-                  <div className={s.contentAndNavbar}>
-                     <Navbar/>
-                     <Content/>
-                     <Contacts/>
-                  </div>
-               </>
-
+            <ContainerHeader/>
+            {!this.props.isAuth &&
+            <Routes>
+              <Route path={'/'} element={<Home/>}/>
+              <Route path={'/login'} element={<ContainerLogin/>}/>
+            </Routes>
             }
-
+            {this.props.isAuth &&
+            <div className={s.contentAndNavbar}>
+              <Navbar/>
+              <Content/>
+              <Contacts/>
+            </div>}
          </div>
       );
    }
 }
 
+
 type MapStateToPropsType = {
-   isInit: boolean
+   isAuth: boolean
 }
 type MapDispatchToPropsType = {
    getAppData(): void
@@ -55,7 +51,7 @@ type MapDispatchToPropsType = {
 
 const mapStateToProps = (state: RootState): MapStateToPropsType => {
    return {
-      isInit: state.appState.isInit
+      isAuth: state.authState.isAuth
    }
 }
 
