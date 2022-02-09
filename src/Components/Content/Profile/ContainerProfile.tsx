@@ -3,7 +3,7 @@ import {Profile} from "./Profile";
 import React, {ComponentType} from "react";
 import {connect} from "react-redux";
 import {ProfileUserInfoType} from "../../../redux/profile-redux/profileReducer";
-import {PostsType} from "./Post/Post";
+import {PostsType} from "./Posts/Post/Post";
 import {addPost, getProfileStatus, getProfileUserInfo, updateProfileStatus} from "../../../redux/profile-redux/profileThunk";
 import {withRouter} from "../../../hoc/withRouter";
 import {compose} from "@reduxjs/toolkit";

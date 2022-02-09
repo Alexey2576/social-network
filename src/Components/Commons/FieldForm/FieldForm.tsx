@@ -1,16 +1,10 @@
 import React, {DetailedHTMLProps, InputHTMLAttributes} from 'react';
-import {composeValidators} from "../Validators/validators";
 import {Field} from "react-final-form";
 import {FieldValidator} from "final-form";
+import {composeValidators} from "../Utils/Validators/validators";
 
 export const FieldForm: React.FC<FieldFormType> = React.memo((
-   {
-      name,
-      validators,
-      type,
-      placeholder,
-      label,
-   }
+   { name, validators, type, placeholder, label, }
 ) => {
    return (
       <Field name={name} validate={validators && composeValidators(validators)}>
@@ -28,7 +22,6 @@ export const FieldForm: React.FC<FieldFormType> = React.memo((
 })
 
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
-
 type FieldFormType = DefaultInputPropsType & {
    name: string
    validators?: FieldValidator<any>

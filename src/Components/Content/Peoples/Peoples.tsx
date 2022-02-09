@@ -1,55 +1,24 @@
-import React, {MouseEvent, useMemo} from "react";
+import React from "react";
 import {People, PeopleType} from "./People/People";
 import './peoples.scss'
+import {Paginator} from "../../Commons/Paginator/Paginator";
+import {PeopleFollowUnfollow} from "./PeopleFollowUnfollow/PeopleFollowUnfollow";
 
-export const Peoples: React.FC<PeoplesType> = React.memo((
-   {
-      peoples,
-      totalCount,
-      countPeoplesOnPage,
-      followCallback,
-      unfollowCallback,
-      setCurrentPageCallback,
-      following_ID,
-   }
-) => {
-   const massPages = useMemo(() => {
-      const countPages = Math.ceil(totalCount / countPeoplesOnPage)
-      let pages: number[] = []
-      for (let i = 1; i <= countPages; i++) {
-         pages.push(i)
-      }
-      return pages
-   }, [countPeoplesOnPage, totalCount])
-
-   const onClickPageHandler = (e: MouseEvent<HTMLButtonElement>) => setCurrentPageCallback(Number(e.currentTarget.value))
-
+export const Peoples: React.FC<PeoplesType> = React.memo((props) => {
    return (
       <div>
-         <div className={"pages"}>
-            {massPages.map(p => <button key={p} className={"page"} onClick={onClickPageHandler} value={p}>{p}</button>)}
-         </div>
-         {peoples.map(p => {
-
-               const onClickUnfollowHandler = () => unfollowCallback(p.id)
-               const onClickFollowHandler = () => followCallback(p.id)
-
+         <Paginator {...props}/>
+         {props.peoples.map(p => {
                return (
                   <div className="people" key={p.id}>
-                     <People id={p.id}
-                             name={p.name}
-                             photos={p.photos}
-                             followed={p.followed}
-                             status={p.status}/>
-                     <div className="people_followed">
-                        {
-                           p.followed
-                              ? <button disabled={following_ID.some(id => id === p.id)} className="people_followed__btn"
-                                        onClick={onClickUnfollowHandler}>Unfollow</button>
-                              : <button disabled={following_ID.some(id => id === p.id)} className="people_followed__btn"
-                                        onClick={onClickFollowHandler}>Follow</button>
-                        }
-                     </div>
+                     <People id={p.id} name={p.name} photos={p.photos}
+                             followed={p.followed} status={p.status}
+                             key={`${p.id}-people`}
+                     />
+                     <PeopleFollowUnfollow {...props}
+                                           people={p}
+                                           key={`${p.id}-followUnfollow`}
+                     />
                   </div>
                )
             }

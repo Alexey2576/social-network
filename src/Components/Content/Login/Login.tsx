@@ -1,7 +1,7 @@
 import React from "react";
 import {Form} from "react-final-form";
 import {UserLoginType} from "../../../redux/auth-redux/authReducer";
-import {required} from "../../Commons/Validators/validators";
+import {required} from "../../Commons/Utils/Validators/validators";
 import {FieldForm} from "../../Commons/FieldForm/FieldForm";
 
 export const Login: React.FC<LoginType> = React.memo(({onSubmit}) => (

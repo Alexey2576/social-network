@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 
-type StatusType = {
+export type StatusType = {
    status: string | null
    myId: number | null
    userID: number

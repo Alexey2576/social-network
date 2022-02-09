@@ -3,7 +3,8 @@ import './people.scss';
 import ava from '../../../../assets/ava.png'
 import {NavLink} from "react-router-dom";
 
-export const People: React.FC<PeopleType> = React.memo(({ name, status, photos, id }) => {
+export const People: React.FC<PeopleType> = React.memo((props) => {
+   const {name, status, photos, id} = props
    return (
       <div className="people_info">
          <div className="people_info__img">
@@ -22,12 +23,10 @@ export const People: React.FC<PeopleType> = React.memo(({ name, status, photos, 
 })
 
 export type PeopleType = {
-   id: number
-   name: string
-   status: string
-   photos: {
-      small: string
-      large: string
-   }
-   followed: boolean
+      id: number
+      name: string
+      status: string
+      photos: { small: string, large: string }
+      followed: boolean
 }
+

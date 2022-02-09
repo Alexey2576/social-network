@@ -1,5 +1,5 @@
-import {UsersType} from "../../Components/Content/Messages/User/User";
-import {UsersMessagesType} from "../../Components/Content/Messages/UserMessages/UserMessages";
+import {UsersType} from "../../Components/Content/Messages/Users/User/User";
+import {UsersMessagesType} from "../../Components/Content/Messages/UsersMessages/UserMessages/UserMessages";
 import {ActionCreatorsType} from "../redax-store";
 import {MESSAGES_ACTIONS_TYPES} from "./messagesActions";
 import {v1} from 'uuid';

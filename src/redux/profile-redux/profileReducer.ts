@@ -1,4 +1,4 @@
-import {PostsType} from "../../Components/Content/Profile/Post/Post";
+import {PostsType} from "../../Components/Content/Profile/Posts/Post/Post";
 import {ActionCreatorsType} from "../redax-store";
 import {PROFILE_ACTIONS_TYPES} from "./profileActions";
 import {v1} from "uuid";

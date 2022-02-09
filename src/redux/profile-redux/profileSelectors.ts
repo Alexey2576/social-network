@@ -1,6 +1,6 @@
 import {RootState} from "../redax-store";
 import {ProfileUserInfoType} from "./profileReducer";
-import {PostsType} from "../../Components/Content/Profile/Post/Post";
+import {PostsType} from "../../Components/Content/Profile/Posts/Post/Post";
 
 export const getUserInfo = (state: RootState): ProfileUserInfoType | null => state.profilePage.profileUserInfo
 export const getPosts = (state: RootState): PostsType[] => state.profilePage.posts

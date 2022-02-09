@@ -31,6 +31,9 @@ export const profileAPI = {
    },
    updateStatus: (status: string) => {
       return instanceAxios.put<CommonResponseType>(`profile/status`, {status}).then(response => response.data)
+   },
+   uploadPhoto: (image: any) => {
+      return instanceAxios.put<CommonResponseType< {small: string, large: string } >>('profile/photo', {image}).then(response => response.data)
    }
 }
 
