@@ -8,6 +8,8 @@ import {MessagesActionCreatorsType} from "./messages-redux/messagesActions";
 import {authReducer} from "./auth-redux/authReducer";
 import {AuthActionCreatorsType} from "./auth-redux/authActions";
 import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from '@redux-devtools/extension';
 
 const rootReducer = combineReducers({
    profilePage: profileReducer,
@@ -16,10 +18,12 @@ const rootReducer = combineReducers({
    authState: authReducer,
 })
 
-export const store = configureStore({
-   reducer: rootReducer,
-   middleware: [thunk]
-})
+export const store = createStore(
+   rootReducer,
+   composeWithDevTools(
+      applyMiddleware(thunk)
+   )
+);
 
 export type ActionCreatorsType =
    | AuthActionCreatorsType
