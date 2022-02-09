@@ -1,4 +1,4 @@
-import {combineReducers, configureStore} from '@reduxjs/toolkit'
+import {combineReducers} from '@reduxjs/toolkit'
 import {messagesReducer} from "./messages-redux/MessagesReducer";
 import {profileReducer} from "./profile-redux/profileReducer";
 import {ProfileActionCreatorsType} from "./profile-redux/profileActions";
@@ -20,10 +20,8 @@ const rootReducer = combineReducers({
 
 export const store = createStore(
    rootReducer,
-   composeWithDevTools(
-      applyMiddleware(thunk)
-   )
-);
+   composeWithDevTools( applyMiddleware(thunk) )
+)
 
 export type ActionCreatorsType =
    | AuthActionCreatorsType
@@ -35,7 +33,4 @@ export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 export type ThunkType = ThunkAction<Promise<void>, RootState, unknown, ActionCreatorsType>
 export type ThunkDispatchType = ThunkDispatch<RootState, unknown, ActionCreatorsType>;
-
-// @ts-ignore
-window.store = store
 

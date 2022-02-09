@@ -10,10 +10,10 @@ import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 
 class ContainerPeoples extends React.PureComponent<ContainerPeoplePropsType> {
    componentDidMount = () => {
-      this.props.getPeoples(this.props.countPeoplesOnPage, this.props.currentPage)
+      this.props.getPeoples(this.props.pageSize, this.props.currentPage)
    }
 
-   setCurrentPageCallback = (currentPage: number) => this.props.getPeoples(this.props.countPeoplesOnPage, currentPage)
+   setCurrentPageCallback = (currentPage: number) => this.props.getPeoples(this.props.pageSize, currentPage)
    followCallback = (people_id: number) => this.props.follow(people_id, !this.props.flag)
    unfollowCallback = (people_id: number) => this.props.unfollow(people_id, !this.props.flag)
 
@@ -36,7 +36,7 @@ type MapStateToPropsType = {
    peoples: PeopleType[] | []
    totalCount: number
    currentPage: number
-   countPeoplesOnPage: number
+   pageSize: number
    isFetching: boolean
    flag: boolean
    isFollowing: boolean
@@ -53,7 +53,7 @@ const mapStateToProps = (state: RootState): MapStateToPropsType => {
       peoples: state.peoplesPage.peoples,
       totalCount: state.peoplesPage.totalCount,
       currentPage: state.peoplesPage.currentPage,
-      countPeoplesOnPage: state.peoplesPage.countPeoplesOnPage,
+      pageSize: state.peoplesPage.countPeoplesOnPage,
       isFetching: state.peoplesPage.isFetching,
       flag: state.peoplesPage.flag,
       isFollowing: state.peoplesPage.isFollowing,

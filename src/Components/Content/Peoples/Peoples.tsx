@@ -7,7 +7,7 @@ import {PeopleFollowUnfollow} from "./PeopleFollowUnfollow/PeopleFollowUnfollow"
 export const Peoples: React.FC<PeoplesType> = React.memo((props) => {
    return (
       <div>
-         <Paginator {...props}/>
+         <Paginator {...props} />
          {props.peoples.map(p => {
                return (
                   <div className="people" key={p.id}>
@@ -30,7 +30,7 @@ export const Peoples: React.FC<PeoplesType> = React.memo((props) => {
 export type PeoplesType = {
    peoples: PeopleType[]
    totalCount: number
-   countPeoplesOnPage: number
+   pageSize: number
    followCallback: (people_id: number) => void
    unfollowCallback: (people_id: number) => void
    setCurrentPageCallback: (currentPage: number) => void
