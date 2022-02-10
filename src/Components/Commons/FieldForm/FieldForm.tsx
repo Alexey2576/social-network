@@ -4,7 +4,7 @@ import {FieldValidator} from "final-form";
 import {composeValidators} from "../Utils/Validators/validators";
 
 export const FieldForm: React.FC<FieldFormType> = React.memo((
-   { name, validators, type, placeholder, label, }
+   { name, validators, type, placeholder, label, submitError}
 ) => {
    return (
       <Field name={name} validate={validators && composeValidators(validators)}>

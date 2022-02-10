@@ -41,7 +41,10 @@ export const profileAPI = {
          }
       }
       return instanceAxios.put<CommonResponseType<{ small: string, large: string }>>('profile/photo', formData, config).then(response => response.data)
-   }
+   },
+   updateProfile: (profileData: ProfileUserInfoType) => {
+      return instanceAxios.put<CommonResponseType>(`profile`, profileData).then(response => response.data)
+   },
 }
 
 export const authAPI = {

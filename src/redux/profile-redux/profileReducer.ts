@@ -7,6 +7,7 @@ const initialProfilePageState = {
    profileUserInfo: {
       userId: 0,
       fullName: "",
+      aboutMe: "",
       lookingForAJob: false,
       lookingForAJobDescription: "",
       photos: {
@@ -67,6 +68,7 @@ export type ProfileUserInfoType = {
    lookingForAJob: boolean
    lookingForAJobDescription: string
    fullName: string
+   aboutMe: string
    contacts: ContactsType
    photos: PhotosType
 }

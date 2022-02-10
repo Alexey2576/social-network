@@ -7,7 +7,7 @@ import {PostsType} from "./Posts/Post/Post";
 import {
    addPost,
    getProfileStatus,
-   getProfileUserInfo,
+   getProfileUserInfo, updateProfileData,
    updateProfileStatus,
    uploadProfilePhoto
 } from "../../../redux/profile-redux/profileThunk";
@@ -35,10 +35,12 @@ class ContainerProfile extends React.Component<ContainerProfilePropsType> {
    addPostCallback = (post: string) => this.props.addPost(post)
    updateStatusCallback = (status: string) => this.props.updateProfileStatus(status)
    updatePhotoCallback = (file: File) => this.props.uploadProfilePhoto(file)
+   updateProfileDataCallback = (profileData: ProfileUserInfoType) => this.props.updateProfileData(profileData)
 
    render = () => {
       return (
          <Profile {...this.props} userIdFromURL={this.props.userIdFromURL}
+                  updateProfileDataCallback={this.updateProfileDataCallback}
                   updatePhotoCallback={this.updatePhotoCallback}
                   addPostCallback={this.addPostCallback}
                   updateStatusCallback={this.updateStatusCallback}
@@ -46,6 +48,7 @@ class ContainerProfile extends React.Component<ContainerProfilePropsType> {
       )
    }
 }
+
 export type ContainerProfilePropsType = MapStateToPropsType & MapDispatchToPropsType
 type MapStateToPropsType = {
    profileUserInfo: ProfileUserInfoType
@@ -60,6 +63,7 @@ type MapDispatchToPropsType = {
    getProfileStatus(userID: number | null): void
    updateProfileStatus(status: string): void
    uploadProfilePhoto(file: File): void
+   updateProfileData(profileData: ProfileUserInfoType): Promise<any>
 }
 
 const mapStateToProps = (state: RootState): MapStateToPropsType => {
@@ -72,7 +76,7 @@ const mapStateToProps = (state: RootState): MapStateToPropsType => {
 }
 
 export default compose<ComponentType>(
-   connect(mapStateToProps, {getProfileUserInfo, addPost, getProfileStatus, updateProfileStatus, uploadProfilePhoto}),
+   connect(mapStateToProps, {getProfileUserInfo, addPost, getProfileStatus, updateProfileStatus, uploadProfilePhoto, updateProfileData}),
    withRouter,
    withAuthRedirect,
 )(ContainerProfile)

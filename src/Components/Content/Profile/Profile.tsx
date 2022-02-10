@@ -27,4 +27,5 @@ type ProfileType = {
    addPostCallback(post: string): void
    updateStatusCallback(status: string): void
    updatePhotoCallback(file: File): void
+   updateProfileDataCallback(profileData: ProfileUserInfoType): Promise<any>
 }

@@ -7,7 +7,7 @@ import {PeopleFollowUnfollow} from "./PeopleFollowUnfollow/PeopleFollowUnfollow"
 export const Peoples: React.FC<PeoplesType> = React.memo((props) => {
    return (
       <div>
-         <Paginator {...props} />
+         <Paginator {...props}/>
          {props.peoples.map(p => {
                return (
                   <div className="people" key={p.id}>
