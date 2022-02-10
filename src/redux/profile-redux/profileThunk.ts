@@ -1,6 +1,6 @@
 import {ThunkDispatchType, ThunkType} from "../redax-store";
 import {profileAPI} from "../../api/api";
-import {addPostAC, setProfileStatus, setProfileUserInfo} from "./profileActions";
+import {addPostAC, setProfilePhoto, setProfileStatus, setProfileUserInfo} from "./profileActions";
 import {setIsFetching} from "../peoples-redux/peoplesActions";
 
 export const getProfileUserInfo = (userID: number | null): ThunkType => async (dispatch: ThunkDispatchType) => {
@@ -27,6 +27,14 @@ export const updateProfileStatus = (status: string): ThunkType => async (dispatc
    dispatch(setIsFetching(false))
    if (data.resultCode === 0)
       dispatch(setProfileStatus(status))
+}
+
+export const uploadProfilePhoto = (file: File): ThunkType => async (dispatch: ThunkDispatchType) => {
+   dispatch(setIsFetching(true))
+   let data = await profileAPI.uploadPhoto(file)
+   dispatch(setIsFetching(false))
+   if (data.resultCode === 0)
+      dispatch(setProfilePhoto(data.data))
 }
 
 export const addPost = (post: string) => (dispatch: ThunkDispatchType) => dispatch(addPostAC(post))

@@ -1,6 +1,5 @@
 import React, {MouseEvent, useMemo, useState} from 'react';
 import './Paginator.css'
-// import cn from 'classnames'
 
 export const Paginator:React.FC<PaginatorType> = React.memo((props) => {
    const  { totalCount, pageSize, paginatorSize = 10,setCurrentPageCallback, } = props
@@ -22,7 +21,6 @@ export const Paginator:React.FC<PaginatorType> = React.memo((props) => {
    const onClickPageHandler = (e: MouseEvent<HTMLButtonElement>) => setCurrentPageCallback(Number(e.currentTarget.value))
 
    return (
-
          <div className={"pages"}>
             { paginatorNumber > 1 && <button onClick={() => {setPaginatorNumber(paginatorNumber - 1)}}>PREV</button> }
             {
@@ -31,10 +29,7 @@ export const Paginator:React.FC<PaginatorType> = React.memo((props) => {
                   .map(p => <button key={p} className={"page"} onClick={onClickPageHandler} value={p}>{p}</button>)
             }
             { paginatorNumber < paginatorCount && <button onClick={() => {setPaginatorNumber(paginatorNumber + 1)}}>NEXT</button> }
-
          </div>
-
-
    );
 });
 

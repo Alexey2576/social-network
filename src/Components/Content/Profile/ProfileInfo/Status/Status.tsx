@@ -1,19 +1,8 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 
-export type StatusType = {
-   status: string | null
-   myId: number | null
-   userID: number
-   updateStatusCallback(status: string): void
-}
-export const Status: React.FC<StatusType> = React.memo((
-   {
-      status,
-      myId,
-      userID,
-      updateStatusCallback,
-   }
-) => {
+export const Status: React.FC<StatusType> = React.memo((props) => {
+   const { status, authId, userIdFromURL, updateStatusCallback, } = props
+
    const [editMode, setEditMode] = useState(false)
    const [newStatus, setNewStatus] = useState<string>("")
 
@@ -24,7 +13,7 @@ export const Status: React.FC<StatusType> = React.memo((
    }, [status])
 
    const onDoubleClickHandler = () => {
-      if (myId === userID)
+      if (authId === Number(userIdFromURL))
          setEditMode(true)
    }
    const onBlurHandler = () => {
@@ -44,7 +33,7 @@ export const Status: React.FC<StatusType> = React.memo((
                    onChange={onChangeHandler}
                />
             : (
-               !status && myId === userID
+               !status && authId === Number(userIdFromURL)
                   ? <button onClick={onClickHandler}>+</button>
                   : <span onDoubleClick={onDoubleClickHandler}>{newStatus}</span>
             )
@@ -52,3 +41,10 @@ export const Status: React.FC<StatusType> = React.memo((
       </>
    )
 })
+
+export type StatusType = {
+   status: string
+   authId: number | null
+   userIdFromURL?: string | null
+   updateStatusCallback(status: string): void
+}

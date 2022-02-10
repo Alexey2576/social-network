@@ -5,7 +5,7 @@ export function withRouter<T>(Component: ComponentType<T>) {
    return (props: any) => {
       let {userID} = useParams<string>();
       let navigate = useNavigate()
-      return <Component {...props} userID={userID} navigate={navigate}/>
+      return <Component {...props} userIdFromURL={userID} navigate={navigate}/>
    };
 }
 

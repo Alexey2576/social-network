@@ -4,9 +4,9 @@ import {PeopleType} from "../Components/Content/Peoples/People/People";
 import {ProfileUserInfoType} from "../redux/profile-redux/profileReducer";
 
 const instanceAxios = axios.create({
-   withCredentials:true,
+   withCredentials: true,
    baseURL: 'https://social-network.samuraijs.com/api/1.0/',
-   headers: { "API-KEY": "0b35bf30-9811-4ef2-8cc3-183ac4bf4914" },
+   headers: {"API-KEY": "0b35bf30-9811-4ef2-8cc3-183ac4bf4914"},
 })
 
 export const userAPI = {
@@ -32,17 +32,24 @@ export const profileAPI = {
    updateStatus: (status: string) => {
       return instanceAxios.put<CommonResponseType>(`profile/status`, {status}).then(response => response.data)
    },
-   uploadPhoto: (image: any) => {
-      return instanceAxios.put<CommonResponseType< {small: string, large: string } >>('profile/photo', {image}).then(response => response.data)
+   uploadPhoto: (file: any) => {
+      const formData = new FormData();
+      formData.append('file', file)
+      const config = {
+         headers: {
+            'Content-Type': 'multipart/form-data'
+         }
+      }
+      return instanceAxios.put<CommonResponseType<{ small: string, large: string }>>('profile/photo', formData, config).then(response => response.data)
    }
 }
 
 export const authAPI = {
    getLoggedData: () => {
-      return instanceAxios.get<CommonResponseType<{id: number, email: string, login: string}>>('auth/me').then(response => response.data)
+      return instanceAxios.get<CommonResponseType<{ id: number, email: string, login: string }>>('auth/me').then(response => response.data)
    },
    logIn: (loginData: UserLoginType) => {
-      return instanceAxios.post<CommonResponseType<{userId: number}>>('auth/login', loginData).then(response => response.data)
+      return instanceAxios.post<CommonResponseType<{ userId: number }>>('auth/login', loginData).then(response => response.data)
    },
    logOut: () => {
       return instanceAxios.delete<CommonResponseType>('/auth/login', {}).then(response => response.data)
