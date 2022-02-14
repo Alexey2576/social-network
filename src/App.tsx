@@ -11,8 +11,7 @@ import {AppDispatch, RootState} from "./redux/redax-store";
 import {Route, Routes} from 'react-router-dom';
 import ContainerLogin from "./Components/Content/Login/ContainerLogin";
 import {Home} from "./Components/Home/Home";
-import {getAppData} from "./redux/auth-redux/authThunk";
-
+import {getAppData} from "./redux/auth/authThunk";
 
 export class App extends React.PureComponent<AppPropsType, AppDispatch> {
    componentDidMount = () => this.props.getAppData()

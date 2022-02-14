@@ -3,7 +3,7 @@ import s from "../profile.module.scss";
 import {Status} from "./Status/Status";
 import {ErrorBoundary} from "../../../Commons/ErrorBoundary/ErrorBoundary";
 import ava from '../../../../assets/ava.png'
-import {ProfileUserInfoType} from "../../../../redux/profile-redux/profileReducer";
+import {ProfileUserInfoType} from "../../../../redux/profile/profileReducer";
 import {FieldForm} from "../../../Commons/FieldForm/FieldForm";
 import {Form} from "react-final-form";
 import {FORM_ERROR} from "final-form";

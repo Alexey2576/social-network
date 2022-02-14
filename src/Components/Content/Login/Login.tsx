@@ -1,6 +1,6 @@
 import React from "react";
 import {Form} from "react-final-form";
-import {UserLoginType} from "../../../redux/auth-redux/authReducer";
+import {UserLoginType} from "../../../redux/auth/authReducer";
 import {required} from "../../Commons/Utils/Validators/validators";
 import {FieldForm} from "../../Commons/FieldForm/FieldForm";
 

@@ -4,9 +4,16 @@ import {Peoples} from "./Peoples";
 import React, {ComponentType} from 'react';
 import {Preloader} from "../../Commons/Preloader/Preloader";
 import {PeopleType} from "./People/People";
-import {follow, getPeoples, unfollow} from "../../../redux/peoples-redux/peoplesThunk";
+import {follow, getPeoples, unfollow} from "../../../redux/peoples/peoplesThunk";
 import {compose} from "@reduxjs/toolkit";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
+import {
+   getCurrentPage, getFlag, getFollowing_ID,
+   getIsFetching, getIsFollowing,
+   getPageSize,
+   getPeoplesFromState,
+   getTotalCount
+} from "../../../redux/peoples/peoplesSelectors";
 
 class ContainerPeoples extends React.PureComponent<ContainerPeoplePropsType> {
    componentDidMount = () => {
@@ -50,14 +57,14 @@ type MapDispatchToPropsType = {
 
 const mapStateToProps = (state: RootState): MapStateToPropsType => {
    return {
-      peoples: state.peoplesPage.peoples,
-      totalCount: state.peoplesPage.totalCount,
-      currentPage: state.peoplesPage.currentPage,
-      pageSize: state.peoplesPage.countPeoplesOnPage,
-      isFetching: state.peoplesPage.isFetching,
-      flag: state.peoplesPage.flag,
-      isFollowing: state.peoplesPage.isFollowing,
-      following_ID: state.peoplesPage.following_ID,
+      peoples: getPeoplesFromState(state),
+      totalCount: getTotalCount(state),
+      currentPage: getCurrentPage(state),
+      pageSize: getPageSize(state),
+      isFetching: getIsFetching(state),
+      flag: getFlag(state),
+      isFollowing: getIsFollowing(state),
+      following_ID: getFollowing_ID(state),
    }
 }
 

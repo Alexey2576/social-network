@@ -2,8 +2,9 @@ import React, {ComponentType} from "react";
 import {Header} from "./Header";
 import {connect} from "react-redux";
 import {AppDispatch, RootState} from "../../redux/redax-store";
-import {getLogOutData} from "../../redux/auth-redux/authThunk";
+import {getLogOutData} from "../../redux/auth/authThunk";
 import {compose} from "@reduxjs/toolkit";
+import {getEmail, getId, getIsAuth, getLogin} from "../../redux/auth/authSelectors";
 
 class ContainerHeader extends React.PureComponent<HeaderPropsType, AppDispatch> {
    logOutCallback = () => this.props.getLogOutData()
@@ -27,10 +28,10 @@ type MapDispatchToPropsType = {
 
 const mapStateToProps = (state: RootState): MapStateToPropsType => {
    return {
-      id: state.authState.id,
-      email: state.authState.email,
-      isAuth: state.authState.isAuth,
-      login: state.authState.login,
+      id: getId(state),
+      email: getEmail(state),
+      isAuth: getIsAuth(state),
+      login: getLogin(state),
    }
 }
 

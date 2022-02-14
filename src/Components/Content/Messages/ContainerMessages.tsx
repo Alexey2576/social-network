@@ -4,9 +4,10 @@ import React, {ComponentType} from 'react';
 import {connect} from "react-redux";
 import {UsersMessagesType} from "./UsersMessages/UserMessages/UserMessages";
 import {UsersType} from "./Users/User/User";
-import {addMessage, changeValueMessage} from "../../../redux/messages-redux/messagesThunk";
+import {addMessage, changeValueMessage} from "../../../redux/messages/messagesThunk";
 import {compose} from "@reduxjs/toolkit";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
+import {getUsers, getUsersMessages} from "../../../redux/messages/messagesSelectors";
 
 class ContainerMessages extends React.PureComponent<ContainerMessagesPropsType> {
 
@@ -34,8 +35,8 @@ type MapDispatchToPropsType = {
 
 const mapStateToProps = (state: RootState): MapStateToPropsType => {
    return {
-      users: state.messagesPage.users,
-      usersMessages: state.messagesPage.usersMessages,
+      users: getUsers(state),
+      usersMessages: getUsersMessages(state),
    }
 }
 

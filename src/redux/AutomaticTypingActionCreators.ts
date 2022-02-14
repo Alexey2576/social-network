@@ -1,4 +1,4 @@
-import * as actions from './messages-redux/messagesActions'
+import * as actions from './messages/messagesActions'
 
 type ActionsType = typeof actions //actions
 type ActionCreatorsNamesType = keyof ActionsType // Objects.key(actions)

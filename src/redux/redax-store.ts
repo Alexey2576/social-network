@@ -1,15 +1,15 @@
 import {combineReducers} from '@reduxjs/toolkit'
-import {messagesReducer} from "./messages-redux/MessagesReducer";
-import {profileReducer} from "./profile-redux/profileReducer";
-import {ProfileActionCreatorsType} from "./profile-redux/profileActions";
-import {peoplesReducer} from "./peoples-redux/peoplesReducer";
-import {PeoplesActionCreatorsType,} from "./peoples-redux/peoplesActions";
-import {MessagesActionCreatorsType} from "./messages-redux/messagesActions";
-import {authReducer} from "./auth-redux/authReducer";
-import {AuthActionCreatorsType} from "./auth-redux/authActions";
+import {profileReducer} from "./profile/profileReducer";
+import {ProfileActionCreatorsType} from "./profile/profileActions";
+import {peoplesReducer} from "./peoples/peoplesReducer";
+import {PeoplesActionCreatorsType,} from "./peoples/peoplesActions";
+import {MessagesActionCreatorsType} from "./messages/messagesActions";
+import {authReducer} from "./auth/authReducer";
+import {AuthActionCreatorsType} from "./auth/authActions";
 import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from '@redux-devtools/extension';
+import {messagesReducer} from "./messages/MessagesReducer";
 
 const rootReducer = combineReducers({
    profilePage: profileReducer,

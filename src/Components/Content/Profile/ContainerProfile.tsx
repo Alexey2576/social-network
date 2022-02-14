@@ -2,7 +2,7 @@ import {RootState} from "../../../redux/redax-store";
 import {Profile} from "./Profile";
 import React, {ComponentType} from "react";
 import {connect} from "react-redux";
-import {ProfileUserInfoType} from "../../../redux/profile-redux/profileReducer";
+import {ProfileUserInfoType} from "../../../redux/profile/profileReducer";
 import {PostsType} from "./Posts/Post/Post";
 import {
    addPost,
@@ -10,11 +10,11 @@ import {
    getProfileUserInfo, updateProfileData,
    updateProfileStatus,
    uploadProfilePhoto
-} from "../../../redux/profile-redux/profileThunk";
+} from "../../../redux/profile/profileThunk";
 import {withRouter} from "../../../hoc/withRouter";
 import {compose} from "@reduxjs/toolkit";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
-import {getAuthId, getPosts, getStatus, getUserInfo} from "../../../redux/profile-redux/profileSelectors";
+import {getAuthId, getPosts, getStatus, getUserInfo} from "../../../redux/profile/profileSelectors";
 
 class ContainerProfile extends React.Component<ContainerProfilePropsType> {
    loadProfileData = () => {

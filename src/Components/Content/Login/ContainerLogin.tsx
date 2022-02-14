@@ -1,12 +1,13 @@
 import React, {ComponentType} from 'react';
 import {Login} from "./Login";
-import {UserLoginType} from "../../../redux/auth-redux/authReducer";
+import {UserLoginType} from "../../../redux/auth/authReducer";
 import {compose} from "@reduxjs/toolkit";
 import {connect} from "react-redux";
-import {getLogInData} from "../../../redux/auth-redux/authThunk";
+import {getLogInData} from "../../../redux/auth/authThunk";
 import {FORM_ERROR} from "final-form";
 import {useNavigate} from "react-router-dom";
 import {RootState} from "../../../redux/redax-store";
+import {getCaptchaUrl} from "../../../redux/auth/authSelectors";
 
 type ContainerLoginPropsType = MapStateToPropsType & MapDispatchToPropsType
 
@@ -34,7 +35,7 @@ type MapStateToPropsType = {
 type MapDispatchToPropsType = { getLogInData(loginData: UserLoginType): Promise<any> }
 
 const mapStateToProps = (state: RootState): MapStateToPropsType => ({
-   captchaUrl: state.authState.captchaUrl
+   captchaUrl: getCaptchaUrl(state)
 })
 
 export default compose<ComponentType>(
