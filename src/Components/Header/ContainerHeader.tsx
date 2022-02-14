@@ -18,7 +18,7 @@ type MapStateToPropsType = {
    id: number | null
    email: string | null
    login: string | null
-   isAuth: boolean
+   isAuth: boolean,
 }
 type MapDispatchToPropsType = {
    getAuthData(): void
@@ -30,7 +30,7 @@ const mapStateToProps = (state: RootState): MapStateToPropsType => {
       id: state.authState.id,
       email: state.authState.email,
       isAuth: state.authState.isAuth,
-      login: state.authState.login
+      login: state.authState.login,
    }
 }
 

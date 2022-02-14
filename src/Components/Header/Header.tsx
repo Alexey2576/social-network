@@ -2,7 +2,6 @@ import React from "react";
 import s from './header.module.scss'
 import logo from '../../assets/logo.png'
 import ava from '../../assets/ava.jpg'
-import {UserLoggedType} from "../../redux/auth-redux/authReducer";
 import {NavLink} from "react-router-dom";
 
 export const Header: React.FC<HeaderType> = React.memo(({ login, isAuth, logOutCallback, }) => {
@@ -33,6 +32,8 @@ export const Header: React.FC<HeaderType> = React.memo(({ login, isAuth, logOutC
    )
 })
 
-export type HeaderType = UserLoggedType & {
+export type HeaderType = {
+   login: string | null
+   isAuth: boolean
    logOutCallback(): void
 }

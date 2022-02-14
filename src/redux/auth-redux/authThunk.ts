@@ -1,34 +1,36 @@
 import {ThunkDispatchType, ThunkType} from "../redax-store";
-import {authAPI} from "../../api/api";
+import {authAPI, securityAPI} from "../../api/api";
 import {UserLoginType} from "./authReducer";
-import {setAuthData} from "./authActions";
-import {setIsFetching} from "../peoples-redux/peoplesActions";
+import {setAuthData, setCaptchaUrl} from "./authActions";
 
 export const getLogInData = (loginData: UserLoginType): ThunkType => async (dispatch: ThunkDispatchType): Promise<any> => {
-   dispatch(setIsFetching(true))
    let data = await authAPI.logIn(loginData)
-   dispatch(setIsFetching(false))
    if (data.resultCode === 0) {
       await dispatch(getAppData())
+   } else {
+      if (data.resultCode === 10) {
+         await dispatch(getCaptchaUrl())
+      }
    }
    return data
 }
 
 export const getLogOutData = (): ThunkType => async (dispatch: ThunkDispatchType) => {
-   dispatch(setIsFetching(true))
    let data = await authAPI.logOut()
-   dispatch(setIsFetching(false))
    if (data.resultCode === 0) {
       dispatch(setAuthData(null, null, null, false))
    }
 }
 
 export const getAppData = (): ThunkType => async (dispatch: ThunkDispatchType) => {
-   dispatch(setIsFetching(true))
    let data = await authAPI.getLoggedData()
-   dispatch(setIsFetching(false))
    if (data.resultCode === 0) {
       const {id, email, login} = data.data
       dispatch(setAuthData(id, email, login, true))
    }
+}
+
+export const getCaptchaUrl = (): ThunkType => async (dispatch: ThunkDispatchType) => {
+   let data = await securityAPI.getCaptchaURL()
+   dispatch(setCaptchaUrl(data.url))
 }

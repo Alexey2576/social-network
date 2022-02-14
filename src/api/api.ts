@@ -59,6 +59,12 @@ export const authAPI = {
    }
 }
 
+export const securityAPI = {
+   getCaptchaURL: () => {
+      return instanceAxios.get<{url: string}>('/security/get-captcha-url').then(response => response.data)
+   }
+}
+
 export type CommonResponseType<T = {}> = {
    resultCode: number
    messages: string[]

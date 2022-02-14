@@ -5,9 +5,7 @@ import {ErrorBoundary} from "../../../Commons/ErrorBoundary/ErrorBoundary";
 import ava from '../../../../assets/ava.png'
 import {ProfileUserInfoType} from "../../../../redux/profile-redux/profileReducer";
 import {FieldForm} from "../../../Commons/FieldForm/FieldForm";
-import {required} from "../../../Commons/Utils/Validators/validators";
 import {Form} from "react-final-form";
-import {UserLoginType} from "../../../../redux/auth-redux/authReducer";
 import {FORM_ERROR} from "final-form";
 
 export const ProfileUserInfo: React.FC<ProfileUserInfoBlock> = React.memo((props) => {
@@ -109,7 +107,7 @@ const ProfileDataForm: React.FC<ProfileDataFormType> = ({onSubmit, contactsKeys,
       <Form
          onSubmit={onSubmit} initialValues={initialValues}
          render={
-            ({handleSubmit, submitError, initialValues}) => (
+            ({handleSubmit, submitError,}) => (
                <form onSubmit={handleSubmit}>
                   <h2>Profile Info</h2>
                   <div>
