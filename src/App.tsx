@@ -1,48 +1,44 @@
-import React, {ComponentType} from 'react';
-import './App.module.scss';
-import {Navbar} from "./Components/Navbar/Navbar";
-import {Content} from "./Components/Content/Content";
-import s from './App.module.scss'
-import {Contacts} from "./Components/Contacts/Contacts";
-import ContainerHeader from "./Components/Header/ContainerHeader";
+import React, {ComponentType, PureComponent} from 'react';
 import {compose} from "@reduxjs/toolkit";
 import {connect} from "react-redux";
 import {AppDispatch, RootState} from "./redux/redax-store";
 import {Route, Routes} from 'react-router-dom';
-import ContainerLogin from "./Components/Content/Login/ContainerLogin";
-import {Home} from "./Components/Home/Home";
+import './index'
+import {Layout, Spin} from 'antd';
+import InitializedContent from "./Components/Content/InitializedContent";
+import {NotFound} from "./Components/NotFound/NotFound";
 import {getAppData} from "./redux/auth/authThunk";
+import Login from "./Components/Login/Login";
+import {getIsInitialized} from "./redux/app/appSelectors";
 
-export class App extends React.PureComponent<AppPropsType, AppDispatch> {
-   componentDidMount = () => this.props.getAppData()
+export class App extends PureComponent<AppPropsType, AppDispatch> {
+   componentDidMount() {
+      this.props.getAppData()
+   }
 
    render() {
+
+      if (!this.props.isInitialized) {
+         return (<Spin size={"large"}/>)
+      }
+
       return (
-         <div className={s.App}>
-            <ContainerHeader/>
-            {
-               !this.props.isAuth &&
-               <Routes>
-                 <Route path={'/'} element={<Home/>}/>
-                 <Route path={'/login'} element={<ContainerLogin/>}/>
-               </Routes>
-            }
-            {this.props.isAuth &&
-            <div className={s.contentAndNavbar}>
-              <Navbar/>
-              <Content/>
-              <Contacts/>
-            </div>}
-         </div>
+         <Layout className="site-layout" style={{minHeight: '100vh', display: "block"}}>
+            <Routes>
+               <Route path={"/*"} element={<InitializedContent/>}/>
+               <Route path={"/login"} element={<Login/>}/>
+               <Route path={"/404"} element={<NotFound/>}/>
+            </Routes>
+         </Layout>
       );
    }
 }
 
 type AppPropsType = MapStateToPropsType & MapDispatchToPropsType
-type MapStateToPropsType = { isAuth: boolean }
-type MapDispatchToPropsType = { getAppData(): void }
+type MapStateToPropsType = { isInitialized: boolean }
+type MapDispatchToPropsType = { getAppData: () => void }
 
-const mapStateToProps = (state: RootState): MapStateToPropsType => ({isAuth: state.authState.isAuth})
+const mapStateToProps = (state: RootState): MapStateToPropsType => ({isInitialized: getIsInitialized(state)})
 
 export default compose<ComponentType>(
    connect(mapStateToProps, {getAppData}))

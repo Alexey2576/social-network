@@ -5,6 +5,7 @@ import {BrowserRouter} from "react-router-dom";
 import App from "./App";
 import {store} from "./redux/redax-store";
 import {Provider} from "react-redux";
+import 'antd/dist/antd.css';
 
 ReactDOM.render(
    <React.StrictMode>

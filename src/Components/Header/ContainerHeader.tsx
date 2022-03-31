@@ -1,25 +1,33 @@
-import React, {ComponentType} from "react";
-import {Header} from "./Header";
+import React, {ComponentType, PureComponent} from "react";
+import {HeaderSN} from "./Header";
 import {connect} from "react-redux";
-import {AppDispatch, RootState} from "../../redux/redax-store";
+import {RootState} from "../../redux/redax-store";
 import {getLogOutData} from "../../redux/auth/authThunk";
 import {compose} from "@reduxjs/toolkit";
 import {getEmail, getId, getIsAuth, getLogin} from "../../redux/auth/authSelectors";
 
-class ContainerHeader extends React.PureComponent<HeaderPropsType, AppDispatch> {
+class ContainerHeader extends PureComponent<HeaderPropsType, HeaderStateType> {
    logOutCallback = () => this.props.getLogOutData()
 
    render = () => (
-      <Header {...this.props} logOutCallback={this.logOutCallback}/>
+      <HeaderSN
+         {...this.props}
+         logOutCallback={this.logOutCallback}
+         collapsed={this.props.collapsed}
+         toggle={this.props.toggle}
+      />
    )
 }
 
-type HeaderPropsType = MapStateToPropsType & MapDispatchToPropsType
+type HeaderStateType = {}
+type HeaderPropsType = MapStateToPropsType
+   & MapDispatchToPropsType
+   & { collapsed: boolean; toggle: () => void }
 type MapStateToPropsType = {
    id: number | null
    email: string | null
    login: string | null
-   isAuth: boolean,
+   isAuth: boolean
 }
 type MapDispatchToPropsType = {
    getAuthData(): void
@@ -31,10 +39,13 @@ const mapStateToProps = (state: RootState): MapStateToPropsType => {
       id: getId(state),
       email: getEmail(state),
       isAuth: getIsAuth(state),
-      login: getLogin(state),
+      login: getLogin(state)
    }
 }
 
-export default compose<ComponentType>(
+export default compose<ComponentType<{
+   collapsed: boolean
+   toggle: () => void
+}>>(
    connect(mapStateToProps, {getLogOutData}))
 (ContainerHeader)

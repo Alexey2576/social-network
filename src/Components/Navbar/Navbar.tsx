@@ -1,59 +1,53 @@
-import React from "react";
-import './navbar.module.scss'
-import s from './navbar.module.scss'
-import messages from '../../assets/messages.png'
-import people from '../../assets/people.png'
-import photos from '../../assets/photos.png'
-import news from '../../assets/news.png'
-import profile from '../../assets/profile.png'
-import settings from '../../assets/setting.png'
-import ava from '../../assets/ava.jpg'
-import {NavLink} from "react-router-dom";
+import {Menu} from "antd";
+import React, {FC, memo} from "react";
 import {useSelector} from "react-redux";
+import Sider from "antd/es/layout/Sider";
+import {NavLink} from "react-router-dom";
+import SubMenu from "antd/lib/menu/SubMenu";
 import {RootState} from "../../redux/redax-store";
+import {MenuUnfoldOutlined, UploadOutlined, UserOutlined, VideoCameraOutlined} from "@ant-design/icons";
 
-export const Navbar = React.memo(() => {
+export const Navbar: FC<NavbarType> = memo(({collapsed, toggle}) => {
+
    const id = useSelector<RootState, number | null>((state: RootState) => state.authState.id)
    const fullAddressNavLink = `/profile/${id}`
 
    return (
-      <div className={s.navbar}>
-         <div className={s.navbar__profile}>
-            <div className={s.navbar__profile_ava}>
-               <img src={ava} alt="ava"/>
-            </div>
-            <div className={s.navbar__profile_info}>
-               <h4 className={s.navbar__profile_info_name}>Alexey Nikitin</h4>
-               <span className={s.navbar__profile_info_username}>@username</span>
-            </div>
-         </div>
-
-         <div className={s.navbar__link}>
-            <NavLink className={s.navbar__link_item} to="/messages">
-               <img className={s.navbar__link_item_icon} src={messages} alt="icon"/>
-               <h3 className={s.navbar__link_item_title}>Messages</h3>
-            </NavLink>
-            <NavLink className={s.navbar__link_item} to="/peoples">
-               <img className={s.navbar__link_item_icon} src={people} alt="icon"/>
-               <h3 className={s.navbar__link_item_title}>Peoples</h3>
-            </NavLink>
-            <NavLink className={s.navbar__link_item} to="/photos">
-               <img className={s.navbar__link_item_icon} src={photos} alt="icon"/>
-               <h3 className={s.navbar__link_item_title}>Photos</h3>
-            </NavLink>
-            <NavLink className={s.navbar__link_item} to="/news">
-               <img className={s.navbar__link_item_icon} src={news} alt="icon"/>
-               <h3 className={s.navbar__link_item_title}>News</h3>
-            </NavLink>
-            <NavLink className={s.navbar__link_item} to={fullAddressNavLink}>
-               <img className={s.navbar__link_item_icon} src={profile} alt="icon"/>
-               <h3 className={s.navbar__link_item_title}>Profile</h3>
-            </NavLink>
-            <NavLink className={s.navbar__link_item} to="/settings">
-               <img className={s.navbar__link_item_icon} src={settings} alt="icon"/>
-               <h3 className={s.navbar__link_item_title}>Settings</h3>
-            </NavLink>
-         </div>
-      </div>
+      <Sider trigger={null} collapsible collapsed={collapsed}>
+         <div className="logo"/>
+         <Menu theme="light" mode="inline" defaultSelectedKeys={['1']}>
+            <Menu.Item key="1" icon={<UserOutlined/>}>
+               <NavLink to={fullAddressNavLink}>
+                  Profile
+               </NavLink>
+            </Menu.Item>
+            <Menu.Item key="2" icon={<VideoCameraOutlined/>}>
+               <NavLink to="/peoples">
+                  Peoples
+               </NavLink>
+            </Menu.Item>
+            <Menu.Item key="3" icon={<UploadOutlined/>}>
+               <NavLink to="/messages">
+                  Messages
+               </NavLink>
+            </Menu.Item>
+            <SubMenu key="sub1" icon={<UserOutlined/>} title="User">
+               <Menu.Item key="3">Tom</Menu.Item>
+               <Menu.Item key="4">Bill</Menu.Item>
+               <Menu.Item key="5">Alex</Menu.Item>
+            </SubMenu>
+            <Menu.Item key="3" onClick={() => toggle()}>
+               <NavLink to="/messages">
+                  <MenuUnfoldOutlined/>
+               </NavLink>
+            </Menu.Item>
+         </Menu>
+      </Sider>
    )
 })
+
+type NavbarType = {
+   collapsed: boolean
+   toggle: () => void
+}
+

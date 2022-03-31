@@ -1,5 +1,5 @@
 import React, {ComponentType} from 'react';
-import {Login} from "./Login";
+import {LoginForm} from "./LoginForm";
 import {UserLoginType} from "../../../redux/auth/authReducer";
 import {compose} from "@reduxjs/toolkit";
 import {connect} from "react-redux";
@@ -11,10 +11,11 @@ import {getCaptchaUrl} from "../../../redux/auth/authSelectors";
 
 type ContainerLoginPropsType = MapStateToPropsType & MapDispatchToPropsType
 
-const ContainerLogin: React.FC<ContainerLoginPropsType> = React.memo(({ getLogInData, captchaUrl }) => {
+const ContainerLoginForm: React.FC<ContainerLoginPropsType> = React.memo(({ getLogInData, captchaUrl }) => {
 
    let navigate = useNavigate();
    const onSubmitHandler = async (loginData: UserLoginType) => {
+      console.log(loginData)
       let data = await getLogInData(loginData)
       if (data.resultCode !== 0) {
          return {[FORM_ERROR]: data.messages[0]}
@@ -24,7 +25,7 @@ const ContainerLogin: React.FC<ContainerLoginPropsType> = React.memo(({ getLogIn
    }
    return (
       <div>
-         <Login onSubmit={onSubmitHandler} captchaUrl={captchaUrl}/>
+         <LoginForm onSubmit={onSubmitHandler} captchaUrl={captchaUrl}/>
       </div>
    );
 })
@@ -40,6 +41,6 @@ const mapStateToProps = (state: RootState): MapStateToPropsType => ({
 
 export default compose<ComponentType>(
    connect(mapStateToProps, {getLogInData}),
-)(ContainerLogin)
+)(ContainerLoginForm)
 
 

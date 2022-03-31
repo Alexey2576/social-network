@@ -25,6 +25,7 @@ class ContainerPeoples extends React.PureComponent<ContainerPeoplePropsType> {
    unfollowCallback = (people_id: number) => this.props.unfollow(people_id, !this.props.flag)
 
    render = () => {
+      debugger
       return (
          <>
             {this.props.isFetching && <Preloader/>}

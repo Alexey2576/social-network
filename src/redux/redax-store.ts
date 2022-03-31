@@ -10,12 +10,15 @@ import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from '@redux-devtools/extension';
 import {messagesReducer} from "./messages/MessagesReducer";
+import {appReducer} from "./app/appReducer";
+import {AppActionCreatorsType} from "./app/appActions";
 
 const rootReducer = combineReducers({
    profilePage: profileReducer,
    messagesPage: messagesReducer,
    peoplesPage: peoplesReducer,
    authState: authReducer,
+   appState: appReducer,
 })
 
 export const store = createStore(
@@ -28,6 +31,7 @@ export type ActionCreatorsType =
    | MessagesActionCreatorsType
    | PeoplesActionCreatorsType
    | ProfileActionCreatorsType
+   | AppActionCreatorsType
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch

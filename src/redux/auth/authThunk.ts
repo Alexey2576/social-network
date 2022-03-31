@@ -2,6 +2,7 @@ import {ThunkDispatchType, ThunkType} from "../redax-store";
 import {authAPI, securityAPI} from "../../api/api";
 import {UserLoginType} from "./authReducer";
 import {setAuthData, setCaptchaUrl} from "./authActions";
+import {setIsInitialize} from "../app/appActions";
 
 export const getLogInData = (loginData: UserLoginType): ThunkType => async (dispatch: ThunkDispatchType): Promise<any> => {
    try {
@@ -39,6 +40,8 @@ export const getAppData = (): ThunkType => async (dispatch: ThunkDispatchType) =
       }
    } catch (e) {
       console.log("authThunk -> getAppData ", e)
+   } finally {
+      dispatch(setIsInitialize(true))
    }
 }
 
