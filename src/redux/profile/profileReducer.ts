@@ -1,13 +1,13 @@
-import {PostsType} from "../../Components/Content/Profile/Posts/Post/Post";
+import {v1} from "uuid";
 import {ActionCreatorsType} from "../redax-store";
 import {PROFILE_ACTIONS_TYPES} from "./profileActions";
-import {v1} from "uuid";
+import {PostsType} from "../../Components/Content/Profile/Posts/Post/Post";
 
 const initialProfilePageState = {
    profileUserInfo: {
       userId: 0,
-      fullName: "",
       aboutMe: "",
+      fullName: "",
       lookingForAJob: false,
       lookingForAJobDescription: "",
       photos: {
@@ -15,14 +15,14 @@ const initialProfilePageState = {
          large: "",
       },
       contacts: {
-         github: "",
          vk: "",
-         facebook: "",
-         instagram: "",
+         github: "",
          twitter: "",
          website: "",
          youtube: "",
+         facebook: "",
          mainLink: "",
+         instagram: "",
       }
    } as ProfileUserInfoType,
    status: "",
@@ -65,24 +65,24 @@ export const profileReducer = (state: ProfilePageType = initialProfilePageState,
 export type ProfilePageType = typeof initialProfilePageState
 export type ProfileUserInfoType = {
    userId: number
+   aboutMe: string
+   fullName: string
+   photos: PhotosType
+   contacts: ContactsType
    lookingForAJob: boolean
    lookingForAJobDescription: string
-   fullName: string
-   aboutMe: string
-   contacts: ContactsType
-   photos: PhotosType
 }
 export type PhotosType = {
    small: string
    large: string
 }
 export type ContactsType = {
-   github: string
    vk: string
-   facebook: string
-   instagram: string
+   github: string
    twitter: string
    website: string
    youtube: string
    mainLink: string
+   facebook: string
+   instagram: string
 }

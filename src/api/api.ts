@@ -1,6 +1,5 @@
 import axios from "axios";
 import {UserLoginType} from "../redux/auth/authReducer";
-import {PeopleType} from "../Components/Content/Peoples/People/People";
 import {ProfileUserInfoType} from "../redux/profile/profileReducer";
 
 const instanceAxios = axios.create({
@@ -74,4 +73,11 @@ type GetUsersResponseType = {
    items: PeopleType[]
    totalCount: number
    error: string
+}
+export type PeopleType = {
+   id: number
+   name: string
+   status: string
+   photos: { small: string, large: string }
+   followed: boolean
 }

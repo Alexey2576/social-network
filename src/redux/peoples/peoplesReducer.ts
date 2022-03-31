@@ -1,7 +1,7 @@
 import {ActionCreatorsType} from "../redax-store";
-import {PeopleType} from "../../Components/Content/Peoples/People/People";
 import {PEOPLES_ACTIONS_TYPES} from "./peoplesActions";
 import {updateObjectInArray} from "../../Components/Commons/Utils/functions-helpers";
+import {PeopleType} from "../../api/api";
 
 export type PeoplesPageType = {
    peoples: PeopleType[] | []
@@ -17,7 +17,7 @@ export type PeoplesPageType = {
 const initialPeoplesPageState: PeoplesPageType = {
    peoples: [],
    totalCount: 0,
-   currentPage: 2,
+   currentPage: 1,
    countPeoplesOnPage: 15,
    isFetching: false,
    flag: false,
@@ -53,6 +53,11 @@ export const peoplesReducer = (state: PeoplesPageType = initialPeoplesPageState,
             following_ID: action.isFollowing
                ? [...state.following_ID, action.followUser_ID]
                : state.following_ID.filter(id => id !== action.followUser_ID)
+         }
+      case PEOPLES_ACTIONS_TYPES.SET_COUNT_PEOPLES_ON_PAGE:
+         return {
+            ...state,
+            countPeoplesOnPage: action.countPeoplesOnPage
          }
       default: return state
    }

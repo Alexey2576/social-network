@@ -1,7 +1,9 @@
-import React from 'react';
-import {PeopleType} from "../People/People";
+import React, {FC, memo} from 'react';
+import {Button} from "antd";
+import {PeopleType} from "../../../../api/api";
+import {CloseCircleOutlined, CheckCircleOutlined} from '@ant-design/icons';
 
-export const PeopleFollowUnfollow: React.FC<PeopleFollowUnfollowType> = React.memo((
+export const PeopleFollowUnfollow: FC<PeopleFollowUnfollowType> = memo((
    props
 ) => {
    const {
@@ -14,15 +16,18 @@ export const PeopleFollowUnfollow: React.FC<PeopleFollowUnfollowType> = React.me
    const onClickFollowHandler = () => followCallback(people.id)
 
    return (
-      <div className="people_followed">
+      <div>
          {
             people.followed
-               ? <button disabled={following_ID.some(id => id === people.id)}
+               ? <Button disabled={following_ID.some(id => id === people.id)}
                          className="people_followed__btn"
-                         onClick={onClickUnfollowHandler}>Unfollow</button>
-               : <button disabled={following_ID.some(id => id === people.id)}
+                         style={{border: "none", padding: 0, height: 0}}
+                         size={"large"}
+                         onClick={onClickUnfollowHandler}><CloseCircleOutlined/></Button>
+               : <Button disabled={following_ID.some(id => id === people.id)}
                          className="people_followed__btn"
-                         onClick={onClickFollowHandler}>Follow</button>
+                         style={{border: "none", padding: 0}}
+                         onClick={onClickFollowHandler}><CheckCircleOutlined /></Button>
          }
       </div>
    );

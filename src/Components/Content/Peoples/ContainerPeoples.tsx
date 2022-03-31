@@ -2,36 +2,42 @@ import {RootState} from "../../../redux/redax-store";
 import {connect} from "react-redux";
 import {Peoples} from "./Peoples";
 import React, {ComponentType} from 'react';
-import {Preloader} from "../../Commons/Preloader/Preloader";
-import {PeopleType} from "./People/People";
 import {follow, getPeoples, unfollow} from "../../../redux/peoples/peoplesThunk";
 import {compose} from "@reduxjs/toolkit";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 import {
-   getCurrentPage, getFlag, getFollowing_ID,
-   getIsFetching, getIsFollowing,
+   getCurrentPage,
+   getFlag,
+   getFollowing_ID,
+   getIsFetching,
+   getIsFollowing,
    getPageSize,
    getPeoplesFromState,
    getTotalCount
 } from "../../../redux/peoples/peoplesSelectors";
+import {Spin} from "antd";
+import {setCountPeoplesOnPage} from "../../../redux/peoples/peoplesActions";
+import {PeopleType} from "../../../api/api";
 
 class ContainerPeoples extends React.PureComponent<ContainerPeoplePropsType> {
    componentDidMount = () => {
       this.props.getPeoples(this.props.pageSize, this.props.currentPage)
    }
 
+   sendMessageCallback = (userInfo: PeopleType) => {}
    setCurrentPageCallback = (currentPage: number) => this.props.getPeoples(this.props.pageSize, currentPage)
+   setSizePageCallback = (currentPage: number, size: number) => {this.props.setCountPeoplesOnPage(currentPage, size)}
    followCallback = (people_id: number) => this.props.follow(people_id, !this.props.flag)
    unfollowCallback = (people_id: number) => this.props.unfollow(people_id, !this.props.flag)
 
    render = () => {
-      debugger
       return (
          <>
-            {this.props.isFetching && <Preloader/>}
+            {this.props.isFetching && <Spin size={"large"}/>}
             <Peoples {...this.props}
                      followCallback={this.followCallback}
                      unfollowCallback={this.unfollowCallback}
+                     onShowSizeChange={this.setSizePageCallback}
                      setCurrentPageCallback={this.setCurrentPageCallback}
             />
          </>
@@ -54,6 +60,7 @@ type MapDispatchToPropsType = {
    follow(people_ID: number, flag: boolean): void
    unfollow(people_ID: number, flag: boolean): void
    getPeoples(countPeoplesOnPage: number, currentPage: number): void
+   setCountPeoplesOnPage(currentPage: number, countPeoplesOnPage: number): void
 }
 
 const mapStateToProps = (state: RootState): MapStateToPropsType => {
@@ -70,6 +77,6 @@ const mapStateToProps = (state: RootState): MapStateToPropsType => {
 }
 
 export default compose<ComponentType>(
-   connect(mapStateToProps, {follow, unfollow, getPeoples}),
+   connect(mapStateToProps, {follow, unfollow, getPeoples, setCountPeoplesOnPage}),
    withAuthRedirect,
 )(ContainerPeoples)

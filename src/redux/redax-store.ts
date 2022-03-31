@@ -35,6 +35,6 @@ export type ActionCreatorsType =
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
-export type ThunkType = ThunkAction<Promise<void>, RootState, unknown, ActionCreatorsType>
+export type ThunkType<T = void> = ThunkAction<Promise<T>, RootState, unknown, ActionCreatorsType>
 export type ThunkDispatchType = ThunkDispatch<RootState, unknown, ActionCreatorsType>;
 

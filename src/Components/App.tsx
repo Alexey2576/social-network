@@ -1,15 +1,15 @@
 import React, {ComponentType, PureComponent} from 'react';
 import {compose} from "@reduxjs/toolkit";
 import {connect} from "react-redux";
-import {AppDispatch, RootState} from "./redux/redax-store";
+import {AppDispatch, RootState} from "../redux/redax-store";
 import {Route, Routes} from 'react-router-dom';
-import './index'
+import '../index'
 import {Layout, Spin} from 'antd';
-import InitializedContent from "./Components/Content/InitializedContent";
-import {NotFound} from "./Components/NotFound/NotFound";
-import {getAppData} from "./redux/auth/authThunk";
-import Login from "./Components/Login/Login";
-import {getIsInitialized} from "./redux/app/appSelectors";
+import InitializedContent from "./Content/InitializedContent";
+import {NotFound} from "./NotFound/NotFound";
+import {getAppData} from "../redux/auth/authThunk";
+import Login from "./Login/Login";
+import {getIsInitialized} from "../redux/app/appSelectors";
 
 export class App extends PureComponent<AppPropsType, AppDispatch> {
    componentDidMount() {

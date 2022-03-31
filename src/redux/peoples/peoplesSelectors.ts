@@ -1,5 +1,5 @@
 import {RootState} from "../redax-store";
-import {PeopleType} from "../../Components/Content/Peoples/People/People";
+import {PeopleType} from "../../api/api";
 
 export const getPeoplesFromState = (state: RootState): PeopleType[] | [] => state.peoplesPage.peoples
 export const getTotalCount = (state: RootState): number => state.peoplesPage.totalCount
