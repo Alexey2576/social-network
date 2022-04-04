@@ -3,12 +3,12 @@ import ava from '../../../assets/ava.png'
 import {PeopleType} from "../../../api/api";
 import {Card, Modal, Pagination} from "antd";
 import {EditOutlined} from '@ant-design/icons';
-import React, {ChangeEvent, FormEvent} from "react";
+import React, {ChangeEvent, FC, FormEvent, memo} from "react";
 import {PeopleFollowUnfollow} from "./PeopleFollowUnfollow/PeopleFollowUnfollow";
 
 const {TextArea} = Input;
 
-export const Peoples: React.FC<PeoplesType> = React.memo((props) => {
+export const Peoples: FC<PeoplesType> = memo((props) => {
    const {
       peoples,
       pageSize,
@@ -29,14 +29,21 @@ export const Peoples: React.FC<PeoplesType> = React.memo((props) => {
       setVisible(true)
    }
    const onChangeModalText = (e: ChangeEvent<HTMLTextAreaElement>) => setModalText(e.currentTarget.value)
-   const handleOk = () => {
+   const handleOk = async () => {
       setConfirmLoading(true);
-      setTimeout(() => {
-         setVisible(false);
-         setModalText("")
-         modalUserInfo && sendMessageCallback(modalUserInfo)
-         setConfirmLoading(false);
-      }, 2000);
+      if (modalUserInfo) {
+         await sendMessageCallback(modalUserInfo, modalText)
+            .then(() => {
+               setVisible(false);
+               setModalText("")
+            })
+            .catch(() => {
+               console.log("error")
+            })
+            .finally(() => {
+               setConfirmLoading(false);
+            })
+      }
    };
 
    const handleCancel = () => setVisible(false)
@@ -107,7 +114,7 @@ export type PeoplesType = {
    totalCount: number
    peoples: PeopleType[]
    following_ID: number[]
-   sendMessageCallback: (userInfo: PeopleType) => {}
+   sendMessageCallback: (userInfo: PeopleType, message: string) => Promise<any>
    followCallback: (people_id: number) => void
    unfollowCallback: (people_id: number) => void
    setCurrentPageCallback: (currentPage: number) => void

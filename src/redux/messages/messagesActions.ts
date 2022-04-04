@@ -1,9 +1,15 @@
+import {MessageType} from "./MessagesReducer";
+
 export enum MESSAGES_ACTIONS_TYPES {
    ADD_MESSAGE = 'messagesReducer/ADD_MESSAGE',
-   CHANGE_VALUE_MESSAGE = 'messagesReducer/CHANGE_VALUE_MESSAGE',
+   SEND_MESSAGE = 'messagesReducer/SEND_MESSAGE',
 }
 
-export type MessagesActionCreatorsType = ReturnType<typeof addMessageAC> | ReturnType<typeof changeValueMessageAC>
+export type MessagesActionCreatorsType =
+   | ReturnType<typeof addUserMessageAC>
+   | ReturnType<typeof sendUserMessageAC>
 
-export const addMessageAC = (message: string) => ({ type: MESSAGES_ACTIONS_TYPES.ADD_MESSAGE, message } as const)
-export const changeValueMessageAC = (newChangeText: string) => ({type: MESSAGES_ACTIONS_TYPES.CHANGE_VALUE_MESSAGE, newChangeText} as const)
+export const addUserMessageAC = (id: string, name: string, photo: string) =>
+   ({ type: MESSAGES_ACTIONS_TYPES.ADD_MESSAGE, payload: {id, name, photo} } as const)
+export const sendUserMessageAC = (message: MessageType & { userId: string }, id: string) =>
+   ({ type: MESSAGES_ACTIONS_TYPES.SEND_MESSAGE, payload: {message, id} } as const)

@@ -1,27 +1,35 @@
 import {ActionCreatorsType} from "../redax-store";
 import {MESSAGES_ACTIONS_TYPES} from "./messagesActions";
-import {v1} from 'uuid';
-import {MessagesType} from "../../Components/Content/Messages/Messages";
 
 const initialMessagesPageState = {
    users: [
-      {id: "user1", name: "Alex", ava: "https://vraki.net/sites/default/files/inline/images/30_55.jpg"},
-      {id: "user2", name: "Sasha", ava: "https://pixelbox.ru/wp-content/uploads/2021/05/ava-vk-animal-91.jpg"},
-      {id: "user3", name: "Sveta", ava: "https://vraki.net/sites/default/files/inline/images/1_6.png"},
-      {id: "user4", name: "Yana", ava: "https://pixelbox.ru/wp-content/uploads/2021/02/mult-ava-instagram-2.jpg"},
-      {id: "user5", name: "Valera", ava: "https://vraki.net/sites/default/files/mood/m.jpg"}
+      {
+         userId: "user1",
+         author: "bla bla",
+         avatar: ""
+      }
    ] as UserType[],
    usersMessages: {
       ["user1"]: [
-         {userId: "user1", message: "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure)."},
-         {message: "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure)."},
-         {message: "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure)."},
-         {userId: "user1", message: "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure)."},
+         {
+            author: "",
+            content: "We supply a serlity design resources (Sketch and Axure).",
+            avatar: "",
+            datetime: ""
+         },
+         {
+            author: "",
+            content: "We supply a series of design principles, practical pattees (Sketch and Axure).",
+            avatar: "",
+            datetime: ""
+         },
+         {
+            author: "",
+            content: "We supply a series of design principles, practical patterns andsources (Sketch and Axure).",
+            avatar: "",
+            datetime: ""
+         },
       ],
-      // ["user2"]: [],
-      // ["user3"]: [],
-      // ["user4"]: [],
-      // ["user5"]: [],
    } as UsersMessagesType,
 }
 
@@ -32,24 +40,57 @@ export const messagesReducer = (state: MessagesPageType = initialMessagesPageSta
       case MESSAGES_ACTIONS_TYPES.ADD_MESSAGE:
          return {
             ...state,
+            users: [
+               ...state.users,
+               {
+                  userId: action.payload.id,
+                  author: action.payload.name,
+                  avatar: action.payload.photo,
+               }
+            ],
+            usersMessages: {
+               ...state.usersMessages,
+               [action.payload.id]: []
+            }
+         }
+      case MESSAGES_ACTIONS_TYPES.SEND_MESSAGE:
+         if (action.payload.id) {
+            return {
+               ...state,
+               usersMessages: {
+                  ...state.usersMessages,
+                  [action.payload.id]: [...state.usersMessages[action.payload.id], {
+                     author: action.payload.message.author,
+                     content: action.payload.message.content,
+                     avatar: action.payload.message.avatar,
+                     datetime: action.payload.message.datetime
+                  }]
+               }
+            }
+         } else {
+            return {
+               ...state
+            }
          }
       default:
          return state
    }
 }
 
-type UserType = {
-   id: string,
-   name: string,
-   ava: string
+export type UserType = {
+   userId: string
+   author: string
+   avatar: string
 }
 
-type UsersMessagesType = {
+export type UsersMessagesType = {
    [userId: string]: MessageType[]
 }
 
-type MessageType = {
-   userId?: string
-   message: string
+export type MessageType = {
+   content: any | null
+   author: string | null
+   avatar: string | null
+   datetime: string | null
 }
 
